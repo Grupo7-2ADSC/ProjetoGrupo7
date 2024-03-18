@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tela de Login</title>
+  <link rel="stylesheet" href="logon.css">
+  <link rel="stylesheet" href="estilo-logon.css">
+</head>
+<body>
+
+    <div class="header">
+
+        <div class="container">
+
+            <img class="logo" src="#" alt="Logo SSS">
+
+            <div class="navbar">
+                <ul>
+                    <li><a href="#"><b>Home</b></a></li>
+                    <li><a href="./login.html"><b>Login</b></a></li>
+                    <li><a href="./cadastro.html"><b>Cadastro</b></a></li>
+                    <li><a href="#quem-somos"><b>Quem Somos</b></a></li>
+                </ul>
+            </div>
+
+            <button class="contact-button">Contato Comercial</button>
+
+        </div>
+
+    </div>
+
+
+    <div class="login">
+        <div class="alerta_erro">
+          <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro"></span>
+          </div>
+        </div>
+        <div class="container">
+          <div class="card card-cadastro">
+            <h2>Cadastro</h2>
+            <p>Ja possui uma conta? <a class="tenhoConta " href="./login.html">faça login</a></p>
+            <div class="formulario">
+              <div class="campo">
+              </div>
+              <div class="campo">
+                <input id="nome_input" type="text" placeholder="Nome da empresa" />
+              </div>
+              <div class="campo">
+                <input id="cpf_input" type="text" placeholder="CNPJ" />
+              </div>
+              <div class="campo">
+                <input id="email_input" type="text" placeholder="e-mail" />
+              </div>
+              <div class="campo">
+                <input id="senha_input" type="password" placeholder="******" />
+              </div>
+              <div class="campo">
+                <input id="confirmacao_senha_input" type="password" placeholder="******" />
+              </div>
+              <button class="botao" onclick="cadastrar()">Cadastrar</button>
+            </div class="tenhoConta2">
+            
+          </div>
+        </div>
+      </div>
+      </div>
+      
+
+</body>
+</html>

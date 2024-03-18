@@ -61,7 +61,7 @@
     box-shadow: 0px 0px 0px 2px rgba(255,255,255,1), 0px 0px 0px 5px rgb(0, 0, 0);
 }
 
-#conteudo-principal {
+#conteudo-principal, #quem-somos, .section-nao-pare {
     display: flex;
     justify-content: space-between;
     margin-top: 50px;
@@ -82,13 +82,15 @@
 
 .solcitar-cotacao {
     margin-top: 15%;
-    background-color: #4b2daf;
+    background-color: #000000;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+    border: 4px solid #000000;
+    box-shadow: 0px 0px 0px 2px rgba(255,255,255,1), 0px 0px 0px 5px rgb(0, 0, 0);
 }
 
 .conteudo-imagem {
@@ -104,4 +106,153 @@
     margin-top: 20px;
 }
 
+.section-monitorarSO {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.tituloMonitoramento {
+    color: white;
+    margin: 0;
+}
+
+.section-decisoes h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000;
+    margin-top: 20px;
+}
+.section-decisoes ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+}
+.section-decisoes li {
+    width: 45%;
+    margin-bottom: 20px;
+}
+.section-decisoes li::before {
+    content: "• ";
+    color: #000000;
+}
+.section-decisoes p {
+    font-size: 14px;
+    color: #333333;
+}
+
+
+/* Insights SSS - Index 5 */
+.sentinel-insights {
+    background-color: #fff;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .titulo-SSS {
+    text-align: center;
+  }
+  
+  .titulo-SSS h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+    margin: 20px auto;
+  }
+  
+  .stat {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+  }
+  
+  .stat p {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .stat span {
+    font-size: 14px;
+    color: #999;
+  }
+  
+  .imagens-servicos {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    width: 80%;
+  }
+  
+  .imagens-servicos img {
+    width: 33%;
+  }
+  
+  .logos-clientes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto;
+    width: 80%;
+  }
+  
+  .quadrado-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .quadrado-logos img {
+    width: 50%;
+  }
+  
+  .logos-clientes h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 20px;
+  }
+
+  /* footer sentinel */
+  
+  .footer {
+    text-align: center;
+    margin: 20px auto;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .footer p {
+    font-size: 12px;
+  }
+  
+  .footer a {
+    font-size: 12px;
+    color: #999;
+    text-decoration: none;
+  }
+  
 
