@@ -1,9 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 
 * {
     margin: 0;
     padding: 0;
     background-color: transparent;
+
+
+    --cor-fundo: #181818;
+
+    --fonte-paragrafo: font-family: "Poppins", sans-serif;
+    --wght-font: 200;
+
+    --fonte-titulo: font-family: "Inter", sans-serif;
+    
 }
 
 /* HEADER CODE */
@@ -49,7 +60,8 @@
 
 .contact-button {
     color: #fff;
-    background-color: #000000;
+    cursor: pointer;
+    background-color:var(--cor-fundo);
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 15px;
@@ -97,7 +109,7 @@
 
 .solcitar-cotacao {
     margin-top: 15%;
-    background-color: #000000;
+    background-color:var(--cor-fundo);
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -151,7 +163,7 @@
 
  /* SO Monitorados */
 .section-monitorarSO {
-    background-color: #181818;
+    background-color: var(--cor-fundo);
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -174,6 +186,7 @@
   flex-direction: column;
   align-items: center;
   height: 700px;
+  justify-content: space-evenly;
   
 }
 .section-decisoes ul {
@@ -198,7 +211,7 @@
 
 .section-decisoes ul h1 {
   text-align: start;
-  font-size: 32px;
+  font-size: 18px;
   font-weight: bold;
   color: #000000;
   margin-top: 20px;
@@ -226,7 +239,7 @@
 
 
 .section-nao-pare {
-  background-color: black; /* Cor de fundo preta */
+  background-color:var(--cor-fundo); /* Cor de fundo preta */
   color: #fff;
   height: 300px; /* Altura de 300px */
   display: flex; /* Usar flexbox para alinhar itens */
@@ -299,7 +312,7 @@
   height: 355px;
   justify-content: center;
   line-height: 400px;
-  background-color: black;
+  background-color: var(--cor-fundo);
   
 
 }
@@ -482,3 +495,15 @@ margin-top: 30px;
   }
   
 
+
+
+  .titulo {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+
+  }
+
+  .paragrafo {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+  }

@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     background-color: transparent;
+
 }
 
 /* HEADER CODE */
@@ -17,6 +18,8 @@
     display: flex;
     align-items: center;
 }
+
+
 
 .header .container {
     width: 80%;
@@ -65,6 +68,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url(../assets/imagens/fundo-logon.png);
+    background-repeat: no-repeat;   
 }
 
 :root {
@@ -153,4 +158,9 @@ body {
     margin-left: 5px;
     text-align: left;
 }
+
+input::placeholder {
+    padding: 10px; /* Espaçamento interno */
+    margin: 10px; /* Espaçamento externo */
+  }
 
