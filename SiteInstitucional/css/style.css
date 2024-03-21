@@ -10,21 +10,27 @@
 
     --cor-fundo: #181818;
 
-    --fonte-paragrafo: font-family: "Poppins", sans-serif;
-    --wght-font: 200;
-
-    --fonte-titulo: font-family: "Inter", sans-serif;
     
+}
+body::-webkit-scrollbar {
+  width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #000; 
+  border-radius: 5px; 
 }
 
 /* HEADER CODE */
 .header {
-    background-color: #4b2daf;
+    background-color: #613D94;
     width: 100%;
     height: 100px;
+    position: relative;
     border-bottom: 2px solid rgb(0, 0, 0);
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
     display: flex;
     align-items: center;
 }
@@ -57,7 +63,10 @@
 }
 
 .logo {
-    width: 350px;
+  width: 350px;
+  font-size: 25px;
+  color: whitesmoke;
+  font-weight: bolder;
 }
 
 .contact-button {
@@ -503,7 +512,7 @@ margin-top: 30px;
 
   }
 
-  .paragrafo {
+  .paragrafo{
     font-family: "Poppins", sans-serif;
     font-weight: 400;
   }
