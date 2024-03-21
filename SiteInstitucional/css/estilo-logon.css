@@ -91,6 +91,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: start;
+    margin-bottom: 5% ;
   }
   
   .botao {
@@ -105,6 +106,8 @@ body {
     width: 120px;
     height: 30px;
     align-self: center;
+    margin-bottom: 20px;
+    
   }
   
   .loading-div {
