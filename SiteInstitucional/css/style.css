@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     background-color: transparent;
-
+    scroll-behavior: smooth;
 
     --cor-fundo: #181818;
 
@@ -42,7 +42,9 @@
     display: flex;
     justify-content: center;
     list-style-type: none;
+    margin-right: 170px;
 }
+
 
 .header .container .navbar li {
     display: inline;
