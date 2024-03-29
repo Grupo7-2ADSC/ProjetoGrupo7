@@ -87,7 +87,7 @@ body::-webkit-scrollbar-thumb {
   background-size: cover;
   background-position: center;
   border-top: 1px solid #000000;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  height: 595px;
 }   
 
  #quem-somos, .section-nao-pare {
@@ -102,11 +102,11 @@ body::-webkit-scrollbar-thumb {
 .conteudo-esquerda, 
 .conteudo-direita {
   color: white;
-    margin-top: 30px;
+    margin-top: 105px;
     width: 45%;
     padding: 20px;
     text-align: left;
-    margin-left: 50px;
+    margin-left: 80px;
     margin-bottom: 20px;
     height: 400px;
 }
@@ -125,7 +125,7 @@ body::-webkit-scrollbar-thumb {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 70px;
-    border: 1px solid white;
+    border: none;
 }
 
 .conteudo-imagem {
@@ -137,16 +137,16 @@ body::-webkit-scrollbar-thumb {
 /* info de dados monitorados */
 
 .info-monitoramento {
-  background-color: #f0f0f0;
-  padding: 20px;
+  padding: 40px;
+  margin-bottom: 80px;
   height: 450px;
   box-sizing: border-box;
   width: 100%;
 }
 
 .titulo-centralizado {
-  margin-top: 20px;
-  margin-bottom: 130px;
+  margin-top: 40px;
+  margin-bottom: 140px;
   text-align: center;
 }
 
@@ -162,8 +162,8 @@ body::-webkit-scrollbar-thumb {
 
 .item img{
   text-align: center;
-  width: 70px;
-  height: 55px;
+  width: 60px;
+  height: 60px;
 }
 
 
@@ -181,7 +181,7 @@ body::-webkit-scrollbar-thumb {
 
 .section-monitorarSO img {
   height: 170px;
-  width: 195px;
+  width: 170px;
 }
 
 .tituloMonitoramento {
@@ -213,8 +213,7 @@ body::-webkit-scrollbar-thumb {
   font-size: 32px;
   font-weight: bold;
   color: #000000;
-  margin-top: 70px;
-  margin-bottom: 20px;
+ 
 }
 
 .section-decisoes ul h1 {
@@ -230,6 +229,7 @@ body::-webkit-scrollbar-thumb {
 
 .section-decisoes li {
   margin-bottom: 20px;
+  width: 530px;
 }
 
 .section-decisoes li::before {
@@ -238,7 +238,7 @@ body::-webkit-scrollbar-thumb {
 
 .section-decisoes p {
   font-size: 14px;
-  color: #333333;
+  color: #211f1f;
 }
 
 
@@ -261,8 +261,11 @@ body::-webkit-scrollbar-thumb {
 .imagem-esquerda,
 .texto-direita {
   flex: 1; /* Crescer igualmente para ocupar espaço */
-  text-align: center; /* Centralizar conteúdo */
   margin: 0 10px; /* Margem interna entre a imagem e o texto */
+}
+
+.imagem-esquerda {
+  text-align: center; /* Centralizar conteúdo */
 }
 
 .texto-direita {
@@ -351,6 +354,7 @@ body::-webkit-scrollbar-thumb {
 
 #quem-somos p {
 margin-top: 30px;
+text-align: justify;
 }
 
 
@@ -417,7 +421,6 @@ margin-top: 30px;
     font-size: 18px;
     text-align: center;
     padding: 10px;
-    border: 1px solid #ddd;
     border-radius: 5px;
     margin: 10px;
   }
@@ -434,7 +437,7 @@ margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-   padding: 20px;
+    padding: 20px;
   }
   
   .imagem-texto img {
@@ -464,8 +467,6 @@ margin-top: 30px;
     justify-content: space-evenly;
     width: 55%;
     height: 220px;
-    border: 4px solid #ddd;
-    border-radius: 5px;
   }
   
   .quadrado-logos img {
@@ -487,18 +488,22 @@ margin-top: 30px;
   
   .footer {
     text-align: center;
-    margin: 20px auto;
     padding: 10px;
-    border-top: 1px solid #ddd;
+    background-color: #613D94;
+    font-family: 'Poppins', sans-serif;
+    height: 100px;
+
   }
   
   .footer p {
     font-size: 12px;
+    margin-top: 35px;
+    color: white;
   }
   
   .footer a {
     font-size: 12px;
-    color: #999;
+    color: white;
     text-decoration: none;
   }
   
