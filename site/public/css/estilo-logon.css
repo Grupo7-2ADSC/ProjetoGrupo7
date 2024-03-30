@@ -59,6 +59,16 @@ body {
     border: 2px solid lightslategray;
     /* box-shadow: 0 0 10px 2px #8F149A; */
   }
+
+  .card-recuperar-senha {
+    height: 50%;
+    border: 2px solid lightslategray;
+    /* box-shadow: 0 0 10px 2px #8F149A; */
+  }
+
+  .card-recuperar-senha h2 {
+    margin-top: 20px;
+  }
   
   .cardCadastro h2 {
     margin: 0;
@@ -97,7 +107,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    margin-bottom: 5% ;
+    margin-bottom: 5%;
+  }
+
+  .campo-recuperar-senha {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
   }
   
   .botaoCadastro {
