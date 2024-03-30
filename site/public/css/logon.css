@@ -71,7 +71,7 @@
     height: 40px;
     margin-top: 10px;
     border-radius: 8px;
-    border: 4px solid #000000;
+    border: none;
 }
 
 body {
@@ -156,7 +156,7 @@ body {
     border: 0;
     border-radius: 2px;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px;
     color: #fff;
     background-color: #613D94;
     width: 120px;
@@ -167,6 +167,12 @@ body {
 .naoTenhoConta {
     margin-left: 5px;
     text-align: left;
+    margin-bottom: 35px;
+    margin-top: 15px;
+}
+
+.naoTenhoConta a {
+    text-decoration: none;
 }
 
 input::placeholder {

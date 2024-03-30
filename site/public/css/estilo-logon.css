@@ -28,7 +28,7 @@ body {
     height: 100%;
   }
   
-  .card {
+  .cardCadastro {
     width: 30%;
     border-radius: 10px;
     display: flex;
@@ -41,21 +41,26 @@ body {
     border-radius: 10px;
     backdrop-filter: blur(4px);
   }
+
+  a {
+    text-decoration: none;
+  }
   
   
   .card-cadastro {
-    height: 80%;
+    height: 90%;
     border: 2px solid lightslategray;
+    margin-top: 40px;
     /* box-shadow: 0 0 10px 2px #8F149A; */
   }
   
   .card-login {
-    height: 60%;
+    height: 68%;
     border: 2px solid lightslategray;
     /* box-shadow: 0 0 10px 2px #8F149A; */
   }
   
-  .card h2 {
+  .cardCadastro h2 {
     margin: 0;
     font-size: 30px;
   }
@@ -70,11 +75,12 @@ body {
   
   .formulario span {
     font-size: 15px;
-    font-weight: 800;
+    margin-bottom: 10px;
+    font-weight: 400;
   }
   
   .formulario input {
-    border: 2px solid #2d2f2f;
+    border: 1px solid #2d2f2f;
     height: 30px;
     text-align: left;
   }
@@ -94,19 +100,20 @@ body {
     margin-bottom: 5% ;
   }
   
-  .botao {
+  .botaoCadastro {
     cursor: pointer;
     font-family: "Barlow", sans-serif;
     border: 0;
     border-radius: 2px;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px;
     color: #fff;
+    background-color: #613D94;
     /* background-color: #8F149A; */
     width: 120px;
     height: 30px;
     align-self: center;
-    margin-bottom: 20px;
+    margin-top: 15px;
     
   }
   
