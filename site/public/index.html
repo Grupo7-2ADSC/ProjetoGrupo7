@@ -12,7 +12,7 @@
 
         <div class="container">
 
-          <p class="logo"> Sentinel System</p>
+          <p class="logo"> <img  class="imagem-logo" src="assets/imagens/logo_transparent.png" alt=""> </p>
 
             <div class="navbar">
                 <ul>
@@ -49,19 +49,46 @@
         <h2 class="titulo-centralizado titulo">Que dados podem ser monitorados?</h2>
         <div class="imagens-texto">
             <div class="item">
-                <img src="assets\imagens\ram.png" alt="Imagem memoria ram">
+                <img src="assets\imagens\ram.png" alt="Imagem memoria ram" onclick="window.dialog.showModal()">
+                <dialog id="dialog">
+                  <h2>Memória</h2>
+                  <p>A memória é um componente extremamente importante em um servidor, sem ela é impossivel armazenar dados bem como impacta diretamente na execução de determinados aplicativos. Além disso, elavé a base para que a CPU execute bem sua função.
+                    <br> <br> <button onclick="window.dialog.close();" aria-label="close" class="x">Close</button>
+                  </p>
+                  </dialog>
                 <p class="paragrafo">Memória</p>
             </div>
-            <div class="item">
-                <img src="assets\imagens\cpu.png" alt="Imagem cpu">
+
+           <div class="item">
+                <img src="assets\imagens\cpu.png" alt="Imagem cpu" onclick="window.dialog_cpu.showModal()">
+                <dialog id="dialog_cpu">
+                  <h2>CPU</h2>
+                  <p>Trabalha juntamente com a memória, a CPU pode ser considerada o cérebro do servidor, é responsável por buscar e processar instruções que estão armazenadas na memória, controlar o fluxo de informações e gerenciar recursos.
+                    <br> <br> <button onclick="window.dialog_cpu.close();" aria-label="close" class="x">Close</button>
+                  </p>
+                  </dialog>
                 <p class="paragrafo">CPU</p>
             </div>
+
             <div class="item">
-                <img src="assets\imagens\disco-rigido.png" alt="Imagem Disco">
+                <img src="assets\imagens\disco-rigido.png" alt="Imagem Disco" onclick="window.dialog_disco.showModal()">
+                <dialog id="dialog_disco">
+                  <h2>Disco</h2>
+                  <p>O disco tem a função de armazenar e recuperar dados, os dados guardados nesse componente ficam guardados de maneira permanente, mesmo quando o servidor está desligado. Quando falamos de escalabilidade essa peça é parte principal do projeto.
+                    <br> <br> <button onclick="window.dialog_disco.close();" aria-label="close" class="x">Close</button>
+                  </p>
+                  </dialog>
                 <p class="paragrafo">Disco</p>
             </div>
+
             <div class="item">
-                <img src="./assets/imagens/internet.png" alt="Imagem Rede">
+                <img src="./assets/imagens/internet.png" alt="Imagem Rede" onclick="window.dialog_rede.showModal()">
+                <dialog id="dialog_rede">
+                  <h2>Rede</h2>
+                  <p>O mundo hoje é conectado pela internet, de nada adianta ter um computador com as melhores peças se conexão é instavel e não permite que as informações sejam transportadas na velocidade adequada e o servidor acaba sendo sub-utilizado.
+                    <br> <br> <button onclick="window.dialog_rede.close();" aria-label="close" class="x">Close</button>
+                  </p>
+                  </dialog>
                 <p class="paragrafo">Rede</p>
             </div>
         </div>

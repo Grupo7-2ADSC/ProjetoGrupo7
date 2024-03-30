@@ -70,6 +70,12 @@ body::-webkit-scrollbar {
     font-weight: bolder;
 }
 
+.imagem-logo{
+    margin-top: 15px;
+    filter: brightness(1.5);
+    width: 160px;
+  }
+
 .contact-button {
     color: #fff;
     cursor: pointer;
