@@ -64,18 +64,12 @@ body::-webkit-scrollbar-thumb {
 
 .logo {
   width: 350px;
-  font-size: 25px;
-  color: whitesmoke;
-  font-weight: bolder;
-  /* background-image: url("../assets/imagens/logo_transparent.png");
-  background-size: cover;
-  z-index: 9; */
 }
 
 .imagem-logo{
-  margin-top: 15px;
-  filter: brightness(1.5);
-  width: 160px;
+  margin-top: 5px;
+  width: 300px;
+  cursor: pointer;
 }
 
 .contact-button {
