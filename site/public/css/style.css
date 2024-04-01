@@ -153,18 +153,6 @@ body::-webkit-scrollbar-thumb {
 	}
 }
 
-.item img{
-  cursor: pointer;
-}
-
-.item img:hover{
-  
-    width: 100%;
-    height: 80px;
-    cursor: pointer;
-    transition: 0.5s;
-}
-
 dialog{
   height: 300px;
   margin-left: 35%;
@@ -192,7 +180,7 @@ dialog{
 
 .x:hover{
   background-color:#613D94;
-  color: black;
+  color: white;
   transition: 1s;
   font-weight: bold;
   cursor: pointer;
@@ -232,9 +220,13 @@ dialog p{
   text-align: center;
   width: 60px;
   height: 60px;
+  cursor: pointer;
 }
 
-
+.item img:hover{ 
+    width: 65px;
+    height: 65px;
+}
 
 
  /* SO Monitorados */
