@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <div class="header">
+  <div class="header">
 
         <div class="container">
 
@@ -29,8 +29,30 @@
             <button class="contact-button" onclick="solicitarCotacao()">Contato Comercial</button>
 
         </div>
-
+    
+    <!-- Menu Hamburguer -->
+    <div id="menu">
+      <div id="menu-bar" onclick="menuOnClick()">
+        <div id="bar1" class="bar"></div>
+        <div id="bar2" class="bar"></div>
+        <div id="bar3" class="bar"></div>
+      </div>
+      <nav class="nav" id="nav">
+        <ul>
+          <li><a href="#conteudo-principal">Home</a></li>
+          <li><a href="./login.html">Login</a></li>
+          <li><a href="./cadastro.html">Cadastro</a></li>
+          <li><a href="#quem-somos">Quem somos</a></li>
+          <li><a href="./faleConosco.html">Contato Comercial</a></li>
+          
+        </ul>
+      </nav> 
     </div>
+    
+    <div class="menu-bg" id="menu-bg"></div>
+
+  </div>
+
 
       <div id="conteudo-principal" 
       style="background-image: linear-gradient(rgba(0, 0, 0, .15), rgba(0, 0, 0, .15)100%), url('./assets/imagens/backgroundHome.png');">
@@ -227,4 +249,14 @@
   function solicitarCotacao() {
     window.location.href = "./faleConosco.html";
 }
+
+function menuOnClick() {
+  document.getElementById("menu-bar").classList.toggle("change");
+  document.getElementById("nav").classList.toggle("change");
+  document.getElementById("menu-bg").classList.toggle("change-bg");
+}
+
+
+
+
 </script>
