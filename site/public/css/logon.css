@@ -235,6 +235,8 @@ input::placeholder {
 
 
     :root {
+        overflow-y: hidden;
+        overflow-x: hidden;
         font-size: 14px; /* Reduz a fonte para telas menores */
 
         .header {
@@ -390,7 +392,7 @@ input::placeholder {
     .login .container {
         justify-content: center;
         align-items: center;
-        height:100%;
+    
     }
     
     .card-branco-login {
