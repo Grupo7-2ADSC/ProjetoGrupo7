@@ -9,6 +9,9 @@
     --fonte-paragrafo: font-family: "Poppins", sans-serif;
 
 }
+#menu {
+    display: none;
+}
 
 /* HEADER CODE */
 .header {
@@ -266,11 +269,14 @@ input::placeholder {
           }
           
           .imagem-logo {
-            margin-left: 85%;
+            margin-left: 40%;
             margin-top: 0.313rem;
-            width: 18.75rem;
+            width: 15.75rem;
             cursor: pointer;
           }
+          
+          
+        
           
           #menu {
             z-index: 2;
