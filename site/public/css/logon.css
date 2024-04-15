@@ -269,9 +269,9 @@ input::placeholder {
           }
           
           .imagem-logo {
-            margin-left: 40%;
+            margin-left: 30%;
             margin-top: 0.313rem;
-            width: 15.75rem;
+            width: 13.75rem;
             cursor: pointer;
           }
           
@@ -511,6 +511,13 @@ input::placeholder {
         margin: 10px; /* Espaçamento externo */
       }
 }
+
+
+
+
+
+
+
 
 @media (min-width: 381px) and (max-width: 820px) {
     .container {
