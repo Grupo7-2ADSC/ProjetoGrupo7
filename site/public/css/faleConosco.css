@@ -73,7 +73,7 @@ body::-webkit-scrollbar {
     cursor: pointer;
 }
 
-.contact-button {
+/* .contact-button {
     color: #fff;
     cursor: pointer;
     background-color:var(--cor-fundo);
@@ -84,7 +84,7 @@ body::-webkit-scrollbar {
     margin-top: 10px;
     border-radius: 8px;
     border: none;
-}
+} */
 
 
 h1{

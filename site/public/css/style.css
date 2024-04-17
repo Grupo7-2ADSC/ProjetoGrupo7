@@ -72,7 +72,7 @@ body::-webkit-scrollbar-thumb {
   cursor: pointer;
 }
 
-.contact-button {
+/* .contact-button {
     color: #fff;
     cursor: pointer;
     background-color:var(--cor-fundo);
@@ -83,7 +83,7 @@ body::-webkit-scrollbar-thumb {
     margin-top: 10px;
     border-radius: 8px;
     border: none;
-}
+} */
 
 #conteudo-principal {
   background-repeat: no-repeat;
@@ -941,5 +941,32 @@ text-align: justify;
   height: 6.25rem;
 }
 
+.logo {
+  text-align: center;
+}
+.navbar {
+  display: none;
+}
+.contact-button {
+  display: block;
+  margin: 10px auto;
+}
+.titulo-fale-conosco {
+  text-align: center;
+}
+.form-contato {
+  margin: 20px;
+}
+.image-form-contato {
+  display: block;
+  margin: 0 auto;
+}
+.head-contato-form p {
+  text-align: center;
+}
+.info-contato {
+  text-align: center;
+  display: none;
+}
 
 }
