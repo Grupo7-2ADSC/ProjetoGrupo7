@@ -1,38 +1,38 @@
 import com.sun.jna.platform.linux.Mman;
 
 public class Memoria {
-    private Long emUso;
-    private Long disponivel;
-    private Long memorialTotal;
+    private String emUso;
+    private String disponivel;
+    private String memorialTotal;
 
     public Memoria(){};
-    public Memoria(Long emUso, Long disponivel, Long memorialTotal) {
+    public Memoria(String emUso, String disponivel, String memorialTotal) {
         this.emUso = emUso;
         this.disponivel = disponivel;
         this.memorialTotal = memorialTotal;
     }
 
-    public Long getEmUso() {
+    public String getEmUso() {
         return emUso;
     }
 
-    public void setEmUso(Long emUso) {
+    public void setEmUso(String emUso) {
         this.emUso = emUso;
     }
 
-    public Long getDisponivel() {
+    public String getDisponivel() {
         return disponivel;
     }
 
-    public void setDisponivel(Long disponivel) {
+    public void setDisponivel(String disponivel) {
         this.disponivel = disponivel;
     }
 
-    public Long getMemorialTotal() {
+    public String getMemorialTotal() {
         return memorialTotal;
     }
 
-    public void setMemorialTotal(Long memorialTotal) {
+    public void setMemorialTotal(String memorialTotal) {
         this.memorialTotal = memorialTotal;
     }
 
