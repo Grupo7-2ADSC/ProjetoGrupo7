@@ -78,11 +78,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Estilo do card sair do usuário */
+
 .user-card {
     display: none;
     position: absolute;
-    top: 80px;
-    right: 100px;
+    top: 90px;
+    right: 110px;
     background-color: black;
     color: white;
     padding: 15px;
@@ -94,8 +95,8 @@ body::-webkit-scrollbar-thumb {
   .user-card::after {
     content: '';
     position: absolute;
-    top: -10px;
-    right: 15px;
+    bottom: 94px;
+    right: 60px;
     border-width: 10px;
     border-style: solid;
     border-color: transparent transparent black transparent;
@@ -108,21 +109,32 @@ body::-webkit-scrollbar-thumb {
   
  
   #logout-btn {
-    background-color: red;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
     color: white;
     border: none;
     padding: 8px 15px;
     margin-top: 15px;
+
+    /* margin: 0 auto; deixar alinhado o conteudo no centro */
     cursor: pointer;
   }
   
   
   #logout-btn:hover {
-    background-color: darkred;
+    background-color: rgba(255, 255, 255, 0.199);
   }
   .user-card.active {
     display: block;
   }
+
+  #logout-btn .icon-sair {
+    margin-right: 5px; 
+    width: 15px;
+  }
+
+  
 
   /* CADASTRO */
 
@@ -204,7 +216,7 @@ body::-webkit-scrollbar-thumb {
   }
   
   .formulario select {
-    border: 2px solid #32b9cd;
+    border: 1px solid #2d2f2f;
     background-color: white;
     color: gray;
     height: 36px;

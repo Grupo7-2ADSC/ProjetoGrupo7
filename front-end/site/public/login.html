@@ -85,19 +85,55 @@
 </body>
 </html>
 <script>
-    function entrar() {
-      window.location.href = "./indisponivel.html";
+  // Declaração da variável usuarios no início do script
+  const usuarios = [
+      { email: 'user1@teste', login: 'user1', senha: '123', nome: 'João Silva', tipoAcesso: 0 },
+      { email: 'user2@teste', login: 'user2', senha: '123', nome: 'Pedrinho', tipoAcesso: 1 },
+      { email: 'user3@teste', login: 'user3', senha: '123', nome: 'Josana', tipoAcesso: 2 }
+  ];
+
+  function realizarLogin(login, senha) {
+      const usuario = usuarios.find(user => user.login === login);
+      if (usuario) {
+          return usuario.tipoAcesso;
+      } else {
+          return null;
+      }
   }
 
+  function redirecionarUsuario(tipoDeAcesso) {
+      if (tipoDeAcesso === 0) {
+          window.location.href = '/front-end/adm/cadastroEmpresa.html';
+      } else if (tipoDeAcesso === 1) {
+          window.location.href = '#';
+      } else if (tipoDeAcesso === 2) {
+          window.location.href = '#';
+      } else {
+          console.error('Tipo de acesso inválido.');
+      }
+  }
+
+  function entrar() {
+      const email = document.getElementById('email_input').value;
+      const senha = document.getElementById('senha_input').value;
+      const tipoDeAcesso = realizarLogin(email, senha);
+      
+      if (tipoDeAcesso !== null) {
+          redirecionarUsuario(tipoDeAcesso);
+      } else {
+          console.error('Usuário não encontrado.');
+      }
+  }
+
+  // fim da validação temporaria d login
+
   function solicitarCotacao() {
-    window.location.href = "./faleConosco.html";
+      window.location.href = "./faleConosco.html";
+  }
 
-    
-}
-
-function menuOnClick() {
-document.getElementById("menu-bar").classList.toggle("change");
-document.getElementById("nav").classList.toggle("change");
-document.getElementById("menu-bg").classList.toggle("change-bg");
-}
-  </script>
+  function menuOnClick() {
+      document.getElementById("menu-bar").classList.toggle("change");
+      document.getElementById("nav").classList.toggle("change");
+      document.getElementById("menu-bg").classList.toggle("change-bg");
+  }
+</script>
