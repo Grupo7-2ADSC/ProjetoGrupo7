@@ -9,9 +9,9 @@ public class Conexao {
 
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        dataSource.setUrl("jdbc:mysql://localhost:3306/testeMemoria");
-        dataSource.setUsername("root");
-        dataSource.setPassword("Lingualoca#4");
+        dataSource.setUrl("jdbc:mysql://172.31.29.51/");
+        dataSource.setUsername("aluno");
+        dataSource.setPassword("urubu100");
 
         conexaoDoBanco = new JdbcTemplate(dataSource);
     }
