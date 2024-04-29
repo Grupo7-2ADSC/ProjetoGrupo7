@@ -9,7 +9,6 @@
     scroll-behavior: smooth;
 
     --cor-fundo: #181818;
-    
 }
 
 body::-webkit-scrollbar {
@@ -73,7 +72,7 @@ body::-webkit-scrollbar {
     cursor: pointer;
 }
 
-.contact-button {
+/* .contact-button {
     color: #fff;
     cursor: pointer;
     background-color:var(--cor-fundo);
@@ -84,7 +83,7 @@ body::-webkit-scrollbar {
     margin-top: 10px;
     border-radius: 8px;
     border: none;
-}
+} */
 
 
 h1{
@@ -97,15 +96,6 @@ p{
     font-weight: 400;
 }
 
-.titulo-fale-conosco {
-    display: flex;
-    margin-left: 200px;
-    margin-top: 95px;
-    text-align: end;
-    font-size: 50px;
-    
-}
-
 .info-contato {
     margin-top: 70px;
     padding: 90px;
@@ -113,8 +103,8 @@ p{
     margin-bottom: 70px;
     color: #fff;
     display: flex;
-    justify-content: space-between; 
-    flex-wrap: wrap; 
+    justify-content: space-between; /* Adjust this as needed */
+    flex-wrap: wrap; /* Allow items to wrap */
 }
 
 .info-contato p {
@@ -182,7 +172,7 @@ p{
 
 input::placeholder {
     display: flex;
-    padding: 10px;
-    margin: 10px; 
+    padding: 10px; /* Espaçamento interno */
+    margin: 10px; /* Espaçamento externo */
 
   }
