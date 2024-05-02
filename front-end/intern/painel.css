@@ -197,6 +197,10 @@ body {
 
 }
 
+.titulo{
+    font-size: 30px;
+}
+
 .card-kpi{
     display: flex;
     flex-direction: column;
@@ -210,11 +214,17 @@ body {
     height: 108px;
     background-color: #220856;
 }
-
+.conjunto-seletor{
+    display: flex;
+    align-items: last baseline;
+    /* border: 1px solid beige */
+    ;
+}
 .seletor-filtro{
+    
     margin-top: 2%;
     /* border: 1px solid brown; */
-    width: 250px;
+    width: 80%;
     height: 60px;
 }
 
@@ -224,6 +234,74 @@ body {
     width: 203px;
     text-transform: capitalize;
 }
+
+.botao-info {
+    background-color: transparent;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    cursor: pointer;
+    animation: bounce 1.2s ease-in-out infinite; /* Adiciona a animação de pulo */
+
+}
+
+.info-div {
+    display: flex;
+    /* border: 1px solid blue; */
+    height: 250px;
+    width: 800px;
+    position: absolute;
+    justify-self: center;
+    top: 18%;
+    left: 30%;
+    background-color: #100e29;
+}
+
+
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0); 
+    }
+    40% {
+        transform: translateY(-10px); 
+    }
+    60% {
+        transform: translateY(-5px);  
+    }
+}
+
+.info-div {
+    display: none; 
+}
+
+.closeButton{
+    width: 30px;
+
+}
+
+.icon-info{
+    width: 30px;
+
+}
+
+.superior-info{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    margin-left: 5%;
+    margin-right: 30px;
+}
+
+.conteudo-legenda{
+    display: flex;
+    padding: 20px;
+}
+.legenda-info{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
 
 .container-servidores{
 
@@ -287,3 +365,19 @@ body {
     width: 80px;
     margin-bottom: 14px;
 }
+
+/* PAINEL INTERNO DE DASHBOARD */
+
+.container-seletorServidor{
+    border: 1px solid brown;
+    display: flex;
+    width: 45%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.seletor-servidor{
+    height: 29px;
+    width: 203px;
+}    
+

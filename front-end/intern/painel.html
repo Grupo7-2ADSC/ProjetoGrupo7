@@ -33,7 +33,7 @@
         </div>
 
         <main class="main-content">
-            <h1>Painel Geral</h1>
+            <h1 class="titulo">Painel Geral</h1>
 
             <div class="container-card-main">
 
@@ -60,16 +60,46 @@
                 
             </div>
 
+           <div class="conjunto-seletor">
             <div class="seletor-filtro">
                 <p>Filtrar servidores por indicador</p>
-                <select class="" name="seletor de filtro" id="select-indicador" alt="seletor de filtro">
+                <select class="" name="seletor de filtro" id="select-indicador" alt="seletor de filtro" onchange="filtrarServidores()">
                     <option value="all">todos</option>
                     <option value="verde">verde</option>
                     <option value="amarelo">amarelo</option>
-                    <option value="laranja">laranja</option>
                     <option value="vermelho">vermelho</option>
                 </select>
             </div>
+            <button id="botaoInfo" class="botao-info" onclick="toggleInfo()"> <img class="icon-info" src="./assets/info.png" alt="Botão de informações"></button>
+            <div id="infoDiv" class="info-div">
+            <div class="superior-info">
+
+                <p>Indice</p>
+            <button id="closeButton" class="closeButton" onclick="toggleInfo()">X</button>
+
+            </div>
+
+            <div class="conteudo-legenda">
+                <div class="legenda-info">
+                <p>🟢</p>
+                <span><b>Indicador Verde</b>
+                <br> <br> Nem um componente do Servidor  apresenta problemas.</span>
+            </div>
+
+            <div class="legenda-info">
+                <p>🟡</p>
+                <span><b>Indicador Amarelo</b>
+                <br> <br> Um componente do Servidor apresenta problemas.</span>
+            </div>
+
+            <div class="legenda-info">
+                <p>🔴</p>
+                <span><b>Indicador Vermelho</b>
+                <br> <br> 2 ou mais componentes do Servidor  apresentam problemas.</span>
+            </div>
+            </div>
+            </div>
+        </div>
 
             <div class="container-servidores">
                 <div class="conteudo-servidores" onclick="redirecionarParaPagina(event)">
@@ -82,7 +112,7 @@
                 
                         <div class="centralizar">
                             <img class="img-server" src="./assets/server.png" alt="">
-                            <p class="nome-servidor"> Servidor Financeiro teste a</p>
+                            <p class="nome-servidor"> Servidor Financeiro</p>
                         </div>
                     </div>
                 </div>
@@ -247,10 +277,38 @@ function redirecionarParaPagina(event) {
             // Obtém o ID do servidor clicado
             const servidorId = event.currentTarget.querySelector('.card-servidores').id;
             
-            // Emite um alerta com o ID do servidor
+            // alerta com id do server
             alert('Clicou no servidor com ID: ' + servidorId);
+
+            window.location.href = "./painelinterno.html";
         }
     }
 
+
+    function toggleInfo() {
+    var botaoInfo = document.getElementById('botaoInfo');
+    var infoDiv = document.getElementById('infoDiv');
+    
+    // botaoInfo.classList.remove('bounce');
+    
+    infoDiv.style.display = (infoDiv.style.display === 'block') ? 'none' : 'block';
+}
+
+function filtrarServidores() {
+    var selectIndicador = document.getElementById('select-indicador');
+    var indicadorSelecionado = selectIndicador.value;
+
+    var servidores = document.querySelectorAll('.conteudo-servidores');
+
+    servidores.forEach(function(servidor) {
+        var indicadorServidor = servidor.querySelector('.alocacao p:nth-child(2)').textContent;
+
+        if (indicadorSelecionado === 'all' || (indicadorSelecionado === 'verde' && indicadorServidor === '🟢') || (indicadorSelecionado === 'amarelo' && indicadorServidor === '🟡') || (indicadorSelecionado === 'vermelho' && indicadorServidor === '🔴')) {
+            servidor.style.display = 'block';
+        } else {
+            servidor.style.display = 'none';
+        }
+    });
+}
 
 </script>
