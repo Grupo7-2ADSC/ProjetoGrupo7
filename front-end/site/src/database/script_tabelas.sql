@@ -98,8 +98,8 @@ CONSTRAINT fk_servidor_disco FOREIGN KEY (fk_servidor)
 
 CREATE TABLE MemoriaRegistro (
 id_memoria INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-armazenamento_total DECIMAL(10,2) NOT NULL,
-armazenamento_em_uso DECIMAL(10,2) NOT NULL,
+quantidade_total DECIMAL(10,2) NOT NULL,
+quantidade_em_uso DECIMAL(10,2) NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_servidor INT NOT NULL,
 CONSTRAINT fk_servidor_memoria FOREIGN KEY (fk_servidor)

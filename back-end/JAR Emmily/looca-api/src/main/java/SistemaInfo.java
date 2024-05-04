@@ -133,7 +133,7 @@ public class SistemaInfo {
                 System.out.println("Mémoria Em uso: " + Conversor.formatarBytes(memoria.getEmUso()));
 
 
-                con.update("INSERT INTO MemoriaRegistro (armazenamento_total, armazenamento_em_uso, fk_servidor) VALUES (?, ?, ?)",
+                con.update("INSERT INTO MemoriaRegistro (quantidade_total, quantidade_em_uso, fk_servidor) VALUES (?, ?, ?)",
                         Conversor.formatarBytes(memoria.getTotal()).replace("GiB", "").replace(",", "."), Conversor.formatarBytes(memoria.getEmUso()).replace("GiB", "").replace(",", "."), id_servidor);
 
 
