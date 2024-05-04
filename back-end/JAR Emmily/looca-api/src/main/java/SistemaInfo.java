@@ -204,13 +204,13 @@ public class SistemaInfo {
                         con.update("INSERT INTO RedeRegistro (nome, endereco_ipv4, endereco_ipv6, bytes_recebidos, bytes_enviados, pacotes_recebidos, pacotes_enviados, fk_servidor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                                 redeInterface.getNomeExibicao(), redeInterface.getEnderecoIpv4().toString().replaceAll("\\[|\\]", ""),
                                 redeInterface.getEnderecoIpv6().toString().replaceAll("\\[|\\]", ""),
-                                Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", "."), Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", "."), redeInterface.getPacotesRecebidos(),
+                                Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", ".").replace("GiB",""), Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", ".").replace("GiB",""), redeInterface.getPacotesRecebidos(),
                                 redeInterface.getPacotesEnviados(), id_servidor);
                     }
                 }
 
             }
-        }, 1, 5000);
+        }, 1, 30000);
 
 
     }

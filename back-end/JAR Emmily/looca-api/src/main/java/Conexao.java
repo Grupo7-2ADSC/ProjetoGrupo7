@@ -14,7 +14,7 @@ public class Conexao {
 
         dataSource.setUrl("jdbc:mysql://localhost:3306/sentinel_system");
         dataSource.setUsername("root");
-        dataSource.setPassword("#Gf53994706831");
+        dataSource.setPassword("Lingualoca#4");
 
         conexaoDoBanco = new JdbcTemplate(dataSource);
 
