@@ -101,129 +101,10 @@
             </div>
         </div>
 
-            <div class="container-servidores">
-                <div class="conteudo-servidores" onclick="redirecionarParaPagina(event)">
-                    <div class="card-servidores" id="servidor1">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>1</p>
-                            <p>🟢</p>
-                        </span>
+            <div class="container-servidores" id="containerServidores">
                 
-                        <div class="centralizar">
-                            <img class="img-server" src="./assets/server.png" alt="">
-                            <p class="nome-servidor"> Servidor Financeiro</p>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="conteudo-servidores">
-                    <div class="card-servidores">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>2</p>
-                            <p>🔴</p>
-                        </span>
-
-                        <div class="centralizar">
-                            
-                        <img class="img-server" src="./assets/server.png" alt="">
-                        <p class="nome-servidor"> Servidor de Rastreamento</p>
-                        </div>
-                    </div>
-                </div> 
-                <div class="conteudo-servidores">
-                    <div class="card-servidores">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>3</p>
-                            <p>🟢</p>
-                        </span>
-
-                        <div class="centralizar">
-                            
-                        <img class="img-server" src="./assets/server.png" alt="">
-                        <p class="nome-servidor"> Servidor de Email</p>
-                        </div>
-                    </div>
-                </div> 
-
-                <div class="conteudo-servidores">
-                    <div class="card-servidores">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>1</p>
-                            <p>🟢</p>
-                        </span>
-
-                        <div class="centralizar">
-                            
-                        <img class="img-server" src="./assets/server.png" alt="">
-                        <p class="nome-servidor"> Servidor de TMS</p>
-                        </div>
-                    </div>
-                </div> 
-                <div class="conteudo-servidores">
-                    <div class="card-servidores">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>1</p>
-                            <p>🟢</p>
-                        </span>
-
-                        <div class="centralizar">
-                            
-                        <img class="img-server" src="./assets/server.png" alt="">
-                        <p class="nome-servidor"> Servidor Financeiro</p>
-                        </div>
-                    </div>
-                </div> 
-
-                <div class="conteudo-servidores">
-                    <div class="card-servidores">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>1</p>
-                            <p>🟢</p>
-                        </span>
-
-                        <div class="centralizar">
-                            
-                        <img class="img-server" src="./assets/server.png" alt="">
-                        <p class="nome-servidor"> Servidor Financeiro</p>
-                        </div>
-                    </div>
-                </div> 
-
-                <div class="conteudo-servidores">
-                    <div class="card-servidores">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>1</p>
-                            <p>🟡</p>
-                        </span>
-
-                        <div class="centralizar">
-                            
-                        <img class="img-server" src="./assets/server.png" alt="">
-                        <p class="nome-servidor"> Servidor Financeiro</p>
-                        </div>
-                    </div>
-                </div> 
-
-                <div class="conteudo-servidores">
-                    <div class="card-servidores">
-                        <p class="ip-maquina"> IP: <span>172.198.182.0</span> </p>
-                        <span class="alocacao">
-                            <p>1</p>
-                            <p>🟢</p>
-                        </span>
-
-                        <div class="centralizar">
-                            
-                        <img class="img-server" src="./assets/server.png" alt="">
-                        <p class="nome-servidor"> Servidor Financeiro</p>
-                        </div>
+                      
                     </div>
                 </div> 
 
@@ -247,8 +128,37 @@
     var idUser = 1; 
     // apenas para teste deixei como id user, mas aqui seria tipoCargo onde 0 = adm, 1 gestor infra e 2 funcionario, mas como
     // todo usuario que não seja adm ou infra vai ver a mesma coisa, cai no else, e ai não tem permissão alguma
+    
 
     var tipoUsuario = "";
+    addEventListener("DOMContentLoaded", (event) => {
+       
+        for(let i = 0; i < 15; i++){ 
+            let contagem = i+1;
+            let cor = "🟢";
+
+            
+            
+            if(i % 2 == 0) cor = "🟡";
+            else cor = '🔴';
+           
+            containerServidores.innerHTML += ` <div class="conteudo-servidores" onclick="redirecionarParaPagina(event)">
+                    <div class="card-servidores" id="servidor${contagem}">
+                        <span class="alocacao">
+                            <p>${contagem}</p>
+                            <p>${cor}</p>
+                        </span>
+                
+                        <div class="centralizar">
+                            <img class="img-server" src="./assets/server.png" alt="">
+                            <p class="nome-servidor"> Servidor de Teste</p>
+                        </div>
+                    </div>
+                </div>`;
+            console.log(i , "passou aqui")
+            
+        }
+    });
 
 function cargo() {
     if (idUser == 0) {
@@ -310,5 +220,8 @@ function filtrarServidores() {
         }
     });
 }
+
+
+
 
 </script>

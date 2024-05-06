@@ -4,14 +4,16 @@
     padding: 0;
     box-sizing: border-box;
     font: 400 1rem "", sans-serif;
+    -ms-zoom-animation: unset;
 }
 
 
 body {
     color: #fff;
-    background: #111;
+    background: #ffffff;
     font: 400 1rem "", sans-serif;
     overflow-x: hidden;
+    
 }
 .sidebar {
     height: 100vh;
@@ -57,6 +59,7 @@ body {
     overflow: hidden;
     transform: scale(1.1); 
 }
+
 
 .icone-menu {
     width: 25px;
@@ -254,6 +257,8 @@ body {
     top: 18%;
     left: 30%;
     background-color: #100e29;
+    border-radius: 12px;
+    border: 1px solid beige;
 }
 
 
@@ -312,9 +317,11 @@ body {
     /* border: 1px solid brown; */
     flex-wrap: wrap;
     background-color: #333;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 30px;
+    padding: 3%;
     border-radius: 12px;
+
 
 }
 
@@ -322,8 +329,8 @@ body {
     border: 1px solid #654d93;
     height: 210px;
     width: 200px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    /* margin-top: 20px;
+    margin-bottom: 20px; */
     cursor: pointer;
     background-color: #220856;
     padding: 5px;
@@ -374,10 +381,228 @@ body {
     width: 45%;
     justify-content: space-around;
     align-items: center;
+    color: #100e29;
 }
 
 .seletor-servidor{
     height: 29px;
     width: 203px;
 }    
+
+.conteudo-monitoramento{    
+    width: 756px;
+    height: 250px;
+    margin-top: 20px;
+    border: 1px solid brown;
+    background-color: gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 30px;
+
+}
+
+.container-pid-cpu {
+    display: block;
+    
+    
+   
+}
+
+.grafico-cpu{
+    /* border: 1px solid brown; */
+    background-color: white;
+}
+
+.grafico-cpu .apexcharts-xaxis-label text {
+    font-size: 2px !important;
+}
+
+
+
+.container-texto{
+    display: flex;
+    /* border: 1px solid blue; */
+    justify-content: space-evenly;
+    align-items: flex-end;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #100e29;
+}
+#cpuChart {
+    color: #100e29;
+}
+
+.title-cpu{
+    font-size: 30px;
+}
+.nome-cpu{
+    font-size: 9px;
+    margin-left: 40px;
+}
+.tabela-pid {
+    width: 360px;
+    border-collapse: collapse;
+}
+
+.titulo-pid{
+    color: #100e29;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid rgb(80, 79, 79);
+    padding: 3px;
+    text-align: center;
+    color: #100e29;
+
+}
+
+th {
+    background-color: #bfb8b8;
+    height: 30px;
+}
+
+td {
+    height: 30px;
+}
+
+.column-pid {
+    border-start-start-radius: 10%;
+}
+
+.column-UsoMemoria {
+    border-start-end-radius: 8%;
+}
+
+
+/* Grafico de memoria ram */
+.container-ram{
+    width: 756px;
+    height: 250px;
+    margin-top: 20px;
+    border: 1px solid brown;
+    background-color: gray;
+    padding: 20px;
+    
+
+}
+.label-superior{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid seagreen; */
+    width: 600px;
+    margin-left: 30px;
+    
+    color: #100e29;
+}
+
+.titulo-ram{
+    font-weight: bold;
+    font-size: 20px;
+    
+}
+
+.paragrafo-ram{
+    font-weight: bold;
+    font-size: 16px;
+    
+}
+.grafico-ram{
+    background-color: white;
+    margin-top: 5px;
+    
+}
+
+.container-disco{
+    width: 756px;
+    height: 250px;
+    margin-top: 20px;
+    border: 1px solid brown;
+    margin-bottom: 40px;
+    background-color: gray;
+    padding: 20px;
+
+}
+
+.container-disco h1{
+    font-size: 20px;
+    color: #100e29;
+    font-weight: bold;
+}
+
+.container-sistema{
+    width: 353px;
+    height: 790px;
+    border: 1px solid brown;
+    position: absolute;
+    margin-left: 75%;
+    margin-top: 35.5%;
+    background-color: gray;
+    padding: 20px;
+    
+}
+
+.conteudo-sistema{
+    border: 1px solid purple;
+    height: 750px;
+    display: flex;
+    justify-content: space;
+    flex-direction: column;
+}
+
+.titulo-sistema{
+    color: #100e29;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.conteudo-sistema p{
+    margin-top: 20px;
+}
+.conexao-wifi{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.conexao-wifi span{
+    font-size: 10px;
+}
+
+.rede-grafico{
+    background-color: white;
+    padding: 10px;
+}
+
+
+.conteudo-rede{
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo-pacotes-topo{
+    display: flex;
+    justify-content: space-between;
+
+}
+.conteudo-pacotes-bottom{
+    display: flex;
+    justify-content: space-between;
+
+
+}
+.conteudo-pacotes{
+    display: flex;
+    justify-content: space-between;;
+    border: 1px solid royalblue;
+    width: 300px ;
+    margin-bottom: 20px;
+}
+
+
+
+
 
