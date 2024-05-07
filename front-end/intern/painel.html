@@ -12,15 +12,14 @@
     <div class="sidebar">
         <div class="divImg">
 
-            <img id="imagemUser" src="" alt="">
+            <img id="imagemUser" src="./assets/logo_roxa.png" alt="">
         </div>
 
         <div class="NomeUsuario">Olá, <span id="nomeUser" class="NomeUsuario">Marcio</span></div>
 
         <ul>
             <li><a class="button" href=""><img class="icone-menu" src="./assets/notification.png" alt="">Avisos ‎ ‎ ‎ </a></li>
-            <li><a class="buttonSelecionado" href=""><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ </a></li>
-            <li><a class="button" href=""><img class="icone-menu" src="./assets/server.png" alt="">Servidor ‎ </a></li>
+            <li><a class="buttonSelecionado" href=""><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ ‎ ‎</a></li>
             <li><a class="button" href=""><img class="icone-menu" src="./assets/report.png" alt="">Relátorio</a></li>
             <li><a class="button" href=""><img class="icone-menu" src="./assets/group.png" alt="">Usuários</a></li>
             <br>
@@ -70,7 +69,8 @@
                     <option value="vermelho">vermelho</option>
                 </select>
             </div>
-            <button id="botaoInfo" class="botao-info" onclick="toggleInfo()"> <img class="icon-info" src="./assets/info.png" alt="Botão de informações"></button>
+            <button id="botaoInfo" class="botao-info" onclick="toggleInfo()"> <img class="icon-info" src="./assets/infoPreta.png" alt="Botão de informações"></button>
+           
             <div id="infoDiv" class="info-div">
             <div class="superior-info">
 
@@ -98,6 +98,22 @@
                 <br> <br> 2 ou mais componentes do Servidor  apresentam problemas.</span>
             </div>
             </div>
+            </div>
+        </div>
+        <div class="line-cadastroServer">
+            <button class="cadastro-servidor" onclick="openCadastro()">Cadastrar Servidor</button>
+        </div>
+        <div id="overlay" onclick="closeCadastro()">
+            <div id="cadastroServer" class="cadastroServer">
+                <h2 class="titulo">Cadastro de Servidor</h2>
+                <button id="closeBtn" onclick="closeCadastro()">X</button>
+               <div class="fomulario-cadastroServer">
+                <p class="p-sever">Nome</p>
+                <input class="inp-server" type="text" name="" id="" alt="">
+                <p class="p-sever">Hostname</p>
+                <input class="inp-server" type="text" name="" id="" alt="">
+            </div>
+            <button onclick="closeCadastro()" class="btn-cadastrarServer">Cadastrar</button>
             </div>
         </div>
 
@@ -133,7 +149,7 @@
     var tipoUsuario = "";
     addEventListener("DOMContentLoaded", (event) => {
        
-        for(let i = 0; i < 15; i++){ 
+        for(let i = 0; i < 8; i++){ 
             let contagem = i+1;
             let cor = "🟢";
 
@@ -160,26 +176,26 @@
         }
     });
 
-function cargo() {
-    if (idUser == 0) {
-        tipoUsuario = "ADM";
-    } else if (idUser == 1) {
-        tipoUsuario = "gestor_infra";
-    } else {
-        tipoUsuario = "funcionario";
-    }
-}
+// function cargo() {
+//     if (idUser == 0) {
+//         tipoUsuario = "ADM";
+//     } else if (idUser == 1) {
+//         tipoUsuario = "gestor_infra";
+//     } else {
+//         tipoUsuario = "funcionario";
+//     }
+// }
 
-cargo(); 
-var imagemUsuario = document.getElementById("imagemUser");
+// cargo(); 
+// var imagemUsuario = document.getElementById("imagemUser");
 
-if (tipoUsuario === "gestor_infra") {
-    imagemUsuario.src = "assets/empresa.png";
-} else if (tipoUsuario === "ADM") {
-    imagemUsuario.src = "assets/empresa.png";
-} else {
-    imagemUsuario.src = "./assets/logo_semNomepng.png";
-}
+// if (tipoUsuario === "gestor_infra") {
+//     imagemUsuario.src = "assets/empresa.png";
+// } else if (tipoUsuario === "ADM") {
+//     imagemUsuario.src = "assets/empresa.png";
+// } else {
+//     imagemUsuario.src = "./assets/logo_semNomepng.png";
+// }
 
 function redirecionarParaPagina(event) {
         // Verifica se o clique foi dentro da div do servidor
@@ -221,7 +237,13 @@ function filtrarServidores() {
     });
 }
 
+function openCadastro() {
+    document.getElementById("overlay").style.display = "block";
+}
 
+function closeCadastro() {
+    document.getElementById("overlay").style.display = "none";
+}
 
 
 </script>

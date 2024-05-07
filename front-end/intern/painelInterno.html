@@ -12,15 +12,14 @@
     <div class="sidebar">
         <div class="divImg">
 
-            <img id="imagemUser" src="./assets/empresa.png" alt="">
+            <img id="imagemUser" src="./assets/logo_roxa.png" alt="">
         </div>
 
         <div class="NomeUsuario">Olá, <span id="nomeUser" class="NomeUsuario">Marcio</span></div>
 
         <ul>
             <li><a class="button" href=""><img class="icone-menu" src="./assets/notification.png" alt="">Avisos ‎ ‎ ‎ </a></li>
-            <li><a class="buttonSelecionado" href=""><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ </a></li>
-            <li><a class="button" href=""><img class="icone-menu" src="./assets/server.png" alt="">Servidor ‎ </a></li>
+            <li><a class="buttonSelecionado" href="./painel.html"><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ ‎ ‎</a></li>
             <li><a class="button" href=""><img class="icone-menu" src="./assets/report.png" alt="">Relátorio</a></li>
             <li><a class="button" href=""><img class="icone-menu" src="./assets/group.png" alt="">Usuários</a></li>
             <br>
@@ -33,23 +32,25 @@
         </div>
 
         <main class="main-content">
-            <div class="container-seletorServidor">
-                <h1 class="titulo">Servidor de backup</h1>
-                <select class="seletor-servidor" name="Seletor de servidor" id="server-selector" alt="Seletor de servidor">
-                    <option value="server1"> 1 - Servidor Financeiro</option>
-                    <option value="server2"> 2 - Servidor de Backup </option>
-                    
-                </select>
-               
-            </div>  
+        
+                <div class="container-seletorServidor">
+                    <h1 class="titulo">Servidor de backup</h1>
+                    <select class="seletor-servidor" name="Seletor de servidor" id="server-selector" alt="Seletor de servidor">
+                        <option value="server1"> 1 - Servidor Financeiro</option>
+                        <option value="server2"> 2 - Servidor de Backup </option>
+                        
+                    </select>
+                   
+                </div> 
+                
 
         <div class="conteudo-monitoramento">
             <div class="container-sistema">
                 <div class="conteudo-sistema">
                     <h1 class="titulo-sistema"> SISTEMA </h1>
 
-                    <P>Data de Inicialização:  <span>04/05/2024</span></P>
-                    <P>Tempo de Atividade:  <span> 6 dias , 4:5:59</span></P>
+                    <P class="tempo-atividade">Data de Inicialização:  <span>04/05/2024</span></P>
+                    <P class="tempo-atividade">Tempo de Atividade:  <span> 6 dias , 4:5:59</span></P>
                         <div class="conexao-wifi">
                             <h1 class="titulo-sistema">WI-FI</h1>
                             <span>Intel(R) Wireless-AC 9462</span>
@@ -69,22 +70,24 @@
                                 <span class="dados-pacote">402461 MB</span>
                             </div>
                         </div>
-                        <div class="conteudo-pacotes-bottom"></div>
+                        <div class="conteudo-pacotes-bottom">
                             <div class="pacotes">
-                                <p class="text-pacote">Recebidos</p>
+                                <p class="text-pacote"> Recebidos</p>
                                 <span class="dados-pacote">402461 MB</span>
                             </div>
                             <div class="pacotes">
                                 <p class="text-pacote">Pacotes Recebidos</p>
                                 <span class="dados-pacote">402461 MB</span>
                             </div>
+
+                        </div>
                             
                         
                     </div>
                     <div class="conteudo-ips">
-                        <p>Nome do adaptador: <span>hl_student</span></p>
-                        <p>Endereço IPv4 <span>192.168.15.139</span></p>
-                        <p>Endereço IPv6<span>2804:1b3:a2c1:3dad:3bb2:fb5f:2591:80c0, 2804:1b3:a2c1:3dad:11e3:3a27:f8e2:ce28, fe80:0:0:0:f428:a9e4:3217:e78</span></p>
+                        <p class="nome-adaptador">Nome do adaptador: <span>Wifi</span></p>
+                        <p class="endereco-ip">Endereço IPv4: <span>192.168.15.139</span></p>
+                        <p class="endereco-ip">Endereço IPv6: <br><span>2804:1b3:a2c1:3dad:3bb2:fb5f:2591:80c0, 2804:1b3:a2c1:3dad:11e3:3a27:f8e2:ce28, fe80:0:0:0:f428:a9e4:3217:e78</span></p>
                     </div>
                 </div>
             </div>
@@ -181,6 +184,10 @@
 </body>
 </html>
 <script>
+
+    // function sair(){
+    //     window.location.href = '/front-end/intern/painel.html';
+    // }
     document.addEventListener('DOMContentLoaded', function() {
             const labels = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
             let cpuData = [0, 20, 50, 55, 90, 95, 80];
