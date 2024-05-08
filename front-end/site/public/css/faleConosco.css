@@ -9,7 +9,6 @@
     scroll-behavior: smooth;
 
     --cor-fundo: #181818;
-    
 }
 
 body::-webkit-scrollbar {
@@ -95,15 +94,6 @@ h1{
 p{
     font-family: "Poppins", sans-serif;
     font-weight: 400;
-}
-
-.titulo-fale-conosco {
-    display: flex;
-    margin-left: 200px;
-    margin-top: 95px;
-    text-align: end;
-    font-size: 50px;
-    
 }
 
 .info-contato {
