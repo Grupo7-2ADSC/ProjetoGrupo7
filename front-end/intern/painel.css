@@ -1,5 +1,6 @@
 
     * {
+    color: white;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,7 +11,7 @@
 
 body {
     color: #fff;
-    background: #ffffff;
+    background: #613D94;
     font: 400 1rem "", sans-serif;
     overflow-x: hidden;
     
@@ -18,7 +19,7 @@ body {
 .sidebar {
     height: 100vh;
     width: 16%;
-    background-color: #333;
+    background-color: black;
     position: fixed;
     top: 0;
     left: 0;
@@ -185,6 +186,7 @@ body {
 }
 
 .main-content{
+    background-color: #613D94;
     width: 80%;
     margin-left: 22%;
     margin-top: 2%;
@@ -200,7 +202,7 @@ body {
 
 .titulo{
     font-size: 30px;
-    color: #100e29;
+    color: black;
 }
 
 .card-kpi{
@@ -214,7 +216,7 @@ body {
     box-shadow: #fff 2px ;
     width: 218px;
     height: 108px;
-    background-color: #220856;
+    background-color: black;
 }
 .conjunto-seletor{
     display: flex;
@@ -231,6 +233,7 @@ body {
 }
 
 .seletor-filtro select{
+    color: black;
     margin-top: 12px ;
     height: 29px;
     width: 203px;
@@ -315,6 +318,7 @@ body {
 }
 
 .cadastro-servidor{
+    color: black;
     width: 146px;
     height: 28px;
 }
@@ -387,6 +391,7 @@ body {
     border: 1px solid black;
 }
 .btn-cadastrarServer{
+    background-color: #613D94;
     width: 125px;
     height: 49px;
     margin-top: 100px;
@@ -407,7 +412,7 @@ body {
     width: 80%;
     /* border: 1px solid brown; */
     flex-wrap: wrap;
-    background-color: #333;
+    background-color: black;
     /* justify-content: center; */
     gap: 30px;
     padding: 3%;
@@ -476,16 +481,18 @@ body {
 }
 
 .seletor-servidor{
+    color: black;
     height: 29px;
     width: 203px;
 }    
 
-.conteudo-monitoramento{    
+.conteudo-monitoramento{   
+    border-radius: 15px; 
     width: 756px;
     height: 250px;
     margin-top: 20px;
     /* border: 1px solid brown; */
-    background-color: gray;
+    background-color: black;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -518,7 +525,7 @@ body {
     align-items: flex-end;
     margin-top: 5px;
     margin-bottom: 5px;
-    color: #100e29;
+    color: white;
 }
 #cpuChart {
     color: #100e29;
@@ -537,7 +544,7 @@ body {
 }
 
 .titulo-pid{
-    color: #100e29;
+    color: white;
     margin-bottom: 10px;
     margin-top: 10px;
 }
@@ -574,9 +581,9 @@ td {
     height: 250px;
     margin-top: 20px;
     /* border: 1px solid brown; */
-    background-color: gray;
+    background-color: black;
     padding: 20px;
-    
+    border-radius: 15px;
 
 }
 .label-superior{
@@ -586,8 +593,7 @@ td {
     /* border: 1px solid seagreen; */
     width: 600px;
     margin-left: 30px;
-    
-    color: #100e29;
+    color: white;
 }
 
 .titulo-ram{
@@ -613,25 +619,26 @@ td {
     margin-top: 20px;
     /* border: 1px solid brown; */
     margin-bottom: 40px;
-    background-color: gray;
+    background-color: black;
     padding: 20px;
-
+    border-radius: 15px;
 }
 
 .container-disco h1{
     font-size: 20px;
-    color: #100e29;
+    color: white;
     font-weight: bold;
 }
 
 .container-sistema{
+    border-radius: 15px;
     width: 353px;
     height: 790px;
     /* border: 1px solid brown; */
     position: absolute;
     margin-left: 75%;
     margin-top: 35.5%;
-    background-color: gray;
+    background-color: black;
     padding: 20px;
     
 }
@@ -647,12 +654,13 @@ td {
 }
 
 .titulo-sistema{
-    color: #100e29;
+    color: white;
     font-weight: bold;
     margin-bottom: 30px;
 }
 
 .conteudo-sistema p{
+    color: white;
     margin-top: 20px;
 }
 .conexao-wifi{
