@@ -234,12 +234,20 @@ body {
 
 .seletor-filtro select{
     color: black;
+    
     margin-top: 12px ;
     height: 29px;
     width: 203px;
     text-transform: capitalize;
 }
+.seletor-filtro option{
+    color: #100e29;
+}
 
+
+.seletor-servidor option{
+    color: #100e29;
+}
 .botao-info {
     background-color: transparent;
     border-radius: 50%;
