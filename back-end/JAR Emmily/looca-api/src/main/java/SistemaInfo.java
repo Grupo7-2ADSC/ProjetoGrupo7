@@ -134,7 +134,7 @@ public class SistemaInfo {
 
 
                 con.update("INSERT INTO MemoriaRegistro (quantidade_total, quantidade_em_uso, fk_servidor) VALUES (?, ?, ?)",
-                        Conversor.formatarBytes(memoria.getTotal()).replace("GiB", "").replace(",", "."), Conversor.formatarBytes(memoria.getEmUso()).replace("GiB", "").replace(",", "."), id_servidor);
+                        Conversor.formatarBytes(memoria.getTotal()).replace("GiB", "").replace("MiB", "").replace(",", "."), Conversor.formatarBytes(memoria.getEmUso()).replace("GiB", "").replace("MiB", "").replace(",", "."), id_servidor);
 
 
                 //COLETANDO DADOS DE DISCO
@@ -152,7 +152,7 @@ public class SistemaInfo {
 
                     // INSERINDO DADOS DE DISCO NO BANCO
                     con.update("INSERT INTO DiscoRegistro (nome, armazenamento_total, armazenamento_livre, fk_servidor) VALUES (?, ?, ?, ?)",
-                            volume.getNome(), Conversor.formatarBytes(volume.getTotal()).replace("GiB", "").replace(",", "."), Conversor.formatarBytes(volume.getDisponivel()).replace("GiB", "").replace(",", "."), id_servidor);
+                            volume.getNome(), Conversor.formatarBytes(volume.getTotal()).replace("GiB", "").replace("MiB", "").replace("KiB", "").replace(",", "."), Conversor.formatarBytes(volume.getDisponivel()).replace("GiB", "").replace("MiB", "").replace(",", "."), id_servidor);
                 }
 
 
@@ -204,7 +204,7 @@ public class SistemaInfo {
                         con.update("INSERT INTO RedeRegistro (nome, endereco_ipv4, endereco_ipv6, bytes_recebidos, bytes_enviados, pacotes_recebidos, pacotes_enviados, fk_servidor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                                 redeInterface.getNomeExibicao(), redeInterface.getEnderecoIpv4().toString().replaceAll("\\[|\\]", ""),
                                 redeInterface.getEnderecoIpv6().toString().replaceAll("\\[|\\]", ""),
-                                Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", ".").replace("GiB",""), Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", ".").replace("GiB",""), redeInterface.getPacotesRecebidos(),
+                                Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", ".").replace("GiB","").replace("KiB", ""), Conversor.formatarBytes(redeInterface.getBytesRecebidos()).replace("MiB", "").replace(",", ".").replace("GiB","").replace("KiB", ""), redeInterface.getPacotesRecebidos(),
                                 redeInterface.getPacotesEnviados(), id_servidor);
                     }
                 }
