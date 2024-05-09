@@ -239,6 +239,11 @@ body {
     width: 203px;
     text-transform: capitalize;
 }
+.seletor-filtro option, .seletor-servidor option{
+    color: #100e29;
+}
+
+
 
 .botao-info {
     background-color: transparent;
@@ -721,6 +726,9 @@ td {
 
 }
 
+.closeButton{
+    color: #100e29;
+}
 
 
 
