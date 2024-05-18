@@ -139,7 +139,7 @@ INSERT INTO Empresa (cnpj, nome, telefone, email) VALUES
 	(1234567890123456, "DHL", 23457695, "dhlOficial@gmail.com");
     
 INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES
-	( "Servidor de Backup", "SAMSUNGBOOK", 1);
+	("Servidor de Backup", "SAMSUNGBOOK", 1);
     
 -- SELECTS
 
