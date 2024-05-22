@@ -12,8 +12,6 @@ CREATE TABLE Empresa (
 id_empresa INT PRIMARY KEY AUTO_INCREMENT,
 cnpj CHAR(16) NOT NULL UNIQUE,
 nome VARCHAR(45) NOT NULL,
-telefone VARCHAR(11) NOT NULL,
-email VARCHAR(200) NOT NULL,
 data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -40,12 +38,20 @@ CONSTRAINT fk_empresa_Usuario FOREIGN KEY (fk_empresa)
 	REFERENCES Empresa (id_empresa)
 );
 
+-- TIPO COMPONENTE
+CREATE TABLE TipoComponente (
+id_tipo_componente INT PRIMARY KEY NOT NULL,
+tipo VARCHAR(45) NOT NULL
+);
+
 -- CONFIGURAÇÃO DE ALERTAS
 
 CREATE TABLE ConfiguracaoAlerta (
 id_configuracao INT PRIMARY KEY NOT NULL,
 parametro DECIMAL(5,2) NOT NULL,
-tipo_hardware VARCHAR(45) NOT NULL,
+fk_tipo_componente INT NOT NULL,
+CONSTRAINT fk_tipo_componente_configuracao FOREIGN KEY (fk_tipo_componente)
+	REFERENCES TipoComponente (id_tipo_componente),
 fk_empresa INT NOT NULL,
 CONSTRAINT fk_empresa_configuracao FOREIGN KEY (fk_empresa)
 	REFERENCES Empresa (id_empresa)
@@ -57,6 +63,7 @@ CREATE TABLE Servidor (
 id_servidor INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45) NOT NULL,
 host_name VARCHAR(45) NOT NULL,
+endereco_mac VARCHAR(45) NOT NULL,
 data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
 fk_empresa INT, 
 CONSTRAINT fk_empresa_servidor FOREIGN KEY (fk_empresa) 
@@ -65,7 +72,7 @@ CONSTRAINT fk_empresa_servidor FOREIGN KEY (fk_empresa)
 
 -- COMPONENTES E SISTEMA
 
-CREATE TABLE SistemaRegistro (
+CREATE TABLE SistemaOperacionalRegistro (
 id_sistema INT PRIMARY KEY AUTO_INCREMENT,
 data_inicializacao DATE NOT NULL,
 tempo_atividade VARCHAR(50) NOT NULL,
@@ -75,35 +82,26 @@ CONSTRAINT fk_servidor_sistema FOREIGN KEY (fk_servidor)
 	REFERENCES Servidor (id_servidor)
 );
 
-CREATE TABLE CpuRegistro (
-id_cpu INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-modelo VARCHAR(60) NOT NULL,
-utilizacao DECIMAL(10,2) NOT NULL,
+CREATE TABLE Componente (
+id_componente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome VARCHAR(60) NOT NULL,
+total DECIMAL(10,2) NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+fk_tipo_componente INT NOT NULL,
+CONSTRAINT fk_tipo_componente FOREIGN KEY (fk_tipo_componente)
+	REFERENCES TipoComponente (id_tipo_componente),
 fk_servidor INT NOT NULL,
-CONSTRAINT fk_servidor_cpu FOREIGN KEY (fk_servidor)
+CONSTRAINT fk_servidor_componente FOREIGN KEY (fk_servidor)
 	REFERENCES Servidor (id_servidor)
 );
 
-CREATE TABLE DiscoRegistro (
-id_disco INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-nome VARCHAR(45) NOT NULL,
-armazenamento_total DECIMAL(10) NOT NULL,
-armazenamento_livre DECIMAL(10) NOT NULL,
+CREATE TABLE Registro (
+id_registro INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+uso DECIMAL(10,2) NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-fk_servidor INT NOT NULL,
-CONSTRAINT fk_servidor_disco FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor)
-);
-
-CREATE TABLE MemoriaRegistro (
-id_memoria INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-quantidade_total DECIMAL(10,2) NOT NULL,
-quantidade_em_uso DECIMAL(10,2) NOT NULL,
-data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-fk_servidor INT NOT NULL,
-CONSTRAINT fk_servidor_memoria FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor)
+fk_componente INT NOT NULL,
+CONSTRAINT fk_componente FOREIGN KEY (fk_componente)
+	REFERENCES componente (id_componente)
 );
 
 CREATE TABLE ProcessoRegistro (
@@ -120,7 +118,6 @@ CONSTRAINT fk_servidor_processo FOREIGN KEY (fk_servidor)
 
 CREATE TABLE RedeRegistro (
 id_rede INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-nome VARCHAR(45) NOT NULL,
 endereco_ipv4 VARCHAR(45) NOT NULL,
 endereco_ipv6 VARCHAR(255) NOT NULL,
 bytes_recebidos DECIMAL(10,2) NOT NULL,
@@ -135,22 +132,23 @@ CONSTRAINT fk_Servidor_rede FOREIGN KEY (fk_servidor)
 
 -- REGISTROS
 
-INSERT INTO Empresa (cnpj, nome, telefone, email) VALUES
-	(1234567890123456, "DHL", 23457695, "dhlOficial@gmail.com");
+INSERT INTO Empresa (cnpj, nome) VALUES
+	(1234567890123456, "DHL");
     
-INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES
-	( "Servidor de Backup", "SAMSUNGBOOK", 1);
+INSERT INTO Servidor (nome, host_name, endereco_mac, fk_empresa) VALUES
+	( "Servidor de Backup", "SAMSUNGBOOK", "70-32-17-1B-0F-D0", 1);
     
 -- SELECTS
 
 SELECT * FROM Empresa;
 SELECT * FROM Usuario;
 SELECT * FROM TipoAcesso;
+SELECT * FROM TipoComponente;
+SELECT * FROM ConfiguracaoAlerta;
 SELECT * FROM Servidor;
-SELECT * FROM SistemaRegistro;
-SELECT * FROM MemoriaRegistro;
-SELECT * FROM DiscoRegistro;
-SELECT * FROM CpuRegistro;
+SELECT * FROM SistemaOperacionalRegistro;
 SELECT * FROM ProcessoRegistro;
 SELECT * FROM RedeRegistro;
+SELECT * FROM Componente;
+SELECT * FROM Registro;
 
