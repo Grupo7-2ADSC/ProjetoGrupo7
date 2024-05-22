@@ -6,52 +6,52 @@
   <title>Login | SSS</title>
   <link rel="stylesheet" href="./css/logon.css">
   <link rel="stylesheet" href="./css/estilo-logon.css">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="shortcut icon" href="./assets/imagens/iconNavegador.png" type="image/x-icon">
   <script src="../script.js"></script>
 </head>
 <body>
-
     <div class="header">
 
         <div class="container">
-
-            <div class="logo"> 
-                <a href="./index.html"><img  class="imagem-logo" src="assets/imagens/logoEmpresa.png" alt=""></a>
-              </div>
-
-            <div class="navbar">
-                <ul>
-                    <li><a href="./index.html">Home</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="index.html#quem-somos">Quem Somos</a></li>
-                </ul>
+    
+          <div class="logo">
+            <a href="./index.html"><img class="imagem-logo" src="assets/imagens/logoEmpresa.png" alt=""></a>
+          </div>
+    
+          <div class="navbar">
+            <ul>
+              <li><a href="./index.html#conteudo-principal">Home</a></li>
+              <li><a href="./login.html">Login</a></li>
+              <li><a href="#quem-somos">Quem Somos</a></li>
+            </ul>
+          </div>
+    
+          <div id="menu">
+            <div id="menu-bar" onclick="menuOnClick()">
+              <div id="bar1" class="bar"></div>
+              <div id="bar2" class="bar"></div>
+              <div id="bar3" class="bar"></div>
             </div>
-
-            <button class="contact-button" onclick="solicitarCotacao()">Contato Comercial</button>
-
+            <nav class="nav" id="nav">
+              <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./login.html">Login</a></li>
+                <li><a href="./index.html#quem-somos">Quem somos</a></li>
+                <li><a href="./faleConosco.html">Contato Comercial</a></li>
+    
+              </ul>
+            </nav>
+          </div>
+    
+          <div class="menu-bg" id="menu-bg"></div>
+    
         </div>
-
-        <!-- Menu Hamburguer -->
-    <div id="menu">
-        <div id="menu-bar" onclick="menuOnClick()">
-          <div id="bar1" class="bar"></div>
-          <div id="bar2" class="bar"></div>
-          <div id="bar3" class="bar"></div>
-        </div>
-        <nav class="nav" id="nav">
-          <ul>
-            <li><a href="./index.html">Home</a></li>
-            <li><a href="./login.html">Login</a></li>
-            <li><a href="./index.html">Quem somos</a></li>
-            <li><a href="./faleConosco.html">Contato Comercial</a></li>
-            
-          </ul>
-        </nav> 
+    
+        <!-- <button class="contact-button" onclick="solicitarCotacao()">Contato Comercial</button> -->
+    
       </div>
-      
-      <div class="menu-bg" id="menu-bg"></div>
-
-    </div>
+    
 
 <link rel="stylesheet" href="/front-end/intern/">
     <div class="login">

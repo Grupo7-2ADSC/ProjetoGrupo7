@@ -977,4 +977,48 @@ text-align: justify;
   display: none;
 }
 
+.container {
+  display: flex;
+  width: 90%;
+  margin: auto;
+}
+
+.login {
+  height: var(--tamanho-login);
+  background-size: cover;
+}
+
+.login .container {
+  justify-content: center;
+  align-items: center;
+
+}
+
+.card-branco-login {
+  width: 300px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
+.card-branco-recuperar-senha{
+  width: 300px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  row-gap: 5px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
 }
