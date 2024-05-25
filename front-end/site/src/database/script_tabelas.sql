@@ -30,10 +30,10 @@ nome VARCHAR(45) NOT NULL,
 email  VARCHAR(200)  NOT NULL UNIQUE,
 senha CHAR(8) NOT NULL,
 data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-fk_tipo_acesso INT, 
+fk_tipo_acesso INT NOT NULL, 
 CONSTRAINT fk_tipo_acesso FOREIGN KEY (fk_tipo_acesso) 
 	REFERENCES TipoAcesso (id_tipo_acesso),
-fk_empresa INT, 
+fk_empresa INT NOT NULL, 
 CONSTRAINT fk_empresa_Usuario FOREIGN KEY (fk_empresa) 
 	REFERENCES Empresa (id_empresa)
 );
@@ -48,7 +48,8 @@ tipo VARCHAR(45) NOT NULL
 
 CREATE TABLE ConfiguracaoAlerta (
 id_configuracao INT PRIMARY KEY NOT NULL,
-parametro DECIMAL(5,2) NOT NULL,
+parametro_min DECIMAL(5,2) NOT NULL,
+parametro_max DECIMAL(5,2) NOT NULL,
 fk_tipo_componente INT NOT NULL,
 CONSTRAINT fk_tipo_componente_configuracao FOREIGN KEY (fk_tipo_componente)
 	REFERENCES TipoComponente (id_tipo_componente),
@@ -63,11 +64,23 @@ CREATE TABLE Servidor (
 id_servidor INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45) NOT NULL,
 host_name VARCHAR(45) NOT NULL,
-endereco_mac VARCHAR(45) NOT NULL,
 data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
 fk_empresa INT, 
 CONSTRAINT fk_empresa_servidor FOREIGN KEY (fk_empresa) 
 	REFERENCES empresa (id_empresa)
+);
+
+-- HISTÓRICO DE ALERTAS
+CREATE TABLE Alerta (
+id_alerta INT PRIMARY KEY NOT NULL,
+registro DECIMAL(10,2) NOT NULL,
+data_registro DATETIME NOT NULL,
+fk_servidor INT NOT NULL,
+CONSTRAINT fk_servidor_alerta FOREIGN KEY (fk_servidor)
+	REFERENCES Servidor (id_servidor),
+fk_configuracao_alerta INT NOT NULL,
+CONSTRAINT fk_configuracao_alerta FOREIGN KEY (fk_configuracao_alerta)
+	REFERENCES ConfiguracaoAlerta (id_configuracao)
 );
 
 -- COMPONENTES E SISTEMA
@@ -84,8 +97,8 @@ CONSTRAINT fk_servidor_sistema FOREIGN KEY (fk_servidor)
 
 CREATE TABLE Componente (
 id_componente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-nome VARCHAR(60) NOT NULL,
-total DECIMAL(10,2) NOT NULL,
+nome VARCHAR(60),
+total DECIMAL(10,2),
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_tipo_componente INT NOT NULL,
 CONSTRAINT fk_tipo_componente FOREIGN KEY (fk_tipo_componente)
@@ -135,8 +148,8 @@ CONSTRAINT fk_Servidor_rede FOREIGN KEY (fk_servidor)
 INSERT INTO Empresa (cnpj, nome) VALUES
 	(1234567890123456, "DHL");
     
-INSERT INTO Servidor (nome, host_name, endereco_mac, fk_empresa) VALUES
-	( "Servidor de Backup", "SAMSUNGBOOK", "70-32-17-1B-0F-D0", 1);
+INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES
+	( "Servidor de Backup", "SAMSUNGBOOK", 1);
     
 -- SELECTS
 
