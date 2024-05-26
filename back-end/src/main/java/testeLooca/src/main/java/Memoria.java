@@ -1,3 +1,5 @@
+package testeLooca.src.main.java;
+
 import com.sun.jna.platform.linux.Mman;
 
 public class Memoria {
