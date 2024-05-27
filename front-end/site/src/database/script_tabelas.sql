@@ -35,12 +35,12 @@ CONSTRAINT fk_tipo_acesso FOREIGN KEY (fk_tipo_acesso)
 	REFERENCES TipoAcesso (id_tipo_acesso),
 fk_empresa INT NOT NULL, 
 CONSTRAINT fk_empresa_Usuario FOREIGN KEY (fk_empresa) 
-	REFERENCES Empresa (id_empresa)
+	REFERENCES Empresa (id_empresa) ON DELETE CASCADE
 );
 
 -- TIPO COMPONENTE
 CREATE TABLE TipoComponente (
-id_tipo_componente INT PRIMARY KEY NOT NULL,
+id_tipo_componente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 tipo VARCHAR(45) NOT NULL
 );
 
@@ -55,7 +55,7 @@ CONSTRAINT fk_tipo_componente_configuracao FOREIGN KEY (fk_tipo_componente)
 	REFERENCES TipoComponente (id_tipo_componente),
 fk_empresa INT NOT NULL,
 CONSTRAINT fk_empresa_configuracao FOREIGN KEY (fk_empresa)
-	REFERENCES Empresa (id_empresa)
+	REFERENCES Empresa (id_empresa) ON DELETE CASCADE
 );
 
 -- SERVIDOR
@@ -67,7 +67,7 @@ host_name VARCHAR(45) NOT NULL,
 data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
 fk_empresa INT, 
 CONSTRAINT fk_empresa_servidor FOREIGN KEY (fk_empresa) 
-	REFERENCES empresa (id_empresa)
+	REFERENCES empresa (id_empresa) ON DELETE CASCADE
 );
 
 -- HISTÓRICO DE ALERTAS
@@ -77,10 +77,7 @@ registro DECIMAL(10,2) NOT NULL,
 data_registro DATETIME NOT NULL,
 fk_servidor INT NOT NULL,
 CONSTRAINT fk_servidor_alerta FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor),
-fk_configuracao_alerta INT NOT NULL,
-CONSTRAINT fk_configuracao_alerta FOREIGN KEY (fk_configuracao_alerta)
-	REFERENCES ConfiguracaoAlerta (id_configuracao)
+	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
 );
 
 -- COMPONENTES E SISTEMA
@@ -92,20 +89,20 @@ tempo_atividade VARCHAR(50) NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_servidor INT NOT NULL,
 CONSTRAINT fk_servidor_sistema FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor)
+	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
 );
 
 CREATE TABLE Componente (
 id_componente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 nome VARCHAR(60),
-total DECIMAL(10,2),
+total_gib DECIMAL(10,2),
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_tipo_componente INT NOT NULL,
 CONSTRAINT fk_tipo_componente FOREIGN KEY (fk_tipo_componente)
 	REFERENCES TipoComponente (id_tipo_componente),
 fk_servidor INT NOT NULL,
 CONSTRAINT fk_servidor_componente FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor)
+	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
 );
 
 CREATE TABLE Registro (
@@ -114,7 +111,7 @@ uso DECIMAL(10,2) NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_componente INT NOT NULL,
 CONSTRAINT fk_componente FOREIGN KEY (fk_componente)
-	REFERENCES componente (id_componente)
+	REFERENCES componente (id_componente) ON DELETE CASCADE
 );
 
 CREATE TABLE ProcessoRegistro (
@@ -126,7 +123,7 @@ uso_memoria DECIMAL (10,2) NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_servidor INT NOT NULL,
 CONSTRAINT fk_servidor_processo FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor)
+	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
 );
 
 CREATE TABLE RedeRegistro (
@@ -140,16 +137,21 @@ pacotes_enviados INT NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_servidor INT NOT NULL,
 CONSTRAINT fk_Servidor_rede FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor)
+	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
 );
 
--- REGISTROS
+-- INSERTS
 
 INSERT INTO Empresa (cnpj, nome) VALUES
 	(1234567890123456, "DHL");
     
 INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES
 	( "Servidor de Backup", "SAMSUNGBOOK", 1);
+    
+INSERT INTO TipoComponente (tipo) VALUES
+	("CPU"),
+    ("MEMORIA"),
+    ("DISCO");
     
 -- SELECTS
 
@@ -158,10 +160,10 @@ SELECT * FROM Usuario;
 SELECT * FROM TipoAcesso;
 SELECT * FROM TipoComponente;
 SELECT * FROM ConfiguracaoAlerta;
+SELECT * FROM Alerta;
 SELECT * FROM Servidor;
 SELECT * FROM SistemaOperacionalRegistro;
 SELECT * FROM ProcessoRegistro;
 SELECT * FROM RedeRegistro;
 SELECT * FROM Componente;
 SELECT * FROM Registro;
-
