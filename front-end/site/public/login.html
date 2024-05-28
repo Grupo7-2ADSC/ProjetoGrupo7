@@ -82,9 +82,20 @@
       </div>
       </div>
 
+
+      <div class="welcome-message" id="welcomeMessage">Bem-vindo ao sistema!</div>
+
 </body>
 </html>
 <script>
+
+  function alertLoginADM(){
+        welcomeMessage.style.display = 'block';
+
+        setTimeout(function() {
+        welcomeMessage.style.display = 'none';
+        }, 5000);
+  }
  
   const usuarios = [
       { email: 'user1@teste', login: 'user1', senha: '123', nome: 'João Silva', tipoAcesso: 0 },
@@ -103,7 +114,8 @@
 
   function redirecionarUsuario(tipoDeAcesso) {
       if (tipoDeAcesso === 0) {
-          window.location.href = '/front-end/adm/cadastroEmpresa.html';
+          alertLoginADM();
+          window.location.href = '/front-end/adm/empresas.html';
       } else if (tipoDeAcesso === 1) {
           window.location.href = '/front-end/intern/painel.html';
       } else if (tipoDeAcesso === 2) {
