@@ -75,9 +75,9 @@ CREATE TABLE Alerta (
 id_alerta INT PRIMARY KEY NOT NULL,
 registro DECIMAL(10,2) NOT NULL,
 data_registro DATETIME NOT NULL,
-fk_servidor INT NOT NULL,
-CONSTRAINT fk_servidor_alerta FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
+fk_componente INT NOT NULL,
+CONSTRAINT fk_componente_alerta FOREIGN KEY (fk_componente)
+	REFERENCES Componente (id_componente) ON DELETE CASCADE
 );
 
 -- COMPONENTES E SISTEMA
