@@ -141,6 +141,9 @@ INSERT INTO Empresa (cnpj, nome, telefone, email) VALUES
 INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES
 	("Servidor de Backup", "SAMSUNGBOOK", 1);
     
+INSERT INTO CpuRegistro (modelo, utilizacao, fk_servidor)
+VALUES ('Intel Core i7', 45.50, 1);
+
 -- SELECTS
 
 SELECT * FROM Empresa;
