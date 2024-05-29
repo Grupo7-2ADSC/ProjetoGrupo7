@@ -70,6 +70,19 @@ CONSTRAINT fk_empresa_servidor FOREIGN KEY (fk_empresa)
 	REFERENCES empresa (id_empresa) ON DELETE CASCADE
 );
 
+CREATE TABLE Componente (
+id_componente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+nome VARCHAR(60),
+total_gib DECIMAL(10,2),
+data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+fk_tipo_componente INT NOT NULL,
+CONSTRAINT fk_tipo_componente FOREIGN KEY (fk_tipo_componente)
+	REFERENCES TipoComponente (id_tipo_componente),
+fk_servidor INT NOT NULL,
+CONSTRAINT fk_servidor_componente FOREIGN KEY (fk_servidor)
+	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
+);
+
 -- HISTÓRICO DE ALERTAS
 CREATE TABLE Alerta (
 id_alerta INT PRIMARY KEY NOT NULL,
@@ -89,19 +102,6 @@ tempo_atividade VARCHAR(50) NOT NULL,
 data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 fk_servidor INT NOT NULL,
 CONSTRAINT fk_servidor_sistema FOREIGN KEY (fk_servidor)
-	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
-);
-
-CREATE TABLE Componente (
-id_componente INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-nome VARCHAR(60),
-total_gib DECIMAL(10,2),
-data_registro DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-fk_tipo_componente INT NOT NULL,
-CONSTRAINT fk_tipo_componente FOREIGN KEY (fk_tipo_componente)
-	REFERENCES TipoComponente (id_tipo_componente),
-fk_servidor INT NOT NULL,
-CONSTRAINT fk_servidor_componente FOREIGN KEY (fk_servidor)
 	REFERENCES Servidor (id_servidor) ON DELETE CASCADE
 );
 
