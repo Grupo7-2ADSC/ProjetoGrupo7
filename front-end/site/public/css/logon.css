@@ -139,6 +139,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .card-branco-login h2 {
@@ -158,6 +159,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .card-branco-recuperar-senha h2 {

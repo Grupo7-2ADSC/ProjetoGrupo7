@@ -320,13 +320,27 @@ body {
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
+    gap: 10px;
 }
 
 .cadastro-servidor{
-    color: black;
+    color: #100e29;
     width: 146px;
     height: 28px;
 }
+
+.alterar-servidor{
+    color: #100e29;
+    width: 110px;
+
+}
+.excluir-servidor{
+    color: #100e29;
+    width: 110px;
+
+}
+
+
 
 /* modal cadastro server */
 #overlay {

@@ -19,7 +19,7 @@
 
         <ul>
             <li><a class="button" href="./avisos.html"><img class="icone-menu" src="./assets/notification.png" alt="">Avisos ‎ ‎ ‎ </a></li>
-            <li><a class="buttonSelecionado" href=""><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ ‎ ‎</a></li>
+            <li><a class="buttonSelecionado"><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ ‎ ‎</a></li>
             <li><a class="button" href="./relatorio.html"><img class="icone-menu" src="./assets/report.png" alt="">Relátorio</a></li>
             <li><a class="button" href="./usuarios.html"><img class="icone-menu" src="./assets/group.png" alt="">Usuários</a></li>
             <br>
@@ -102,8 +102,10 @@
         </div>
         <div class="line-cadastroServer">
             <button class="cadastro-servidor" onclick="openCadastro()">Cadastrar Servidor</button>
+            <button class="alterar-servidor">Alterar</button>
+            <button class="excluir-servidor">Excluir</button>
         </div>
-        <div id="overlay" onclick="closeCadastro()">
+        <div id="overlay" >
             <div id="cadastroServer" class="cadastroServer">
                 <h2 class="titulo">Cadastro de Servidor</h2>
                 <button id="closeBtn" onclick="closeCadastro()" style="color: black;">X</button>
@@ -117,23 +119,7 @@
             </div>
         </div>
 
-            <div class="container-servidores" id="containerServidores">
-                
-
-                      
-                    </div>
-                </div> 
-
-         
-             
-
-         
-                
-
-                
-                
-            </div>
-
+            <div class="container-servidores" id="containerServidores"></div>
         </main>
    
     

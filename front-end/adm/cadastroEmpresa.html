@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="headerADM.css">
     <link rel="stylesheet" href="style-cadastros.css">
     <link rel="icon" href="../site/public/assets/imagens/iconNavegador.png" type="image/x-icon">
     <title>Cadastrar empresas</title>
@@ -11,14 +12,14 @@
     <div class="header">
         <div class="container">
           <div class="logo"> 
-            <a href="./empresas.html"><img class="imagem-logo" src="../site/public/assets/imagens/logoEmpresa.png" alt=""></a>
+            <a href="./empresas.html"><img class="imagem-logo" src="../site/public/assets/imagens/logoEmpresa.png" alt="logo empresa"></a>
           </div>
       
           <div class="navbar">
             <ul>
               <li><a href="./empresas.html">Empresas</a></li>
-              <li><a href="./cadastroUsuarios.html">Usuários</a></li>
-              <li><a href="./adicionarAcesso.html">Acessos</a></li>
+              <li><a href="usuarios.html">Usuários</a></li>
+              <li><a href="./tiposacesso.html">Acessos</a></li>
             </ul>
           </div>
       
@@ -76,26 +77,4 @@
           
 </body>
 </html>
-<script>
- document.addEventListener('DOMContentLoaded', function() {
-  const userProfile = document.getElementById('user-profile');
-  const userCard = document.getElementById('user-card');
-  const logoutBtn = document.getElementById('logout-btn');
-  const welcomeMessage = document.getElementById('welcomeMessage');
-
-
-  userProfile.addEventListener('click', function() {
-    userCard.classList.toggle('active');
-  });
-
-  document.addEventListener('click', function(event) {
-    if (!userProfile.contains(event.target) && !userCard.contains(event.target)) {
-      userCard.classList.remove('active');
-    }
-  });
-
-  logoutBtn.addEventListener('click', function() {
-    window.location.href = '../site/public/index.html';
-  });
-});
-</script>
+<script src="empresas.js"></script>

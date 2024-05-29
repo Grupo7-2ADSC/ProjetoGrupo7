@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List empresas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="headerADM.css">
+  <link rel="stylesheet" href="acessos.css">
+    <title>Tipos de acesso</title>
 </head>
-<link rel="stylesheet" href="empresas.css">
-<link rel="stylesheet" href="headerADM.css">
+<body>
+
+
 <body>
     <div class="header">
         <div class="container">
           <div class="logo"> 
-            <a href="./empresas.html"><img class="imagem-logo" src="../site/public/assets/imagens/logoEmpresa.png" alt="logo empresa"></a>
+            <a href="./empresas.html"><img class="imagem-logo" src="../site/public/assets/imagens/logoEmpresa.png" alt="Logo empresa"></a>
           </div>
       
           <div class="navbar">
             <ul>
               <li><a href="./empresas.html">Empresas</a></li>
-              <li><a href="usuarios.html">Usuários</a></li>
+              <li><a href="./usuarios.html">Usuários</a></li>
               <li><a href="./tiposacesso.html">Acessos</a></li>
             </ul>
           </div>
@@ -36,18 +39,15 @@
         </div>
       </div>
 
-
-      
       <div class="container-table"  id="containerTable">
-        <div class="containerTittle"><h2>Lista de Empresas</h2>
-        <button onclick="cadastrarEmpresa()">Cadastrar Empresa</button></div>
-        <table id="empresasTable">
+        <div class="containerTittle"><h2>Lista Acessos</h2>
+        <button onclick="adicionarNovoAcesso()">Cadastrar novo acesso</button></div>
+        <table id="acessosTable">
             <thead>
                 <tr>
-                    <th>Nome da Empresa</th>
-                    <th>CNPJ</th>
-                    <th>Data de Cadastro</th>
-                    <th>Ações</th>
+                <th>ID Acesso</th>
+                <th>Tipo de acesso</th>
+                <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,8 +55,7 @@
             </tbody>
         </table>
     </div>
-
-    
 </body>
 </html>
-<script src="./js/empresas.js"></script>
+<script src="acessos.js"></script>
+      

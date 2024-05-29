@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./css/estilo-logon.css">
   <link rel="stylesheet" href="./css/style.css">
   <link rel="shortcut icon" href="./assets/imagens/iconNavegador.png" type="image/x-icon">
-  <script src="../script.js"></script>
+  
 </head>
 <body>
     <div class="header">
@@ -16,7 +16,7 @@
         <div class="container">
     
           <div class="logo">
-            <a href="./index.html"><img class="imagem-logo" src="assets/imagens/logoEmpresa.png" alt=""></a>
+            <a href="./index.html"><img class="imagem-logo" src="assets/imagens/logoEmpresa.png" alt="Logo"></a>
           </div>
     
           <div class="navbar">
@@ -94,12 +94,12 @@
 
         setTimeout(function() {
         welcomeMessage.style.display = 'none';
-        }, 5000);
+        }, 3000);
   }
  
   const usuarios = [
-      { email: 'user1@teste', login: 'user1', senha: '123', nome: 'João Silva', tipoAcesso: 0 },
-      { email: 'user2@teste', login: 'user2', senha: '123', nome: 'Pedrinho', tipoAcesso: 1 },
+      { email: 'user1@teste', login: 'user1', senha: '123', nome: 'GDS', tipoAcesso: 0 },
+      { email: 'user2@teste', login: 'user2', senha: '123', nome: 'Marcio', tipoAcesso: 1 },
       { email: 'user3@teste', login: 'user3', senha: '123', nome: 'Josana', tipoAcesso: 2 }
   ];
 
@@ -115,7 +115,9 @@
   function redirecionarUsuario(tipoDeAcesso) {
       if (tipoDeAcesso === 0) {
           alertLoginADM();
-          window.location.href = '/front-end/adm/empresas.html';
+          setTimeout(function() {
+            window.location.href = '/front-end/adm/empresas.html';
+        }, 3050);
       } else if (tipoDeAcesso === 1) {
           window.location.href = '/front-end/intern/painel.html';
       } else if (tipoDeAcesso === 2) {
