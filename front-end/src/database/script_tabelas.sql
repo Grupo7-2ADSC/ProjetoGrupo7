@@ -143,7 +143,7 @@ CONSTRAINT fk_Servidor_rede FOREIGN KEY (fk_servidor)
 -- INSERTS
 
 INSERT INTO Empresa (cnpj, nome) VALUES
-	(1234567890123456, "DHL");
+	(1234567890123456, "Sentinel Sys");
     
 INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES
 	( "Servidor de Backup", "SAMSUNGBOOK", 1);
@@ -152,6 +152,11 @@ INSERT INTO TipoComponente (tipo) VALUES
 	("CPU"),
     ("MEMORIA"),
     ("DISCO");
+    
+    INSERT INTO TipoAcesso (tipo) VALUES ('ADM'), ('Representante'), ('Gestor de infra'), ('Usuario padrão/Funcionario');
+
+INSERT INTO Usuario (nome, email, senha, fk_tipo_acesso, fk_empresa) 
+VALUES ('Admin User', 'admin@gmail.com', 'admin123', 1, 1);
     
 -- SELECTS
 
@@ -167,3 +172,17 @@ SELECT * FROM ProcessoRegistro;
 SELECT * FROM RedeRegistro;
 SELECT * FROM Componente;
 SELECT * FROM Registro;
+
+
+SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, TipoAcesso.id 
+FROM Usuario
+JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
+WHERE user = '1';
+
+
+SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, TipoAcesso.id_tipo_acesso 
+FROM Usuario
+JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
+WHERE email = 'admin@gmail.com' AND senha = '';
+
+-- 'admin@gmail.com', 'admin123'
