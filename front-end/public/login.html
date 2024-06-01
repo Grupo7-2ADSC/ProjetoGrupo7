@@ -138,12 +138,12 @@
     sessionStorage.NOME_USUARIO = json.nome;
     sessionStorage.ID_USUARIO = json.id;
     sessionStorage.TIPO_ACESSO = json.tipoAcesso;
+    sessionStorage.NOME_EMPRESA = json.empresa;
+        
 
+    console.log(resposta);
     redirecionarUsuario(json.tipoAcesso);
 
-    setTimeout(function () {
-        alertwelcome();
-    }, 1000);
 });
 
       } else {
@@ -162,7 +162,7 @@
   }
 
   function redirecionarUsuario(tipoDeAcesso) {
-   // console.log("Acessei o redirecionar por tipo de usuario, tipo de acesso: " + tipoDeAcesso);
+    console.log("Acessei o redirecionar por tipo de usuario, tipo de acesso: " + tipoDeAcesso);
     
     if (tipoDeAcesso === 'ADM') { 
         alertwelcome();

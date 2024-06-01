@@ -174,15 +174,10 @@ SELECT * FROM Componente;
 SELECT * FROM Registro;
 
 
-SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, TipoAcesso.id 
-FROM Usuario
-JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
-WHERE user = '1';
-
-
-SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, TipoAcesso.id_tipo_acesso 
-FROM Usuario
-JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
-WHERE email = 'admin@gmail.com' AND senha = '';
+SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, TipoAcesso.tipo AS tipoAcesso, Empresa.nome AS empresa
+    FROM Usuario 
+    JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
+    JOIN Empresa ON Usuario.fk_empresa = Empresa.id_empresa 
+    WHERE email = '' AND senha = '';
 
 -- 'admin@gmail.com', 'admin123'
