@@ -8,10 +8,25 @@ function buscarPorCnpj(req, res) {
   });
 }
 
-function listar(req, res) {
-  empresaModel.listar().then((resultado) => {
-    res.status(200).json(resultado);
-  });
+
+function listarEmpresasAdm(req, res) {
+    empresaModel.listarEmpresas()
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao listar empresas:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+function editarEmpresa(id, nome, cnpj) {
+  return empresaModel.editar(id, nome, cnpj);
+}
+
+function deletarEmpresa(id) {
+  return empresaModel.deletar(id);
 }
 
 function buscarPorId(req, res) {
@@ -40,8 +55,10 @@ function cadastrar(req, res) {
 }
 
 module.exports = {
+  listarEmpresasAdm,
+  editarEmpresa,
+  deletarEmpresa,
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
-  listar,
 };

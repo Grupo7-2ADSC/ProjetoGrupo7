@@ -8,33 +8,29 @@
     <title>Adicionar novo Acesso</title>
 </head>
 <body>
-    <div class="header">
-        <div class="container">
-          <div class="logo"> 
-            <a href="./empresas.html"><img class="imagem-logo" src="../site/public/assets/imagens/logoEmpresa.png" alt="logo empresa"></a>
-          </div>
-      
-          <div class="navbar">
-            <ul>
-              <li><a href="./empresas.html">Empresas</a></li>
-              <li><a href="usuarios.html">Usuários</a></li>
-              <li><a href="./tiposacesso.html">Acessos</a></li>
-            </ul>
-          </div>
-      
-          <div id="user-profile" class="user-profile">
-            <img class="img-user" src="./assets/userBranco.png" alt="">
-            <!-- Card sair do usuário -->
-            <div id="user-card" class="user-card">
-                <div class="user-card-content">
-                  <p>Gustavo | ADM </p> <!-- Aqui sera puxado do banco -->
-                  
-                  <button id="logout-btn"><img class="icon-sair" src="./assets/exitBranco.png" alt="Icone de sair">Sair</button>
-                </div>
-              </div>
+  <div class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="./empresas.html"><img class="imagem-logo" src="/assets/imagens/logoEmpresa.png" alt="logo empresa"></a>
+      </div>
+      <div class="navbar">
+        <ul>
+          <li><a href="./empresas.html">Empresas</a></li>
+          <li><a href="usuarios.html">Usuários</a></li>
+          <li><a href="./tiposacesso.html">Acessos</a></li>
+        </ul>
+      </div>
+      <div id="user-profile" class="user-profile">
+        <img class="img-user" src="./assets/userBranco.png" alt="">
+        <div id="user-card" class="user-card">
+          <div class="user-card-content">
+            <p><span id="userName"></span> | ADM</p>
+            <button id="logout-btn"><img class="icon-sair" src="./assets/exitBranco.png" alt="Icone de sair">Sair</button>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
         <div class="container-cadastro" style="margin-top: 100px;">
 

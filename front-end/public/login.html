@@ -167,10 +167,10 @@
     if (tipoDeAcesso === 'ADM') { 
         alertwelcome();
         setTimeout(function () {
-            window.location.href = './site/adm/empresas.html';
+            window.location.href = './adm/empresas.html';
         }, 3050);
     } else if (tipoDeAcesso === 'Representante' || tipoDeAcesso === 'Gestor de infra') { 
-        window.location.href = './site/intern/painel.html';
+        window.location.href = './intern/painel.html';
     }  else if (tipoDeAcesso === 'Usuario padrão/Funcionario') { // Comparação com string 'Usuario padrão/Funcionario'
         window.location.href = '#';
     } else {
