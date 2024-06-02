@@ -53,14 +53,14 @@
                     <span>Nome</span>
                     <input id="nomeEmp_input" type="text" placeholder="Nome da empresa" />
                   </div>
-                  <div class="campo">
+                  <!-- <div class="campo">
                      <span>E-mail</span>
                     <input id="emailEmp_input" type="text" placeholder="E-mail" />
                   </div>
                   <div class="campo">
-                    <span>Telefone </span>
+                    <span>Telefone</span>
                     <input id="telefoneEmp_input" type="number" placeholder="Digite seu Telefone" />
-                  </div>
+                  </div> -->
             
                   <button class="botaoCadastro" onclick="cadastrar()">Cadastrar</button>
                 </div>
@@ -72,4 +72,60 @@
           
 </body>
 </html>
-<script src="empresas.js"></script>
+<script>
+  function cadastrar() {
+    var nomeVar = nomeEmp_input.value;
+    var cnpjVar = cnpj_input.value;
+    if (nomeVar == "" || cnpjVar == "") {
+      alert("Preencha todos os campos!");
+      return false;
+    } else {
+      fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nomeServer: nomeVar,
+          cnpjServer: cnpjVar
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+          if (resposta.ok) {
+            alert("Empresa cadastrada com sucesso!");
+            location.reload();
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+        });
+      return false;
+    }
+  
+  };
+
+
+
+  // function listar() {
+  //   fetch("/empresas/listar", {
+  //     method: "GET",
+  //   })
+  //     .then(function (resposta) {
+  //       resposta.json().then((empresas) => {
+  //         empresas.forEach((empresa) => {
+  //           listaEmpresas.innerHTML += `<option value='${empresa.id}'>${empresa.cnpj}</option>`;
+  //         });
+  //       });
+  //     })
+  //     .catch(function (resposta) {
+  //       console.log(`#ERRO: ${resposta}`);
+  //     });
+  // }
+
+  // function sumirMensagem() {
+  //   cardErro.style.display = "none";
+  // }
+</script>

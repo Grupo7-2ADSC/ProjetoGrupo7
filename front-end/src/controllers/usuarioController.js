@@ -35,29 +35,23 @@ function autenticar(req, res) {
 
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-    var empresaId = req.body.empresaServer;
-
+    var cnpj = req.body.cnpjServer;
+  
     if (nome === undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    } else if (email === undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha === undefined) {
-        res.status(400).send("Sua senha está undefined!");
-    } else if (empresaId === undefined) {
-        res.status(400).send("Sua empresa está undefined!");
+      res.status(400).send("Campo nome está undefined!");
+    } else if (cnpj === undefined) {
+      res.status(400).send("Campo cnpj está undefined!");
     } else {
-        usuarioModel.cadastrar(nome, email, senha, empresaId)
-            .then(resultado => {
-                res.json(resultado);
-            })
-            .catch(erro => {
-                console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            });
+      usuarioModel.cadastrar(nome, cnpj)
+        .then(resultado => {
+          res.json(resultado);
+        })
+        .catch(erro => {
+          console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+        });
     }
-}
+  }
 
 module.exports = {
     autenticar,
