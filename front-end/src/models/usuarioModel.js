@@ -46,7 +46,7 @@ JOIN
 }
 
   function editar(id, nome, email, senha, tipoAcesso) {
-    var query = `UPDATE Usuario SET nome = ?, email = ?, senha = ? fk_tipo_acesso = ? WHERE id_usuario = ?;`;
+    var query = `UPDATE Usuario SET nome = ?, email = ?, senha = ?, fk_tipo_acesso = ? WHERE id_usuario = ?;`;
     return database.executar(query, [nome, email, senha, tipoAcesso, id]);
 }
 
@@ -62,7 +62,7 @@ function cadastrarUsuario(nome, email, senha, empresa, tipoAcesso){
     `;
   
     console.log("Executando a instrução SQL: \n" + query);
-    return database.executar(query, [nome,  email, senha, empresa, tipoAcesso]);
+    return database.executar(query, [nome,  email, senha, tipoAcesso, empresa]);
   } 
 
 module.exports = {
