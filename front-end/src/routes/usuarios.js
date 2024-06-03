@@ -50,7 +50,7 @@ router.delete("/deletar/:id", function (req, res) {
 });
 
 router.post("/cadastrarUser", function (req, res) {
-    usuarioController.cadastrarUsuario(req, res);
+    usuarioController.cadastrarUser(req, res);
 });
 
 module.exports = router;

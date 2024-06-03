@@ -74,12 +74,12 @@ function cadastrar(req, res) {
     }
   }
 
-  function cadastrarUsuario(req, res) {
-      var nome = req.body.nome;
-      var email = req.body.email;
-      var senha = req.body.senha;
-      var empresa = req.body.fk_empresa;
-      var tipoAcesso = req.body.fk_tipo_acesso;;
+  function cadastrarUser(req, res) {
+      var nome = req.body.nomeServer;
+      var email = req.body.emailServer;
+      var senha = req.body.senhaServer;
+      var empresa = req.body.empresaServer;
+      var tipoAcesso = req.body.acessoServer;;
   
     if (nome === undefined) {
       res.status(400).send("Campo nome está undefined!");
@@ -109,5 +109,5 @@ module.exports = {
     listarUsuariosAdm,
     editarUsuario,
     deletarUsuario,
-    cadastrarUsuario,
+    cadastrarUser,
 };
