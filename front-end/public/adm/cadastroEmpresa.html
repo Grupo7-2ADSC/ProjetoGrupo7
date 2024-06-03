@@ -73,6 +73,29 @@
 </body>
 </html>
 <script>
+  const userProfile = document.getElementById('user-profile');
+  const userCard = document.getElementById('user-card');
+  const logoutBtn = document.getElementById('logout-btn');
+  const nomeUsuario = document.getElementById('userName');
+
+    if (sessionStorage.NOME_USUARIO) {
+      nomeUsuario.textContent = sessionStorage.NOME_USUARIO;
+    }
+    
+  userProfile.addEventListener('click', function() {
+    userCard.classList.toggle('active');
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!userProfile.contains(event.target) && !userCard.contains(event.target)) {
+      userCard.classList.remove('active');
+    }
+  });
+
+  logoutBtn.addEventListener('click', function() {
+    window.location.href = '../site/public/index.html';
+  });
+
   function cadastrar() {
     var nomeVar = nomeEmp_input.value;
     var cnpjVar = cnpj_input.value;

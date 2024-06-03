@@ -29,10 +29,10 @@ logoutBtn.addEventListener('click', function() {
 
 
 const acessos = [
-    {id: 0, tipoAcesso: 'ADM'},
-    {id: 1 , tipoAcesso: 'Representante'},
-    {id: 2 , tipoAcesso: 'Gestor de infra'},
-    {id: 3 , tipoAcesso: 'Usuario Padrão'}
+    {id: 1, tipoAcesso: 'ADM'},
+    {id: 2 , tipoAcesso: 'Representante'},
+    {id: 3 , tipoAcesso: 'Gestor de infra'},
+    {id: 4 , tipoAcesso: 'Usuario Padrão'}
 ];
 
 

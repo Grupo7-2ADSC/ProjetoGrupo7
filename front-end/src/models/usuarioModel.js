@@ -26,7 +26,50 @@ function cadastrar(nome, cnpj) {
     return database.executar(query, [nome, cnpj]);
   } 
 
+  function listarUsuarios() {
+    var query = `    SELECT 
+    Usuario.id_usuario, 
+    Usuario.nome, 
+    Usuario.email, 
+    Usuario.senha, 
+    Usuario.data_cadastro,
+    TipoAcesso.id_tipo_acesso,
+    TipoAcesso.tipo AS tipoAcesso, 
+    Empresa.nome AS empresa
+FROM 
+    Usuario 
+JOIN 
+    TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
+JOIN 
+    Empresa ON Usuario.fk_empresa = Empresa.id_empresa;`;
+    return database.executar(query);
+}
+
+  function editar(id, nome, email, senha, tipoAcesso) {
+    var query = `UPDATE Usuario SET nome = ?, email = ?, senha = ? fk_tipo_acesso = ? WHERE id_usuario = ?;`;
+    return database.executar(query, [nome, email, senha, tipoAcesso, id]);
+}
+
+function deletar(id) {
+    var query = `DELETE FROM Usuario WHERE id_usuario = ?;`;
+    return database.executar(query, [id]);
+}
+function cadastrarUsuario(nome, email, senha, empresa, tipoAcesso){
+
+  var query = `
+  INSERT INTO Usuario (nome, email, senha, fk_tipo_acesso, fk_empresa) 
+  VALUES (?, ?, ?, ?, ?);
+    `;
+  
+    console.log("Executando a instrução SQL: \n" + query);
+    return database.executar(query, [nome,  email, senha, empresa, tipoAcesso]);
+  } 
+
 module.exports = {
     autenticar,
-    cadastrar
-};
+    cadastrar,
+    listarUsuarios,
+    editar,
+    deletar,
+    cadastrarUsuario,
+  };

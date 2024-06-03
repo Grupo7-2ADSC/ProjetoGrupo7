@@ -179,5 +179,43 @@ SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, TipoAcesso.tipo AS tipoA
     JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
     JOIN Empresa ON Usuario.fk_empresa = Empresa.id_empresa 
     WHERE email = '' AND senha = '';
+    
+    SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, Usuario.senha TipoAcesso.tipo AS tipoAcesso, Empresa.nome AS empresa
+    FROM Usuario 
+    JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
+    JOIN Empresa ON Usuario.fk_empresa = Empresa.id_empresa 
+    WHERE email = '' AND senha = '';
 
 -- 'admin@gmail.com', 'admin123'
+
+
+SELECT 
+    Usuario.id_usuario, 
+    Usuario.nome, 
+    Usuario.email, 
+    TipoAcesso.tipo AS tipoAcesso, 
+    Empresa.nome AS empresa
+FROM 
+    Usuario 
+JOIN 
+    TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
+JOIN 
+    Empresa ON Usuario.fk_empresa = Empresa.id_empresa;
+    
+    SELECT 
+    Usuario.id_usuario, 
+    Usuario.nome, 
+    Usuario.email, 
+    Usuario.senha, 
+    Usuario.data_cadastro,
+    TipoAcesso.id_tipo_acesso,
+    TipoAcesso.tipo AS tipoAcesso, 
+    Empresa.nome AS empresa
+FROM 
+    Usuario 
+JOIN 
+    TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
+JOIN 
+    Empresa ON Usuario.fk_empresa = Empresa.id_empresa;
+    
+    UPDATE Usuario SET nome = 'Admin User Teste', email = 'admin@gmail.com', senha = 'admin1231', fk_tipo_acesso = '1' WHERE id_usuario = '1';

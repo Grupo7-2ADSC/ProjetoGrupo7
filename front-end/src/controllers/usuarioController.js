@@ -33,6 +33,27 @@ function autenticar(req, res) {
     }
 }
 
+function listarUsuariosAdm(req, res) {
+  usuarioModel.listarUsuarios()
+      .then(resultado => {
+          res.json(resultado);
+      })
+      .catch(erro => {
+          console.log("Erro ao listar Usuarios:", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+      });
+}
+
+function editarUsuario(id, nome, email, senha, tipoAcesso) {
+  return usuarioModel.editar(id, nome, email, senha, tipoAcesso);
+}
+
+function deletarUsuario(id) {
+  return usuarioModel.deletar(id);
+}
+
+
+// esse cadastro é para a empresa na tela de AudioParamMap, a rota pode ser alterada para empresa depois
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var cnpj = req.body.cnpjServer;
@@ -53,7 +74,40 @@ function cadastrar(req, res) {
     }
   }
 
+  function cadastrarUsuario(req, res) {
+      var nome = req.body.nome;
+      var email = req.body.email;
+      var senha = req.body.senha;
+      var empresa = req.body.fk_empresa;
+      var tipoAcesso = req.body.fk_tipo_acesso;;
+  
+    if (nome === undefined) {
+      res.status(400).send("Campo nome está undefined!");
+    } else if (email === undefined) {
+      res.status(400).send("Campo email está undefined!");
+    } else if (senha === undefined) {
+      res.status(400).send("Campo senha está undefined!");
+    } else if (empresa === undefined) {
+      res.status(400).send("Campo empresa está undefined!");
+    }else if (tipoAcesso === undefined) {
+      res.status(400).send("Campo tipoAcesso está undefined!");
+    } else {
+      usuarioModel.cadastrarUsuario(nome, email, senha, empresa, tipoAcesso)
+        .then(resultado => {
+          res.json(resultado);
+        })
+        .catch(erro => {
+          console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+        });
+    }
+  }
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    listarUsuariosAdm,
+    editarUsuario,
+    deletarUsuario,
+    cadastrarUsuario,
 };

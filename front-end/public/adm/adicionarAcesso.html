@@ -48,11 +48,11 @@
                   </div>
                   <div class="campo">
                     <span>Nome</span>
-                    <input id="nome_input" type="text" placeholder="Nome do acesso" />
+                    <input id="nomeAcs_input" type="text" placeholder="Nome do acesso" />
                   </div>
             
             
-                  <button class="botaoCadastro" onclick="">Adicionar</button>
+                  <button class="botaoCadastro" onclick="cadastrar()">Adicionar</button>
                 </div>
                 
               </div>
@@ -67,6 +67,9 @@
   const userProfile = document.getElementById('user-profile');
   const userCard = document.getElementById('user-card');
   const logoutBtn = document.getElementById('logout-btn');
+  const nomeUsuario = document.getElementById('userName');
+
+  nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
 
   userProfile.addEventListener('click', function() {
     userCard.classList.toggle('active');
@@ -81,5 +84,39 @@
   logoutBtn.addEventListener('click', function() {
     window.location.href = '../site/public/index.html';
   });
+
+
+
 });
+function cadastrar() {
+  var nomeVar = nomeAcs_input.value;
+  if (nomeVar == "") {
+    alert("Preencha todos os campos!");
+    return false;
+  } else {
+    fetch("/empresas/cadastrarAcesso", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeServer: nomeVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+          alert("Acesso cadastrado com sucesso!");
+          location.reload();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+    return false;
+  }
+
+};
 </script>

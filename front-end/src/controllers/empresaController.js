@@ -29,6 +29,45 @@ function deletarEmpresa(id) {
   return empresaModel.deletar(id);
 }
 
+
+function listarAcessos(req, res) {
+  empresaModel.listarAcessos()
+      .then(resultado => {
+          res.json(resultado);
+      })
+      .catch(erro => {
+          console.log("Erro ao listar acessos:", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+      });
+}
+
+
+function editarAcesso(id, nome) {
+  return empresaModel.editarAcesso(id, nome);
+}
+
+function deletarAcesso(id) {
+  return empresaModel.deletarAcesso(id);
+}
+
+function cadastrarAcesso(req, res) {
+  var nome = req.body.nomeServer;
+
+  if (nome === undefined) {
+    res.status(400).send("Campo nome está undefined!");
+  } else {
+    empresaModel.cadastrarAcesso(nome)
+      .then(resultado => {
+        res.json(resultado);
+      })
+      .catch(erro => {
+        console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
+}
+
+
 function buscarPorId(req, res) {
   var id = req.params.id;
 
@@ -58,6 +97,10 @@ module.exports = {
   listarEmpresasAdm,
   editarEmpresa,
   deletarEmpresa,
+  listarAcessos,
+  deletarAcesso,
+  editarAcesso,
+  cadastrarAcesso,
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
