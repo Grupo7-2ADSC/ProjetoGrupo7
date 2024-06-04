@@ -154,25 +154,26 @@
             
             </div>
 
-            <div class="container-ram">
+            <div class="container-ramEdisco">
                 <div class="indicador-ram">
                     <div class="label-superior">
                         <h1 class="titulo-ram">MÉMORIA RAM</h1>
                         <p class="paragrafo-ram">Total: <span id="totalRam"> 10,2 </span>GB</p>
                         <p class="paragrafo-ram">Em uso: <span id="totalRam"> 6,7 </span>GB</p>
                     </div>
-                    <canvas id="ramChart" class="grafico-ram" width="400" height="110"></canvas>
+                    <canvas id="ramChart" class="grafico-ram"></canvas>
                 </div>
             
+                <div class="indicador-ram">
+                    <div class="label-superior">
+                        
+                    <h1 class="titulo-disco">DISCO</h1>
+                    </div>
+                    <canvas id="diskChart" class="grafico-ram"></canvas>
+                </div>
+                
             </div>
 
-            <div class="container-disco">
-
-                <h1 class="titulo-disco">DISCO</h1>
-                <canvas id="diskChart" class="grafico-ram" width="400" height="110"></canvas>
-
-            
-            </div>
 
             
             
@@ -185,12 +186,9 @@
 </html>
 <script>
 
-    // function sair(){
-    //     window.location.href = '/front-end/intern/painel.html';
-    // }
     document.addEventListener('DOMContentLoaded', function() {
             const labels = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
-            let cpuData = [0, 20, 50, 55, 90, 95, 80];
+            let cpuData = [0];
             let ramData = [0, 10, 30, 45, 70, 85, 60];
 
             const cpuCtx = document.getElementById('cpuChart').getContext('2d');
@@ -198,13 +196,19 @@
                 type: 'line',
                 data: {
                     labels: labels,
+                    line:{
+                        clip:{
+                            right: 0
+                        }
+                    },
                     datasets: [{
                         label: 'Uso de CPU(%)',
                         data: cpuData,
                         borderColor: 'rgb(75, 192, 192)',
                         backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         fill: true,
-                        tension: 0.1
+                        tension: 0.1,
+                        xAxisID: 'x'
                     }]
                 },
                 options: {
@@ -214,7 +218,8 @@
                                 font: {
                                     size: 12 
                                 }
-                            }
+                            },
+                            position: 'right'
                         },
                         y: {
                             title: {
@@ -415,8 +420,12 @@
                 }
             });
             function updateData() {
-                cpuData.shift();
                 cpuData.push(Math.floor(Math.random() * 100)); 
+                if(cpuData.length > labels.length){
+                    cpuData.shift();
+                    cpuChart.update();
+                }
+                
                 ramData.shift();
                 ramData.push(Math.floor(Math.random() * 100)); 
                 cpuChart.update();
@@ -431,7 +440,7 @@
                 redeChart.update();
             }
 
-            setInterval(updateData, 2000);
+            setInterval(updateData, 10000);
         });
 
         function logout(){

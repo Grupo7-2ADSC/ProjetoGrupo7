@@ -6,6 +6,7 @@
     box-sizing: border-box;
     font: 400 1rem "", sans-serif;
     -ms-zoom-animation: unset;
+    overflow-y: none;
 }
 
 
@@ -594,10 +595,12 @@ td {
 }
 
 
-/* Grafico de memoria ram */
-.container-ram{
+/* Grafico de memoria ram e disco */
+.container-ramEdisco{
+    display: flex;
+    justify-content: space-between;
     width: 756px;
-    height: 250px;
+    height: 350px;
     margin-top: 20px;
     /* border: 1px solid brown; */
     background-color: black;
@@ -605,40 +608,45 @@ td {
     border-radius: 15px;
 
 }
+
+.indicador-ram{
+    width: 350px;
+}
 .label-superior{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    margin-bottom: 10%;
     align-items: center;
+    gap: 20px;
     /* border: 1px solid seagreen; */
-    width: 600px;
-    margin-left: 30px;
+    
     color: white;
 }
 
 .titulo-ram{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
     
 }
 
 .paragrafo-ram{
     font-weight: bold;
-    font-size: 16px;
+    font-size: 11px;
     
 }
 .grafico-ram{
     background-color: white;
     margin-top: 5px;
+    border: 1px solid red;
     
 }
 
 .container-disco{
-    width: 756px;
+    width: 400px;
     height: 250px;
     margin-top: 20px;
     /* border: 1px solid brown; */
     margin-bottom: 40px;
-    background-color: black;
     padding: 20px;
     border-radius: 15px;
 }
@@ -652,11 +660,11 @@ td {
 .container-sistema{
     border-radius: 15px;
     width: 353px;
-    height: 790px;
+    height: 625px;
     /* border: 1px solid brown; */
     position: absolute;
     margin-left: 75%;
-    margin-top: 35.5%;
+    margin-top: 24.5%;
     background-color: black;
     padding: 20px;
     
@@ -664,7 +672,7 @@ td {
 
 .conteudo-sistema{
     /* border: 1px solid purple; */
-    height: 750px;
+    height: 500px;
     display: flex;
     justify-content: space;
     flex-direction: column;
@@ -675,17 +683,17 @@ td {
 .titulo-sistema{
     color: white;
     font-weight: bold;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .conteudo-sistema p{
     color: white;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .conexao-wifi{
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .conexao-wifi span{
@@ -721,15 +729,24 @@ td {
     justify-content: space-between;;
     /* border: 1px solid rgb(1, 5, 19); */
     width: 300px ;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .text-pacote{
-    margin-bottom: 10px;
+    margin-bottom: 4px;
     font-weight: bold ;
+    font-size: 10px;
+}
+
+.dados-pacote{
+    font-size: 15px;
 }
 .endereco-ip{
     font-weight: bold;
+    font-size: 15px;
+}
+.endereco-ip span{
+    font-size: 13px;
 }
 
 .nome-adaptador{
