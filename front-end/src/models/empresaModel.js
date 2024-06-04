@@ -2,7 +2,7 @@ var database = require("../database/config");
 const { cadastrar } = require("./usuarioModel");
 
 function listarEmpresas() {
-    var query = `SELECT * FROM Empresa;`;
+    var query = `   SELECT id_empresa, cnpj, nome, DATE_FORMAT(Empresa.data_cadastro, '%d/%m/%Y %H:%i') AS data_cadastro FROM Empresa;  `;
     return database.executar(query);
 }
 

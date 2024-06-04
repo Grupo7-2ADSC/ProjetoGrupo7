@@ -218,4 +218,9 @@ JOIN
 JOIN 
     Empresa ON Usuario.fk_empresa = Empresa.id_empresa;
     
-    UPDATE Usuario SET nome = 'Admin User Teste', email = 'admin@gmail.com', senha = 'admin1231', fk_tipo_acesso = '1' WHERE id_usuario = '1';
+    UPDATE Usuario SET nome = 'Admin User Teste', email = 'admin@gmail.com', senha = 'admin121', fk_tipo_acesso = '1' WHERE id_usuario = '1';
+   
+    
+    SELECT id_tipo_acesso, tipo FROM TipoAcesso;
+    
+    SELECT id_empresa, cnpj, nome, DATE_FORMAT(Empresa.data_cadastro, '%d/%m/%Y %H:%i') FROM Empresa;

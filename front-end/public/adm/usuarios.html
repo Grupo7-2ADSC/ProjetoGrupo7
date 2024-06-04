@@ -79,9 +79,10 @@ function cadastrarUsuario(){
     }
   });
 
-  logoutBtn.addEventListener('click', function() {
-    window.location.href = '../site/public/index.html';
-  });
+  logoutBtn.addEventListener('click', function () {
+      sessionStorage.clear();
+      window.location.href = '../index.html';
+    });
 
   fetch('/usuarios/listarUsuarios')
     .then(response => response.json())

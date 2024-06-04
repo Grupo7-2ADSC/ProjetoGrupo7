@@ -27,12 +27,13 @@ function cadastrar(nome, cnpj) {
   } 
 
   function listarUsuarios() {
-    var query = `    SELECT 
+    var query = `   
+    SELECT 
     Usuario.id_usuario, 
     Usuario.nome, 
     Usuario.email, 
     Usuario.senha, 
-    Usuario.data_cadastro,
+    DATE_FORMAT(Usuario.data_cadastro, '%d/%m/%Y %H:%i') AS data_cadastro,
     TipoAcesso.id_tipo_acesso,
     TipoAcesso.tipo AS tipoAcesso, 
     Empresa.nome AS empresa
@@ -41,7 +42,8 @@ FROM
 JOIN 
     TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
 JOIN 
-    Empresa ON Usuario.fk_empresa = Empresa.id_empresa;`;
+    Empresa ON Usuario.fk_empresa = Empresa.id_empresa;
+`;
     return database.executar(query);
 }
 
