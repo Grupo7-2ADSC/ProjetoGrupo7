@@ -9,7 +9,7 @@ function autenticar(email, senha) {
     JOIN TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
     JOIN Empresa ON Usuario.fk_empresa = Empresa.id_empresa 
     WHERE email = ? AND senha = ?;
-    `;
+    GO`;
 
     console.log("Executando a instrução SQL: \n" + query);
     return database.executar(query, [email, senha]);
@@ -43,7 +43,7 @@ JOIN
     TipoAcesso ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso
 JOIN 
     Empresa ON Usuario.fk_empresa = Empresa.id_empresa;
-`;
+go`;
     return database.executar(query);
 }
 
