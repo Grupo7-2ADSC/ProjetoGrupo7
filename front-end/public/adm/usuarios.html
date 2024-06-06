@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="headerADM.css">
+    <link rel="stylesheet" href="user.css">
+    <title>Usuarios</title>
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <div class="logo">
+        <a href="./empresas.html"><img class="imagem-logo" src="/assets/imagens/logoEmpresa.png" alt="logo empresa"></a>
+      </div>
+      <div class="navbar">
+        <ul>
+          <li><a href="./empresas.html">Empresas</a></li>
+          <li><a href="usuarios.html">Usuários</a></li>
+          <li><a href="./tiposacesso.html">Acessos</a></li>
+        </ul>
+      </div>
+      <div id="user-profile" class="user-profile">
+        <img class="img-user" src="./assets/userBranco.png" alt="">
+        <div id="user-card" class="user-card">
+          <div class="user-card-content">
+            <p><span id="userName"></span> | ADM</p>
+            <button id="logout-btn"><img class="icon-sair" src="./assets/exitBranco.png" alt="Icone de sair">Sair</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div class="container-table"  id="containerTable">
+        <div class="containerTittle"><h2>Lista de Usuarios</h2>
+        <button onclick="cadastrarUsuario()">Cadastrar Usuarios</button></div>
+        <table id="usersTable">
+            <thead>
+                <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Senha</th>
+                <th>Tipo de acesso</th>
+                <th>Empresa</th>
+                <th>Data de cadastro</th>
+                <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+
+function cadastrarUsuario(){
+    window.location.href = "../adm/cadastroUsuarios.html";
+}
+ document.addEventListener('DOMContentLoaded', function() {
+  const userProfile = document.getElementById('user-profile');
+  const userCard = document.getElementById('user-card');
+  const logoutBtn = document.getElementById('logout-btn');
+  const usersTableBody = document.querySelector('#usersTable tbody');
+  const nomeUsuario = document.getElementById('userName');
+  let usuarios = []
+
+  nomeUsuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+  userProfile.addEventListener('click', function() {
+    userCard.classList.toggle('active');
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!userProfile.contains(event.target) && !userCard.contains(event.target)) {
+      userCard.classList.remove('active');
+    }
+  });
+
+  logoutBtn.addEventListener('click', function () {
+      sessionStorage.clear();
+      window.location.href = '../index.html';
+    });
+
+  fetch('/usuarios/listarUsuarios')
+    .then(response => response.json())
+    .then(data => {
+      usuarios = data;
+      preencherTabela(usuarios);
+    })
+    .catch(error => console.error('Erro no fetch de usuarios', error));
+
+  function preencherTabela(usuarios) {
+    usersTableBody.innerHTML = '';
+    usuarios.forEach(usuario => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${usuario.nome}</td>
+        <td>${usuario.email}</td>
+        <td>***********</td>
+        <td>${usuario.tipoAcesso}</td>
+        <td>${usuario.empresa}</td>
+        <td>${usuario.data_cadastro}</td>
+        <td>
+          <button class="edit" onclick="editarUsuario(${usuario.id_usuario})">Editar</button>
+          <button class="delete" onclick="deletarUsuario(${usuario.id_usuario})">Deletar</button>
+        </td>
+      `;
+      usersTableBody.appendChild(row);
+    });
+  }
+
+  window.editarUsuario = function(id) {
+    const  usuario = usuarios.find(usr => usr.id_usuario === id);
+    if (usuario) {
+      const nome = prompt('Editar nome do usuário:', usuario.nome);
+      const email = prompt('Editar email do usuário:', usuario.email);
+      const senha = prompt('Editar senha do usuário:', usuario.senha);
+      const tipoAcesso = prompt('Editar tipo de acesso', usuario.fk_tipo_acesso);
+
+      if (nome && email && senha && tipoAcesso) {
+        fetch(`/usuarios/editar/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ nome, email, senha, tipoAcesso })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.mensagem) {
+            alert(data.mensagem);
+            atualizarTabela();
+          } else {
+            alert('Erro ao editar usuário');
+          }
+        })
+        .catch(error => console.error('Erro:', error));
+      }
+    }
+  };
+
+  window.deletarUsuario = function(id) {
+    if (confirm('Tem certeza que deseja deletar este usuário?')) {
+      fetch(`/usuarios/deletar/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.mensagem) {
+          alert(data.mensagem);
+          atualizarTabela();
+        } else {
+          alert('Erro ao deletar usuário');
+        }
+      })
+      .catch(error => console.error('Erro:', error));
+    }
+  };
+
+  function atualizarTabela() {
+    fetch('/usuarios/listarUsuarios')
+      .then(response => response.json())
+      .then(data => {
+        usuarios = data;
+        preencherTabela(usuarios);
+      })
+      .catch(error => console.error('Erro ao buscar usuários:', error));
+  }
+});
+
+</script>
