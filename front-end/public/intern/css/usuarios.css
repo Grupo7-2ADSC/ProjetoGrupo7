@@ -232,14 +232,11 @@ th, td {
     padding: 20px;
     text-align: start;
     align-items: center;
-    
     color: #100e29;
-    
-
 }
 
 th {
-    background-color: #7f7b7b;
+    background-color: #EFEFEF;
     height: 40px;
 }
 
@@ -390,7 +387,7 @@ td {
 }
 
 .btn-cancelar {
-    background-color: #D9D9D9;
+    background-color: #919090;
     color: black;
     width: 110px;
 }

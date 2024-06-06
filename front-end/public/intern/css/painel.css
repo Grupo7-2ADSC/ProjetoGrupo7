@@ -1,6 +1,6 @@
 
 * {
-    color: white;
+    color: black;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -12,7 +12,7 @@
 
 body {
     color: #fff;
-    background: #613D94;
+    background: #ffffff;
     font: 400 1rem "", sans-serif;
     overflow-x: hidden;
     
@@ -187,7 +187,7 @@ body {
 }
 
 .main-content{
-    background-color: #613D94;
+    background-color: #ffffff;
     width: 80%;
     margin-left: 22%;
     margin-top: 2%;
@@ -217,7 +217,7 @@ body {
     box-shadow: #fff 2px ;
     width: 218px;
     height: 108px;
-    background-color: black;
+    background-color: #EFEFEF;
 }
 .conjunto-seletor{
     display: flex;
@@ -264,9 +264,9 @@ body {
     justify-self: center;
     top: 18%;
     left: 30%;
-    background-color: #100e29;
+    background-color: #EFEFEF;
     border-radius: 12px;
-    border: 1px solid beige;
+    border: 1px solid;
 }
 
 
@@ -432,7 +432,7 @@ body {
     width: 80%;
     /* border: 1px solid brown; */
     flex-wrap: wrap;
-    background-color: black;
+    /* background-color: black; */
     /* justify-content: center; */
     gap: 30px;
     padding: 3%;
@@ -454,12 +454,13 @@ body {
 }
 
 .card-servidores{
-    
     /* border: 1px solid aqua; */
     /* flex-direction: row; */
     margin-bottom: 20px;
+}
 
-
+.nome-servidor, .alocacao p{
+    color: white;
 }
 
 .ip-maquina{
