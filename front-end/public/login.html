@@ -78,7 +78,7 @@
     </div>
   </div>
 
-<img src="./site/adm/empresas.html" alt="">
+  <img src="./site/adm/empresas.html" alt="">
 
   <div id="div_erros_login"></div>
   </div>
@@ -110,7 +110,7 @@
 
       return false;
     } else {
-      
+
     }
 
     console.log("FORM LOGIN: ", emailVar);
@@ -132,19 +132,19 @@
         console.log(resposta);
 
         resposta.json().then(json => {
-    console.log(json);
-    console.log(JSON.stringify(json));
-    sessionStorage.EMAIL_USUARIO = json.email;
-    sessionStorage.NOME_USUARIO = json.nome;
-    sessionStorage.ID_USUARIO = json.id;
-    sessionStorage.TIPO_ACESSO = json.tipoAcesso;
-    sessionStorage.NOME_EMPRESA = json.empresa;
-        
+          console.log(json);
+          console.log(JSON.stringify(json));
+          sessionStorage.EMAIL_USUARIO = json.email;
+          sessionStorage.NOME_USUARIO = json.nome;
+          sessionStorage.ID_USUARIO = json.id;
+          sessionStorage.TIPO_ACESSO = json.tipoAcesso;
+          sessionStorage.NOME_EMPRESA = json.empresa;
 
-    console.log(resposta);
-    redirecionarUsuario(json.tipoAcesso);
 
-});
+          console.log(resposta);
+          redirecionarUsuario(json.tipoAcesso);
+
+        });
 
       } else {
         console.log("Houve um erro ao tentar realizar o login!");
@@ -163,20 +163,20 @@
 
   function redirecionarUsuario(tipoDeAcesso) {
     console.log("Acessei o redirecionar por tipo de usuario, tipo de acesso: " + tipoDeAcesso);
-    
-    if (tipoDeAcesso === 'ADM') { 
-        alertwelcome();
-        setTimeout(function () {
-            window.location.href = './adm/empresas.html';
-        }, 3050);
-    } else if (tipoDeAcesso === 'Representante' || tipoDeAcesso === 'Gestor de infra') { 
-        window.location.href = './intern/painel.html';
-    }  else if (tipoDeAcesso === 'Usuario padrão/Funcionario') { // Comparação com string 'Usuario padrão/Funcionario'
-        window.location.href = '#';
+
+    if (tipoDeAcesso === 'ADM') {
+      alertwelcome();
+      setTimeout(function () {
+        window.location.href = './adm/empresas.html';
+      }, 3050);
+    } else if (tipoDeAcesso === 'Representante' || tipoDeAcesso === 'Gestor de infra') {
+      window.location.href = './intern/painel.html';
+    } else if (tipoDeAcesso === 'Usuario padrão/Funcionario') { // Comparação com string 'Usuario padrão/Funcionario'
+      window.location.href = './intern/painel.html';
     } else {
-        console.error('Tipo de acesso inválido.');
+      console.error('Tipo de acesso inválido.');
     }
-}
+  }
 
 
 

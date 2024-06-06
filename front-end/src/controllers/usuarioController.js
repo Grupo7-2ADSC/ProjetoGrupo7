@@ -18,6 +18,7 @@ function autenticar(req, res) {
                         nome: resultadoAutenticar[0].nome,
                         tipoAcesso: resultadoAutenticar[0].tipoAcesso,
                         empresa: resultadoAutenticar[0].empresa
+                        
 
                     });
                 } else if (resultadoAutenticar.length === 0) {

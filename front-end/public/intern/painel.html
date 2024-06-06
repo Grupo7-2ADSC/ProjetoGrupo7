@@ -15,7 +15,7 @@
             <img id="imagemUser" src="./assets/logo_roxa.png" alt="">
         </div>
 
-        <div class="NomeUsuario">Olá, <span id="nomeUser" class="NomeUsuario">Marcio</span></div>
+        <div class="NomeUsuario">Olá, <span id="nomeUser" class="NomeUsuario"></span></div>
 
         <ul>
             <li><a class="button" href="./avisos.html"><img class="icone-menu" src="./assets/notification.png" alt="">Avisos ‎ ‎ ‎ </a></li>
@@ -131,7 +131,7 @@
     // apenas para teste deixei como id user, mas aqui seria tipoCargo onde 0 = adm, 1 gestor infra e 2 funcionario, mas como
     // todo usuario que não seja adm ou infra vai ver a mesma coisa, cai no else, e ai não tem permissão alguma
     
-
+    nomeUser.innerHTML = sessionStorage.NOME_USUARIO;   
     var tipoUsuario = "";
     addEventListener("DOMContentLoaded", (event) => {
        

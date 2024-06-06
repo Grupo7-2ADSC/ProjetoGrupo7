@@ -15,7 +15,7 @@
             <img id="imagemUser" src="./assets/logo_roxa.png" alt="">
         </div>
 
-        <div class="NomeUsuario">Olá, <span id="nomeUser" class="NomeUsuario">Marcio</span></div>
+        <div class="NomeUsuario">Olá, <span id="nomeUser" class="NomeUsuario"></span></div>
 
         <ul>
             <li><a class="button" href="./avisos.html"><img class="icone-menu" src="./assets/notification.png" alt="">Avisos ‎ ‎ ‎ </a></li>
@@ -36,8 +36,8 @@
                 <div class="container-seletorServidor">
                     <h1 class="titulo">Servidor de backup</h1>
                     <select class="seletor-servidor" name="Seletor de servidor" id="server-selector" alt="Seletor de servidor">
-                        <option value="server1"> 1 - Servidor de Teste</option>
-                        <option value="server2"> 2 - Servidor de Teste 2 </option>
+                        <option value="server1" id="servidorSelecionado"></option>
+
                         
                     </select>
                    
@@ -49,11 +49,11 @@
                 <div class="conteudo-sistema">
                     <h1 class="titulo-sistema"> SISTEMA </h1>
 
-                    <P class="tempo-atividade">Data de Inicialização:  <span>04/05/2024</span></P>
+                    <P class="tempo-atividade">Data de Inicialização:  <span id="dataInicializacao"></span></P>
                     <P class="tempo-atividade">Tempo de Atividade:  <span> 6 dias , 4:5:59</span></P>
                         <div class="conexao-wifi">
                             <h1 class="titulo-sistema">WI-FI</h1>
-                            <span>Intel(R) Wireless-AC 9462</span>
+                            <span id="placaRede"></span>
     
                         </div>
 
@@ -85,9 +85,9 @@
                         
                     </div>
                     <div class="conteudo-ips">
-                        <p class="nome-adaptador">Nome do adaptador: <span>Wifi</span></p>
-                        <p class="endereco-ip">Endereço IPv4: <span>192.168.15.139</span></p>
-                        <p class="endereco-ip">Endereço IPv6: <br><span>2804:1b3:a2c1:3dad:3bb2:fb5f:2591:80c0, 2804:1b3:a2c1:3dad:11e3:3a27:f8e2:ce28, fe80:0:0:0:f428:a9e4:3217:e78</span></p>
+                        <p class="nome-adaptador">Nome do adaptador: <span id="nomeAdaptador">Wifi</span></p>
+                        <p class="endereco-ip">Endereço IPv4: <span id="enderecoIpV4"></span></p>
+                        <p class="endereco-ip">Endereço IPv6: <br><span id="enderecoIpV6"></span></p>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
            <div class="container-pid-cpu">
 
             <div class="chart-cpu">
-                <div class="container-texto"><h1 class="title-cpu">CPU</h1> <span class="nome-cpu">Intel(R) Core(TM)2 Duo CPU T7300 @ 2.00GHz</span></div>
+                <div class="container-texto"><h1 class="title-cpu">CPU</h1> <span class="nome-cpu" id="nomeCpu"></span></div>
                 <!-- <div id="chart" class="grafico-cpu"> -->
                     <canvas id="cpuChart" class="grafico-cpu" width="300" height="200"></canvas>
                 </div>
@@ -158,8 +158,8 @@
                 <div class="indicador-ram">
                     <div class="label-superior">
                         <h1 class="titulo-ram">MÉMORIA RAM</h1>
-                        <p class="paragrafo-ram">Total: <span id="totalRam"> 10,2 </span>GB</p>
-                        <p class="paragrafo-ram">Em uso: <span id="totalRam"> 6,7 </span>GB</p>
+                        <p class="paragrafo-ram">Total: <span id="totalRam"> </span>GB</p>
+                        <p class="paragrafo-ram">Em uso: <span id="totalRamEmUso"> 6,7 </span>GB</p>
                     </div>
                     <canvas id="ramChart" class="grafico-ram"></canvas>
                 </div>
@@ -167,7 +167,7 @@
                 <div class="indicador-ram">
                     <div class="label-superior">
                         
-                    <h1 class="titulo-disco">DISCO</h1>
+                    <h1 class="titulo-disco">DISCO(S)</h1>
                     </div>
                     <canvas id="diskChart" class="grafico-ram"></canvas>
                 </div>
@@ -185,7 +185,36 @@
 </body>
 </html>
 <script>
+    nomeUser.innerHTML = sessionStorage.NOME_USUARIO;   
 
+
+    fetch('/servidores/dadosEstaticosServidor', {
+        method: 'GET',
+
+
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro na resposta do servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data recebida pelo fetch de dados estaticos do servidor \n' + JSON.stringify(data));
+        if (data) {
+            servidorSelecionado.innerHTML = data.nome_servidor;
+            nomeCpu.innerHTML = data.nome_cpu;
+            dataInicializacao.innerHTML = data.data_inicializacao_sistema;
+            totalRam.innerHTML = data.total_memoria_ram;
+            enderecoIpV4.innerHTML = data.endereco_ipv4;
+            enderecoIpV6.innerHTML = data.endereco_ipv6;
+             //   placaRede.innerHTML = estaticData.placa_rede;
+            //   nomeAdaptador.innerHTML = estaticData.nome_adaptador;
+        }}).catch(error => {
+            console.error('Erro no fetch de dados estaticos do servidor', error);
+        }); 
+
+    
     document.addEventListener('DOMContentLoaded', function() {
             const labels = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
             let cpuData = [0];
@@ -444,7 +473,8 @@
         });
 
         function logout(){
-            window.location.href = '/front-end/site/public/index.html'
+            sessionStorage.clear();
+            window.location.href = '../index.html';
         }
         
 </script>

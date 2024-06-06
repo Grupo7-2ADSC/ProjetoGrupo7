@@ -113,7 +113,7 @@ function cadastrarUsuario(){
   }
 
   window.editarUsuario = function(id) {
-    const usuario = usuarios.find(usr => usr.id_usuario === id);
+    const  usuario = usuarios.find(usr => usr.id_usuario === id);
     if (usuario) {
       const nome = prompt('Editar nome do usuário:', usuario.nome);
       const email = prompt('Editar email do usuário:', usuario.email);

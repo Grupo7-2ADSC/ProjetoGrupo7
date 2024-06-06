@@ -41,7 +41,7 @@ router.delete("/deletar/:id", function (req, res) {
 
     usuarioController.deletarUsuario(id)
         .then(resultado => {
-            res.status(200).json({ mensagem: "usuario deletada com sucesso!" });
+            res.status(200).json({ mensagem: "usuario deletado com sucesso!" });
         })
         .catch(erro => {
             console.log("Erro ao deletar usuario:", erro);
