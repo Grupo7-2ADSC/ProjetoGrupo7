@@ -27,9 +27,24 @@ function getDadosEstaticos(req, res) {
     console.log("Houve um erro ao buscar os dados estáticos do servidor: ", erro.sqlMessage);
     res.status(500).json(erro.sqlMessage);
   });
-}
+};
 
-module.exports = {
+function getProcessos(req, res) {
+    servidorModel.getTopProcessos()
+    .then(resultado => {
+        res.json(resultado);
+    })
+    .catch(erro => {
+        console.log("Erro ao listar Usuarios:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+};
+
+
+
+module.exports = { 
+  
   // buscarServidoresPorEmpresa,
-  getDadosEstaticos
+  getDadosEstaticos,
+  getProcessos,
 }

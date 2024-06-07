@@ -112,41 +112,6 @@
                         <th class="column-usoCpu">USO CPU</th>
                         <th class="column-UsoMemoria">USO MEMORIA</th>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        
-                    </tr>
                 </table>
                 
             </div>
@@ -213,6 +178,40 @@
         }}).catch(error => {
             console.error('Erro no fetch de dados estaticos do servidor', error);
         }); 
+
+
+    setInterval(() => {
+        fetch('/servidores/dadosPID', {
+            method: 'GET',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na resposta do servidor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data recebida pelo fetch de dados estaticos do servidor \n' + JSON.stringify(data));
+            if (data) {
+                const processos = data;
+
+                const tabelaPid = document.querySelector('.tabela-pid');
+                tabelaPid.innerHTML = ''; // Clear the table before adding new data
+                processos.forEach(processo => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="column-pid">${processo.pid}</td>
+                        <td class="column-nome">${processo.nome}</td>
+                        <td class="column-usoCpu">${processo.uso_cpu}</td>
+                        <td class="column-UsoMemoria">${processo.uso_memoria}</td>
+                    `;
+                    tabelaPid.appendChild(tr);
+                });
+            }
+        }).catch(error => {
+            console.error('Erro no fetch de dados estaticos do servidor', error);
+        });
+    }, 5000); // Fetch data every 5 seconds
 
     
     document.addEventListener('DOMContentLoaded', function() {

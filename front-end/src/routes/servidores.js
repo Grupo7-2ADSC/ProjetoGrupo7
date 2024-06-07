@@ -11,4 +11,9 @@ router.get('/dadosEstaticosServidor', function (req, res) {
   servidorController.getDadosEstaticos(req, res);
 });
 
+router.get('/dadosPID', function (req, res) {
+  servidorController.getProcessos(req, res);
+});
+
+
 module.exports = router;

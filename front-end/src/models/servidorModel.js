@@ -1,5 +1,6 @@
 const { query } = require("express");
 var database = require("../database/config");
+const { get } = require("../routes/servidores");
 
 // function buscarServidoresPorEmpresa(empresaId) {
 
@@ -36,10 +37,27 @@ WHERE
   `;
   console.log("Executando a instrução SQL: \n" + query);
   return database.executar(query);
-}
+};
 
+function getTopProcessos() {
+    const query = `
+        SELECT pr1.id_processo, pr1.pid, pr1.nome, pr1.uso_cpu, pr1.uso_memoria, pr1.data_registro, pr1.fk_servidor
+        FROM ProcessoRegistro pr1
+        JOIN (
+                SELECT nome, MAX(uso_cpu) AS max_uso_cpu
+                FROM ProcessoRegistro
+                GROUP BY nome
+                ORDER BY max_uso_cpu DESC
+                LIMIT 5
+        ) pr2 ON pr1.nome = pr2.nome AND pr1.uso_cpu = pr2.max_uso_cpu
+        ORDER BY pr1.uso_cpu DESC, pr1.uso_memoria DESC;
+    `;
+    console.log("Executando a instrução SQL: \n" + query);
+    return database.executar(query);
+};
 
 module.exports = {
-  // buscarServidoresPorEmpresa,
-  getDadosEstaticosServidor,
+    getDadosEstaticosServidor,
+    getTopProcessos
 }
+
