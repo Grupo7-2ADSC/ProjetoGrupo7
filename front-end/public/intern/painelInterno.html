@@ -62,7 +62,7 @@
                     <div class="conteudo-rede">
                         <div class="conteudo-pacotes-topo">
                             <div class="pacotes">
-                                <p class="text-pacote">Enviados</p>
+                                <p class="text-pacote">Bytes Enviados</p>
                                 <span class="dados-pacote">418,7 MB</span>
                             </div>
                             <div class="pacotes">
@@ -72,7 +72,7 @@
                         </div>
                         <div class="conteudo-pacotes-bottom">
                             <div class="pacotes">
-                                <p class="text-pacote"> Recebidos</p>
+                                <p class="text-pacote">Bytes Recebidos</p>
                                 <span class="dados-pacote">402461 MB</span>
                             </div>
                             <div class="pacotes">
@@ -106,12 +106,7 @@
 
                 <h1 class="titulo-pid">PROCESSOS COM MAIOR USO DE CPU</h1>
                 <table class="tabela-pid">
-                    <tr>
-                        <th class="column-pid">PID</th>
-                        <th class="column-nome">NOME</th>
-                        <th class="column-usoCpu">USO CPU</th>
-                        <th class="column-UsoMemoria">USO MEMORIA</th>
-                    </tr>
+                    
                 </table>
                 
             </div>
@@ -124,7 +119,7 @@
                     <div class="label-superior">
                         <h1 class="titulo-ram">MÉMORIA RAM</h1>
                         <p class="paragrafo-ram">Total: <span id="totalRam"> </span>GB</p>
-                        <p class="paragrafo-ram">Em uso: <span id="totalRamEmUso"> 6,7 </span>GB</p>
+                        <p class="paragrafo-ram">Em uso: <span id="totalRamEmUso"> </span>GB</p>
                     </div>
                     <canvas id="ramChart" class="grafico-ram"></canvas>
                 </div>
@@ -152,7 +147,7 @@
 <script>
     nomeUser.innerHTML = sessionStorage.NOME_USUARIO;   
 
-
+// fetch de dados estaticos do servidor
     fetch('/servidores/dadosEstaticosServidor', {
         method: 'GET',
 
@@ -179,7 +174,11 @@
             console.error('Erro no fetch de dados estaticos do servidor', error);
         }); 
 
+        // fim do fetch de dados estaticos do servidor
 
+
+
+     // fetch de dados dianmicos de PID do servidor
     setInterval(() => {
         fetch('/servidores/dadosPID', {
             method: 'GET',
@@ -191,94 +190,184 @@
             return response.json();
         })
         .then(data => {
-            console.log('Data recebida pelo fetch de dados estaticos do servidor \n' + JSON.stringify(data));
-            if (data) {
-                const processos = data;
+    console.log('Data recebida pelo fetch de dados estaticos do servidor \n' + JSON.stringify(data));
+    if (data) {
+        const processos = data;
 
-                const tabelaPid = document.querySelector('.tabela-pid');
-                tabelaPid.innerHTML = ''; // Clear the table before adding new data
-                processos.forEach(processo => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="column-pid">${processo.pid}</td>
-                        <td class="column-nome">${processo.nome}</td>
-                        <td class="column-usoCpu">${processo.uso_cpu}</td>
-                        <td class="column-UsoMemoria">${processo.uso_memoria}</td>
-                    `;
-                    tabelaPid.appendChild(tr);
-                });
-            }
-        }).catch(error => {
-            console.error('Erro no fetch de dados estaticos do servidor', error);
+        const tabelaPid = document.querySelector('.tabela-pid');
+
+        tabelaPid.innerHTML = '';
+
+        // Adicionar os nomes de referência das colunas
+        const trHeader = document.createElement('tr');
+        trHeader.innerHTML = `
+            <th class="column-pid">PID</th>
+            <th class="column-nome">NOME</th>
+            <th class="column-usoCpu">USO CPU</th>
+            <th class="column-UsoMemoria">USO MEMORIA</th>
+        `;
+        tabelaPid.appendChild(trHeader);
+
+        // Adicionar os dados do banco abaixo dos nomes de referência
+        processos.forEach(processo => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="column-pid">${processo.pid}</td>
+                <td class="column-nome">${processo.nome}</td>
+                <td class="column-usoCpu">${processo.uso_cpu}</td>
+                <td class="column-UsoMemoria">${processo.uso_memoria}</td>
+            `;
+            tabelaPid.appendChild(tr);
         });
-    }, 5000); // Fetch data every 5 seconds
+    }
+}).catch(error => {
+    console.error('Erro no fetch de dados estaticos do servidor', error);
+});
+    }, 5000); 
 
-    
-    document.addEventListener('DOMContentLoaded', function() {
-            const labels = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
-            let cpuData = [0];
-            let ramData = [0, 10, 30, 45, 70, 85, 60];
+    // fim do fetch de dados dinamicos de PID do servidor
 
-            const cpuCtx = document.getElementById('cpuChart').getContext('2d');
-            const cpuChart = new Chart(cpuCtx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    line:{
-                        clip:{
-                            right: 0
-                        }
-                    },
-                    datasets: [{
-                        label: 'Uso de CPU(%)',
-                        data: cpuData,
-                        borderColor: 'rgb(75, 192, 192)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        fill: true,
-                        tension: 0.1,
-                        xAxisID: 'x'
-                    }]
-                },
-                options: {
-                    scales: {
-                        x: {
-                            ticks: {
-                                font: {
-                                    size: 12 
-                                }
-                            },
-                            position: 'right'
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: '% Utilização'
-                            },
-                            ticks: {
-                                font: {
-                                    size: 10 
-                                }
+
+    // fetch de dados de disco do servidor
+
+    fetch('/servidores/dadosDiscos', {
+    method: 'GET',
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Erro na resposta do servidor');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('Data recebida pelo fetch de dados de disco do servidor \n' + JSON.stringify(data));
+    if (data) {
+        const discos = data;
+        
+        const ctx = document.getElementById('diskChart').getContext('2d');
+        
+        const diskChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: discos.map(disco => disco.nome_componente),
+                datasets: [{
+                    label: 'Volume utilizado',
+                    data: discos.map(disco => disco.uso),
+                    backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }, {
+                    label: 'Volume disponível',
+                    data: discos.map(disco => disco.total_gib - disco.uso),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            font: {
+                                size: 12 
                             }
                         }
                     },
-                    plugins: {
-                        tooltip: {
-                            enabled: true,
-                            callbacks: {
-                                labelColor: function(context) {
-                                    return {
-                                        borderColor: '#000', 
-                                        backgroundColor: '#000', 
-                                        color: ''
-                                    };
-                                }
+                    y: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Espaço (GB)'
+                        },
+                        ticks: {
+                            font: {
+                                size: 10 
                             }
                         }
                     }
+                },
+                plugins: {
+                    tooltip: {
+                        enabled: true
+                    }
                 }
-            });
+            }
+        });
+    }
+}).catch(error => {
+    console.error('Erro no fetch de dados de disco do servidor', error);
+});
 
+
+    //fim do fetch de dados de disco do servidor
+
+
+    // fetch de dados dinamicos de uso de CPU, RAM do servidor
+
+    document.addEventListener('DOMContentLoaded', function() {
+            const labels = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
+            let cpuData = [0, 0, 0, 0, 0, 0, 0];
+            let ramData = [0, 0, 0, 0, 0, 0, 0];
+
+            const cpuCtx = document.getElementById('cpuChart').getContext('2d');
             const ramCtx = document.getElementById('ramChart').getContext('2d');
+
+            const cpuChart = new Chart(cpuCtx, {
+                type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Uso de CPU(%)',
+            data: cpuData,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.1,
+            xAxisID: 'x'
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        size: 12 
+                    }
+                },
+                position: 'right'
+            },
+            y: {
+                min: 0, 
+                max: 100, 
+                title: {
+                    display: true,
+                    text: '% Utilização'
+                },
+                ticks: {
+                    font: {
+                        size: 10 
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                enabled: true,
+                callbacks: {
+                    labelColor: function(context) {
+                        return {
+                            borderColor: '#000', 
+                            backgroundColor: '#000', 
+                            color: ''
+                        };
+                    }
+                }
+            }
+        }
+    }
+});
+
             const ramChart = new Chart(ramCtx, {
                 type: 'line',
                 data: {
@@ -293,184 +382,349 @@
                     }]
                 },
                 options: {
-                    scales: {
-                        x: {
-                            ticks: {
-                                font: {
-                                    size: 12 
-                                }
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: '% Utilização'
-                            },
-                            ticks: {
-                                font: {
-                                    size: 10 
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            enabled: true,
-                            callbacks: {
-                                labelColor: function(context) {
-                                    return {
-                                        borderColor: '#000', 
-                                        backgroundColor: '#000', 
-                                        color: ''
-                                    };
-                                }
-                            }
-                        }
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        size: 12 
                     }
-                }
-            });
- 
-
-            const labelsDisco = ['Disco 0 (C:)', 'Disco 1 (E:)', 'Disco 2 (D:)'];
-            const usedSpace = [400, 300, 200 ]; 
-            const totalSpace = [1000, 800, 500]; 
-
-            const ctxDisk = document.getElementById('diskChart').getContext('2d');
-            const diskChart = new Chart(ctxDisk, {
-                type: 'bar',
-                data: {
-                    labels: labelsDisco,
-                    datasets: [{
-                        label: 'Volume utilizado',
-                        data: usedSpace,
-                        backgroundColor: 'rgba(255, 99, 132, 0.8)', // Cor da barra para espaço usado
-                        borderColor: 'rgba(255, 99, 132, 1)', // Borda da barra para espaço usado
-                        borderWidth: 1
-                    }, {
-                        label: 'Volume disponivel',
-                        data: totalSpace.map((space, index) => space - usedSpace[index]), // Calcula o espaço livre
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Cor da barra para espaço livre
-                        borderColor: 'rgba(54, 162, 235, 1)', // Borda da barra para espaço livre
-                        borderWidth: 1
-                    }]
                 },
-                options: {
-                    scales: {
-                        x: {
-                            stacked: true,
-                            ticks: {
-                                font: {
-                                    size: 12 
-                                }
-                            }
-                        },
-                        y: {
-                            stacked: true,
-                            title: {
-                                display: true,
-                                text: 'Espaço (GB)'
-                            },
-                            ticks: {
-                                font: {
-                                    size: 10 
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            enabled: true
-                        }
-                    }
-                }
-            });
-
-            const labelsRede = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
-            let sentData = [0, 20, 50, 55, 90, 95, 80];
-            let receivedData = [0, 10, 30, 45, 70, 85, 60];
-
-            const redeCtx = document.getElementById('redeChart').getContext('2d');
-            const redeChart = new Chart(redeCtx, {
-                type: 'line',
-                data: {
-                    labels: labelsRede,
-                    datasets: [{
-                        label: 'Pacotes Enviados',
-                        data: sentData,
-                        borderColor: 'rgba(154, 237, 29)',
-                        backgroundColor: 'rgba(154, 237, 29, 0.2)',
-                        fill: true,
-                        tension: 0.1
-                    }, {
-                        label: 'Pacotes Recebidos',
-                        data: receivedData,
-                        borderColor: 'rgb(75, 192, 192)',
-                        backgroundColor: 'rgb(75, 192, 192, 0.2)',
-                        fill: true,
-                        tension: 0.1
-                    }]
+                position: 'right'
+            },
+            y: {
+                min: 0, 
+                max: 100, 
+                title: {
+                    display: true,
+                    text: '% Utilização'
                 },
-                options: {
-                    scales: {
-                        x: {
-                            ticks: {
-                                font: {
-                                    size: 12 
-                                }
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Pacotes'
-                            },
-                            ticks: {
-                                font: {
-                                    size: 10 
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            enabled: true,
-                            callbacks: {
-                                labelColor: function(context) {
-                                    return {
-                                        borderColor: '#000', 
-                                        backgroundColor: '#000', 
-                                        color: ''
-                                    };
-                                }
-                            }
-                        }
+                ticks: {
+                    font: {
+                        size: 10 
                     }
                 }
-            });
-            function updateData() {
-                cpuData.push(Math.floor(Math.random() * 100)); 
-                if(cpuData.length > labels.length){
-                    cpuData.shift();
-                    cpuChart.update();
+            }
+        },
+        plugins: {
+            tooltip: {
+                enabled: true,
+                callbacks: {
+                    labelColor: function(context) {
+                        return {
+                            borderColor: '#000', 
+                            backgroundColor: '#000', 
+                            color: ''
+                        };
+                    }
                 }
+            }
+        }
+    }
+});
+
+            setInterval(() => {
+    fetch('/servidores/dadosCPUeRAM', {
+        method: 'GET',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro na resposta do servidor');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data recebida pelo fetch de dados de CPU e RAM do servidor \n' + JSON.stringify(data));
+        if (data && data.length > 0) {
+            const latestData = data[0]; // Obter o objeto com os dados mais recentes
+            console.log('DADOS RECEBIDOS DE CPU E RAM: ' + JSON.stringify(latestData));
+           
+            if (latestData.uso_cpu !== undefined && latestData.uso_ram !== undefined) {
+                console.log('Uso de CPU: ' + latestData.uso_cpu + ' | Uso de RAM: ' + latestData.uso_ram);
+
                 
-                ramData.shift();
-                ramData.push(Math.floor(Math.random() * 100)); 
+                totalRamEmUso.innerHTML = latestData.uso_ram;
+                cpuData.push(parseFloat(latestData.uso_cpu));
+                ramData.push(parseFloat(latestData.uso_ram));
+
+              
+                if (cpuData.length > labels.length) cpuData.shift();
+                if (ramData.length > labels.length) ramData.shift();
+
                 cpuChart.update();
                 ramChart.update();
-
-                // Grafico de rede
-
-                sentData.shift();
-                sentData.push(Math.floor(Math.random() * 1000)); // Dados fictícios para exemplo
-                receivedData.shift();
-                receivedData.push(Math.floor(Math.random() * 1000)); // Dados fictícios para exemplo
-                redeChart.update();
+            } else {
+                console.error('Dados de CPU ou RAM não recebidos corretamente');
             }
+        } else {
+            console.error('Nenhum dado recebido do servidor');
+        }
+    }).catch(error => {
+        console.error('Erro no fetch de dados de CPU e RAM do servidor', error);
+    });
+}, 10000);
 
-            setInterval(updateData, 10000);
-        });
 
+    // fim do fetch de dados dinamicos de uso de CPU, RAM do servidor
+
+
+    
+    // document.addEventListener('DOMContentLoaded', function() {
+    //         const labels = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
+    //         let cpuData = [0];
+    //         let ramData = [0, 10, 30, 45, 70, 85, 60];
+
+    //         const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+    //         const cpuChart = new Chart(cpuCtx, {
+    //             type: 'line',
+    //             data: {
+    //                 labels: labels,
+    //                 line:{
+    //                     clip:{
+    //                         right: 0
+    //                     }
+    //                 },
+    //                 datasets: [{
+    //                     label: 'Uso de CPU(%)',
+    //                     data: cpuData,
+    //                     borderColor: 'rgb(75, 192, 192)',
+    //                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    //                     fill: true,
+    //                     tension: 0.1,
+    //                     xAxisID: 'x'
+    //                 }]
+    //             },
+    //             options: {
+    //                 scales: {
+    //                     x: {
+    //                         ticks: {
+    //                             font: {
+    //                                 size: 12 
+    //                             }
+    //                         },
+    //                         position: 'right'
+    //                     },
+    //                     y: {
+    //                         title: {
+    //                             display: true,
+    //                             text: '% Utilização'
+    //                         },
+    //                         ticks: {
+    //                             font: {
+    //                                 size: 10 
+    //                             }
+    //                         }
+    //                     }
+    //                 },
+    //                 plugins: {
+    //                     tooltip: {
+    //                         enabled: true,
+    //                         callbacks: {
+    //                             labelColor: function(context) {
+    //                                 return {
+    //                                     borderColor: '#000', 
+    //                                     backgroundColor: '#000', 
+    //                                     color: ''
+    //                                 };
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         });
+
+    //         const ramCtx = document.getElementById('ramChart').getContext('2d');
+    //         const ramChart = new Chart(ramCtx, {
+    //             type: 'line',
+    //             data: {
+    //                 labels: labels,
+    //                 datasets: [{
+    //                     label: 'Uso de RAM(%)',
+    //                     data: ramData,
+    //                     borderColor: 'rgb(192, 75, 75)',
+    //                     backgroundColor: 'rgba(192, 75, 75, 0.2)',
+    //                     fill: true,
+    //                     tension: 0.2
+    //                 }]
+    //             },
+    //             options: {
+    //                 scales: {
+    //                     x: {
+    //                         ticks: {
+    //                             font: {
+    //                                 size: 12 
+    //                             }
+    //                         }
+    //                     },
+    //                     y: {
+    //                         title: {
+    //                             display: true,
+    //                             text: '% Utilização'
+    //                         },
+    //                         ticks: {
+    //                             font: {
+    //                                 size: 10 
+    //                             }
+    //                         }
+    //                     }
+    //                 },
+    //                 plugins: {
+    //                     tooltip: {
+    //                         enabled: true,
+    //                         callbacks: {
+    //                             labelColor: function(context) {
+    //                                 return {
+    //                                     borderColor: '#000', 
+    //                                     backgroundColor: '#000', 
+    //                                     color: ''
+    //                                 };
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         });
+ 
+
+            // const labelsDisco = ['Disco 0 (C:)', 'Disco 1 (E:)', 'Disco 2 (D:)'];
+            // const usedSpace = [400, 300, 200 ]; 
+            // const totalSpace = [1000, 800, 500]; 
+
+            // const ctxDisk = document.getElementById('diskChart').getContext('2d');
+            // const diskChart = new Chart(ctxDisk, {
+            //     type: 'bar',
+            //     data: {
+            //         labels: labelsDisco,
+            //         datasets: [{
+            //             label: 'Volume utilizado',
+            //             data: usedSpace,
+            //             backgroundColor: 'rgba(255, 99, 132, 0.8)', // Cor da barra para espaço usado
+            //             borderColor: 'rgba(255, 99, 132, 1)', // Borda da barra para espaço usado
+            //             borderWidth: 1
+            //         }, {
+            //             label: 'Volume disponivel',
+            //             data: totalSpace.map((space, index) => space - usedSpace[index]), // Calcula o espaço livre
+            //             backgroundColor: 'rgba(54, 162, 235, 0.2)', // Cor da barra para espaço livre
+            //             borderColor: 'rgba(54, 162, 235, 1)', // Borda da barra para espaço livre
+            //             borderWidth: 1
+            //         }]
+            //     },
+            //     options: {
+            //         scales: {
+            //             x: {
+            //                 stacked: true,
+            //                 ticks: {
+            //                     font: {
+            //                         size: 12 
+            //                     }
+            //                 }
+            //             },
+            //             y: {
+            //                 stacked: true,
+            //                 title: {
+            //                     display: true,
+            //                     text: 'Espaço (GB)'
+            //                 },
+            //                 ticks: {
+            //                     font: {
+            //                         size: 10 
+            //                     }
+            //                 }
+            //             }
+            //         },
+            //         plugins: {
+            //             tooltip: {
+            //                 enabled: true
+            //             }
+            //         }
+            //     }
+            // });
+
+        //     const labelsRede = ['60s', '50s', '40s', '30s', '20s', '10s', '0s'];
+        //     let sentData = [0, 20, 50, 55, 90, 95, 80];
+        //     let receivedData = [0, 10, 30, 45, 70, 85, 60];
+
+        //     const redeCtx = document.getElementById('redeChart').getContext('2d');
+        //     const redeChart = new Chart(redeCtx, {
+        //         type: 'line',
+        //         data: {
+        //             labels: labelsRede,
+        //             datasets: [{
+        //                 label: 'Pacotes Enviados',
+        //                 data: sentData,
+        //                 borderColor: 'rgba(154, 237, 29)',
+        //                 backgroundColor: 'rgba(154, 237, 29, 0.2)',
+        //                 fill: true,
+        //                 tension: 0.1
+        //             }, {
+        //                 label: 'Pacotes Recebidos',
+        //                 data: receivedData,
+        //                 borderColor: 'rgb(75, 192, 192)',
+        //                 backgroundColor: 'rgb(75, 192, 192, 0.2)',
+        //                 fill: true,
+        //                 tension: 0.1
+        //             }]
+        //         },
+        //         options: {
+        //             scales: {
+        //                 x: {
+        //                     ticks: {
+        //                         font: {
+        //                             size: 12 
+        //                         }
+        //                     }
+        //                 },
+        //                 y: {
+        //                     title: {
+        //                         display: true,
+        //                         text: 'Pacotes'
+        //                     },
+        //                     ticks: {
+        //                         font: {
+        //                             size: 10 
+        //                         }
+        //                     }
+        //                 }
+        //             },
+        //             plugins: {
+        //                 tooltip: {
+        //                     enabled: true,
+        //                     callbacks: {
+        //                         labelColor: function(context) {
+        //                             return {
+        //                                 borderColor: '#000', 
+        //                                 backgroundColor: '#000', 
+        //                                 color: ''
+        //                             };
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     });
+        //     function updateData() {
+        //         cpuData.push(Math.floor(Math.random() * 100)); 
+        //         if(cpuData.length > labels.length){
+        //             cpuData.shift();
+        //             cpuChart.update();
+        //         }
+                
+        //         ramData.shift();
+        //         ramData.push(Math.floor(Math.random() * 100)); 
+        //         cpuChart.update();
+        //         ramChart.update();
+
+        //         // Grafico de rede
+
+        //         sentData.shift();
+        //         sentData.push(Math.floor(Math.random() * 1000)); // Dados fictícios para exemplo
+        //         receivedData.shift();
+        //         receivedData.push(Math.floor(Math.random() * 1000)); // Dados fictícios para exemplo
+        //         redeChart.update();
+        //     }
+
+        //     setInterval(updateData, 10000);
+        // ;
+    });
         function logout(){
             sessionStorage.clear();
             window.location.href = '../index.html';

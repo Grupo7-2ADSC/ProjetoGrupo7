@@ -1,6 +1,6 @@
 
 * {
-    color: black;
+    color: rgb(255, 255, 255);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -560,8 +560,12 @@ body {
     margin-left: 40px;
 }
 .tabela-pid {
+    color: white;
     width: 360px;
     border-collapse: collapse;
+}
+.tabela-pid td{
+    color: white;
 }
 
 .titulo-pid{

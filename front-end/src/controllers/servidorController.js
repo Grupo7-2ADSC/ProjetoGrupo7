@@ -1,4 +1,5 @@
 var servidorModel = require("../models/servidorModel");
+const { get } = require("../routes/servidores");
 
 // function buscarServidoresPorEmpresa(req, res) {
 //   var idUsuario = req.params.idUsuario;
@@ -41,10 +42,47 @@ function getProcessos(req, res) {
 };
 
 
+function getDadosDiscos(req, res) {
+    servidorModel.getDadosDiscos()
+    .then(resultado => {
+        res.json(resultado);
+    })
+    .catch(erro => {
+        console.log("Erro ao pegar discos do sistema:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+};
+
+function getDadosCPUeRAM(req, res) {
+    servidorModel.getDadosCPUeRAM()
+    .then(resultado => {
+        res.json(resultado);
+    })
+    .catch(erro => {
+        console.log("Erro ao pegar dados de cpu e ram do sistema:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function getDadosRede(req, res) {
+    servidorModel.getDadosRede()
+    .then(resultado => {
+        res.json(resultado);
+    })
+    .catch(erro => {
+        console.log("Erro ao pegar dados de rede do sistema:", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+};
+
 
 module.exports = { 
   
   // buscarServidoresPorEmpresa,
   getDadosEstaticos,
   getProcessos,
+  getDadosDiscos,
+  getDadosCPUeRAM,
+  getDadosRede,
+  
 }

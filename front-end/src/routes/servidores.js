@@ -15,5 +15,17 @@ router.get('/dadosPID', function (req, res) {
   servidorController.getProcessos(req, res);
 });
 
+router.get('/dadosDiscos', function (req, res) {
+  servidorController.getDadosDiscos(req, res);
+});
+
+router.get('/dadosCPUeRAM', function (req, res) {
+  servidorController.getDadosCPUeRAM(req, res);
+});
+
+router.get('/dadosRede', function (req, res) {
+  servidorController.getDadosRede(req, res);
+});
+
 
 module.exports = router;

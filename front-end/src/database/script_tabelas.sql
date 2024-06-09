@@ -47,7 +47,7 @@ tipo VARCHAR(45) NOT NULL
 -- CONFIGURAÇÃO DE ALERTAS
 
 CREATE TABLE ConfiguracaoAlerta (
-id_configuracao INT PRIMARY KEY NOT NULL,
+id_configuracao INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 parametro_min DECIMAL(5,2) NOT NULL,
 parametro_max DECIMAL(5,2) NOT NULL,
 fk_tipo_componente INT NOT NULL,
@@ -157,6 +157,24 @@ INSERT INTO TipoComponente (tipo) VALUES
 
 INSERT INTO Usuario (nome, email, senha, fk_tipo_acesso, fk_empresa) 
 VALUES ('Admin User', 'admin@gmail.com', 'admin123', 1, 1);
+
+
+SELECT 
+    c.id_componente,
+    c.nome AS nome_componente,
+    c.total_gib,
+    r.uso AS uso,
+    c.data_registro,
+    c.fk_servidor
+FROM 
+    Componente c
+JOIN 
+    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+LEFT JOIN 
+    Registro r ON c.id_componente = r.fk_componente
+WHERE 
+    tc.tipo = 'DISCO' AND
+    c.fk_servidor = 2;
     
 -- SELECTS
 use sentinel_system;
@@ -173,10 +191,12 @@ SELECT * FROM RedeRegistro;
 SELECT * FROM Componente;
 SELECT * FROM Registro;
 
+INSERT INTO Componente (nome, total_gib, fk_tipo_componente, fk_servidor) 
+VALUES ('SSD Nvme M2 (E:)', 230.3, 3, 2);
 
 
 SELECT *
-FROM Registro
+FROM Registro 
 WHERE fk_componente = 3
 ORDER BY data_registro DESC
 LIMIT 1;
@@ -269,5 +289,103 @@ JOIN (
     LIMIT 5
 ) pr2 ON pr1.nome = pr2.nome AND pr1.uso_cpu = pr2.max_uso_cpu
 ORDER BY pr1.uso_cpu DESC, pr1.uso_memoria DESC;
+
+SELECT 
+    c.id_componente,
+    c.nome AS nome_componente,
+    c.total_gib,
+    r.uso AS uso,
+    c.data_registro,
+    c.fk_servidor
+FROM 
+    Componente c
+JOIN 
+    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+LEFT JOIN 
+    Registro r ON c.id_componente = r.fk_componente
+WHERE 
+    tc.tipo = 'DISCO' AND
+    c.fk_servidor = 2;
     
+    SELECT 
+    c.id_componente,
+    c.nome AS nome_componente,
+    c.total_gib,
+    MAX(r.uso) AS uso,
+    c.data_registro,
+    c.fk_servidor
+FROM 
+    Componente c
+JOIN 
+    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+LEFT JOIN 
+    Registro r ON c.id_componente = r.fk_componente
+WHERE 
+    tc.tipo = 'DISCO' AND
+    c.fk_servidor = 2
+GROUP BY 
+    c.id_componente, c.nome, c.total_gib, c.data_registro, c.fk_servidor;
+    
+    SELECT 
+    c_cpu.id_componente AS id_cpu,
+    c_cpu.nome AS nome_cpu,
+    r_cpu.uso AS uso_cpu,
+    c_ram.id_componente AS id_ram,
+    c_ram.nome AS nome_ram,
+    r_ram.uso AS uso_ram
+FROM 
+    Servidor s
+JOIN 
+    Componente c_cpu ON s.id_servidor = c_cpu.fk_servidor
+JOIN 
+    TipoComponente tc_cpu ON c_cpu.fk_tipo_componente = tc_cpu.id_tipo_componente AND tc_cpu.tipo = 'CPU'
+JOIN 
+    (SELECT fk_componente, uso FROM Registro r WHERE r.fk_componente IN (SELECT id_componente FROM Componente WHERE fk_tipo_componente = (SELECT id_tipo_componente FROM TipoComponente WHERE tipo = 'CPU')) ORDER BY data_registro DESC LIMIT 1) r_cpu ON c_cpu.id_componente = r_cpu.fk_componente
+JOIN 
+    Componente c_ram ON s.id_servidor = c_ram.fk_servidor
+JOIN 
+    TipoComponente tc_ram ON c_ram.fk_tipo_componente = tc_ram.id_tipo_componente AND tc_ram.tipo = 'MEMORIA'
+JOIN 
+    (SELECT fk_componente, uso FROM Registro r WHERE r.fk_componente IN (SELECT id_componente FROM Componente WHERE fk_tipo_componente = (SELECT id_tipo_componente FROM TipoComponente WHERE tipo = 'MEMORIA')) ORDER BY data_registro DESC LIMIT 1) r_ram ON c_ram.id_componente = r_ram.fk_componente
+WHERE 
+    s.id_servidor = 2;
+    
+    SELECT 
+    c_cpu.id_componente AS id_cpu,
+    c_cpu.nome AS nome_cpu,
+    r_cpu.uso AS uso_cpu,
+    c_ram.id_componente AS id_ram,
+    r_ram.uso AS uso_ram
+FROM 
+    Servidor s
+JOIN 
+    Componente c_cpu ON s.id_servidor = c_cpu.fk_servidor
+JOIN 
+    TipoComponente tc_cpu ON c_cpu.fk_tipo_componente = tc_cpu.id_tipo_componente AND tc_cpu.tipo = 'CPU'
+JOIN 
+    (SELECT fk_componente, uso FROM Registro WHERE fk_componente IN (SELECT id_componente FROM Componente WHERE fk_tipo_componente = (SELECT id_tipo_componente FROM TipoComponente WHERE tipo = 'CPU')) ORDER BY data_registro DESC LIMIT 1) r_cpu ON c_cpu.id_componente = r_cpu.fk_componente
+JOIN 
+    Componente c_ram ON s.id_servidor = c_ram.fk_servidor
+JOIN 
+    TipoComponente tc_ram ON c_ram.fk_tipo_componente = tc_ram.id_tipo_componente AND tc_ram.tipo = 'MEMORIA'
+JOIN 
+    (SELECT fk_componente, uso FROM Registro WHERE fk_componente IN (SELECT id_componente FROM Componente WHERE fk_tipo_componente = (SELECT id_tipo_componente FROM TipoComponente WHERE tipo = 'MEMORIA')) ORDER BY data_registro DESC LIMIT 1) r_ram ON c_ram.id_componente = r_ram.fk_componente
+WHERE 
+    s.id_servidor = 2;
+    
+    
+    SELECT 
+    id_rede, 
+    bytes_recebidos, 
+    bytes_enviados, 
+    pacotes_recebidos, 
+    pacotes_enviados, 
+    data_registro 
+FROM 
+    RedeRegistro 
+WHERE 
+    fk_servidor = 2
+ORDER BY 
+    data_registro DESC 
+LIMIT 1;
     
