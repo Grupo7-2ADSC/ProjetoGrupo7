@@ -11,11 +11,12 @@ const { get } = require("../routes/servidores");
 // }
 
 function getDadosEstaticosServidor() {
-  const query = `  SELECT 
+  const query = `      SELECT 
     s.nome AS nome_servidor,
     c_cpu.nome AS nome_cpu,
     c_mem.total_gib AS total_memoria_ram,
     DATE_FORMAT(sr.data_inicializacao, '%d/%m/%Y %H:%i') AS data_inicializacao_sistema,
+    sr.tempo_atividade, -- incluir diretamente o tempo de atividade sem formatação
     rr.endereco_ipv4,
     rr.endereco_ipv6
 FROM 

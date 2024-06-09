@@ -192,7 +192,7 @@ SELECT * FROM Componente;
 SELECT * FROM Registro;
 
 INSERT INTO Componente (nome, total_gib, fk_tipo_componente, fk_servidor) 
-VALUES ('SSD Nvme M2 (E:)', 230.3, 3, 2);
+VALUES ('SSD Nvme M7 de Yasuo (F:)', 230.3, 3, 2);
 
 
 SELECT *
@@ -259,6 +259,7 @@ JOIN
     c_cpu.nome AS nome_cpu,
     c_mem.total_gib AS total_memoria_ram,
     DATE_FORMAT(sr.data_inicializacao, '%d/%m/%Y %H:%i') AS data_inicializacao_sistema,
+    DATE_FORMAT(sr.tempo_atividade, '%d/%m/%Y %H:%i') AS tempo_atividade_sistema,
     rr.endereco_ipv4,
     rr.endereco_ipv6
 FROM 
