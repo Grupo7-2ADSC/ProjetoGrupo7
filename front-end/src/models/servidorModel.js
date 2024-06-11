@@ -1,14 +1,12 @@
-const { query } = require("express");
 var database = require("../database/config");
-const { get } = require("../routes/servidores");
 
-// function buscarServidoresPorEmpresa(empresaId) {
+function buscarServidoresPorEmpresa(empresaId) {
 
-//   instrucaoSql = `SELECT * FROM Servidor WHERE fk_empresa = ${empresaId}`;
+  instrucaoSql = `SELECT * FROM Servidor WHERE fk_empresa = ${empresaId}`;
 
-//   console.log("Executando a instrução SQL: \n" + instrucaoSql);
-//   return database.executar(instrucaoSql);
-// }
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
 
 function getDadosEstaticosServidor() {
   const query = `      SELECT 
@@ -34,7 +32,7 @@ JOIN
 LEFT JOIN 
     RedeRegistro rr ON s.id_servidor = rr.fk_servidor
 WHERE 
-    s.id_servidor = 2;
+    s.id_servidor = 2 LIMIT 10;
   `;
   console.log("Executando a instrução SQL: \n" + query);
   return database.executar(query);
@@ -51,7 +49,7 @@ function getTopProcessos() {
                 ORDER BY max_uso_cpu DESC
                 LIMIT 5
         ) pr2 ON pr1.nome = pr2.nome AND pr1.uso_cpu = pr2.max_uso_cpu
-        ORDER BY pr1.uso_cpu DESC, pr1.uso_memoria DESC;
+        ORDER BY pr1.uso_cpu DESC, pr1.uso_memoria DESC LIMIT 10;
     `;
     console.log("Executando a instrução SQL: \n" + query);
     return database.executar(query);
@@ -76,7 +74,7 @@ WHERE
     tc.tipo = 'DISCO' AND
     c.fk_servidor = 2
 GROUP BY 
-    c.id_componente, c.nome, c.total_gib, c.data_registro, c.fk_servidor;
+    c.id_componente, c.nome, c.total_gib, c.data_registro, c.fk_servidor LIMIT 10;
     `;
     console.log("Executando a instrução SQL: \n" + query);
     return database.executar(query);
@@ -106,7 +104,7 @@ JOIN
 JOIN 
     (SELECT fk_componente, uso FROM Registro WHERE fk_componente IN (SELECT id_componente FROM Componente WHERE fk_tipo_componente = (SELECT id_tipo_componente FROM TipoComponente WHERE tipo = 'MEMORIA')) ORDER BY data_registro DESC LIMIT 1) r_ram ON c_ram.id_componente = r_ram.fk_componente
 WHERE 
-    s.id_servidor = 2;
+    s.id_servidor = 2 LIMIT 10;
     `
 
     console.log("Executando a instrução SQL: \n" + query);
@@ -136,12 +134,56 @@ LIMIT 1;`
 
 };
 
+function inserirParametrosDefault(idEmpresa) {
+    let query = `
+    INSERT INTO ConfiguracaoAlerta (parametro_min, parametro_max, fk_tipo_componente, fk_empresa) VALUES
+    (50.00, 90.00, 1, ?), -- CPU
+    (80.00, 90.00, 2, ?), -- MEMÓRIA
+    (85.00, 95.00, 3, ?); -- DISCO
+    `;
+    return database.executar(query, [idEmpresa, idEmpresa, idEmpresa]);
+}
+
+function obterParametrosEmp(idEmpresa) {
+    const query = `SELECT * FROM ConfiguracaoAlerta WHERE fk_empresa = ?`;
+    return database.executar(query, [idEmpresa]);
+}
+
+function getQtdServidoresUsoCompontesElevado(idEmpresa) {
+    const query = `
+    SELECT 
+    COUNT(DISTINCT CASE WHEN (rc.uso / c.total_gib) * 100 > 80 THEN s.id_servidor END) AS serverDiscoElevado,
+    COUNT(DISTINCT CASE WHEN (rm.uso / c.total_gib) * 100 > 70 THEN s.id_servidor END) AS serverRamElevado,
+    COUNT(DISTINCT CASE WHEN rc.uso > 80.00 THEN s.id_servidor END) AS serverCpuElevado
+FROM 
+    Servidor s
+JOIN 
+    Empresa e ON s.fk_empresa = e.id_empresa
+JOIN 
+    Componente c ON s.id_servidor = c.fk_servidor
+JOIN 
+    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+LEFT JOIN 
+    Registro rc ON c.id_componente = rc.fk_componente AND tc.tipo = 'DISCO'
+LEFT JOIN 
+    Registro rm ON c.id_componente = rm.fk_componente AND tc.tipo = 'MEMORIA'
+WHERE 
+    e.id_empresa = ?;`
+    return database.executar(query, [idEmpresa]);
+}
+
+
 module.exports = {
+    buscarServidoresPorEmpresa,
     getDadosEstaticosServidor,
     getTopProcessos,
     getDadosDiscos,
     getDadosCPUeRAM,
     getDadosRede,
+    inserirParametrosDefault,
+    obterParametrosEmp,
+    getQtdServidoresUsoCompontesElevado,
+    
     
 }
 

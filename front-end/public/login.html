@@ -54,6 +54,7 @@
 
   </div>
 
+  <div class="welcome-message" id="welcomeMessage">Bem-vindo ao sistema!</div>
 
   <link rel="stylesheet" href="/front-end/intern/">
   <div class="login">
@@ -70,6 +71,8 @@
             <span>Senha</span>
             <input id="senha_input" type="password" placeholder="******">
           </div>
+          <p id="erroCamposVazios" class="erroAutenticacao">Preencha os campos para autenticar</p>
+          <p id="dadosInvalidos" class="erroAutenticacao">E-mail ou senha inválidos</p>
           <p class="naoTenhoConta"> <a class="naoTenhoConta" href="./esqueceuSenha.html">Esqueci minha senha</a></p>
           <button class="botao" onclick="entrar()">Entrar</button>
         </div>
@@ -84,15 +87,12 @@
   </div>
   </div>
 
-
-  <div class="welcome-message" id="welcomeMessage">Bem-vindo ao sistema!</div>
-
 </body>
 
 </html>
 <script>
 
-  function alertwelcome() {
+function alertwelcome() {
     welcomeMessage.style.display = 'block';
     setTimeout(function () {
       welcomeMessage.style.display = 'none';
@@ -105,12 +105,14 @@
     var senhaVar = senha_input.value;
 
     if (emailVar == "" || senhaVar == "") {
-      cardErro.style.display = "block"
-      mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+      erroCamposVazios.style.display = "block"
+      dadosInvalidos.style.display = "none"
 
       return false;
+
     } else {
 
+      erroCamposVazios.style.display = "none"
     }
 
     console.log("FORM LOGIN: ", emailVar);
@@ -138,7 +140,10 @@
           sessionStorage.NOME_USUARIO = json.nome;
           sessionStorage.ID_USUARIO = json.id;
           sessionStorage.TIPO_ACESSO = json.tipoAcesso;
-          sessionStorage.NOME_EMPRESA = json.empresa;
+          sessionStorage.ID_EMPRESA = json.empresaId;
+          sessionStorage.SERVIDORES = JSON.stringify(json.servidores);
+          sessionStorage.PARAMETROS_ALERTAS = JSON.stringify(json.parametros);
+
 
 
           console.log(resposta);

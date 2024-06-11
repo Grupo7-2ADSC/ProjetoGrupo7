@@ -259,7 +259,31 @@ JOIN
     c_cpu.nome AS nome_cpu,
     c_mem.total_gib AS total_memoria_ram,
     DATE_FORMAT(sr.data_inicializacao, '%d/%m/%Y %H:%i') AS data_inicializacao_sistema,
-    DATE_FORMAT(sr.tempo_atividade, '%d/%m/%Y %H:%i') AS tempo_atividade_sistema,
+    rr.endereco_ipv4,
+    rr.endereco_ipv6
+FROM 
+    Servidor s
+JOIN 
+    Componente c_cpu ON s.id_servidor = c_cpu.fk_servidor
+JOIN 
+    TipoComponente tc_cpu ON c_cpu.fk_tipo_componente = tc_cpu.id_tipo_componente AND tc_cpu.tipo = 'CPU'
+JOIN 
+    Componente c_mem ON s.id_servidor = c_mem.fk_servidor
+JOIN 
+    TipoComponente tc_mem ON c_mem.fk_tipo_componente = tc_mem.id_tipo_componente AND tc_mem.tipo = 'MEMORIA'
+JOIN 
+    SistemaOperacionalRegistro sr ON s.id_servidor = sr.fk_servidor
+LEFT JOIN 
+    RedeRegistro rr ON s.id_servidor = rr.fk_servidor
+WHERE 
+    s.id_servidor = 2;
+    
+    SELECT 
+    s.nome AS nome_servidor,
+    c_cpu.nome AS nome_cpu,
+    c_mem.total_gib AS total_memoria_ram,
+    DATE_FORMAT(sr.data_inicializacao, '%d/%m/%Y %H:%i') AS data_inicializacao_sistema,
+    sr.tempo_atividade, -- incluir diretamente o tempo de atividade sem formatação
     rr.endereco_ipv4,
     rr.endereco_ipv6
 FROM 
@@ -389,4 +413,98 @@ WHERE
 ORDER BY 
     data_registro DESC 
 LIMIT 1;
+
+
+SELECT 
+    c.id_componente,
+    c.nome AS nome_componente,
+    tc.tipo AS tipo_componente,
+    ca.parametro_min,
+    ca.parametro_max,
+    e.nome AS nome_empresa
+FROM 
+    Componente c
+JOIN 
+    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+JOIN 
+    ConfiguracaoAlerta ca ON tc.id_tipo_componente = ca.fk_tipo_componente
+JOIN 
+    Empresa e ON ca.fk_empresa = e.id_empresa
+WHERE 
+    e.id_empresa = 8
+ORDER BY 
+    c.id_componente;
     
+    
+    SELECT 
+    c.id_componente,
+    c.nome AS nome_componente,
+    tc.tipo AS tipo_componente,
+    ca.parametro_min,
+    ca.parametro_max,
+    e.nome AS nome_empresa
+FROM 
+    Componente c
+JOIN 
+    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+JOIN 
+    ConfiguracaoAlerta ca ON tc.id_tipo_componente = ca.fk_tipo_componente
+JOIN 
+    Empresa e ON ca.fk_empresa = e.id_empresa
+WHERE 
+    e.id_empresa = 8
+ORDER BY 
+    c.id_componente;
+    
+    
+    INSERT INTO ConfiguracaoAlerta (parametro_min, parametro_max, fk_tipo_componente, fk_empresa) VALUES
+    (10.00, 90.00, 1, 1), -- Exemplo de valores padrão para CPU
+    (20.00, 80.00, 2, 1), -- Exemplo de valores padrão para MEMÓRIA
+    (15.00, 75.00, 3, 1);
+    
+    -- CPU
+    SELECT COUNT(DISTINCT c.id_componente) AS Servidores_CPU_Acima_80
+FROM Componente c
+JOIN TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+JOIN Registro r ON c.id_componente = r.fk_componente
+JOIN Servidor s ON c.fk_servidor = s.id_servidor
+JOIN Empresa e ON s.fk_empresa = e.id_empresa
+WHERE tc.tipo = 'CPU' AND r.uso > 80.00 AND e.id_empresa = 8;
+
+
+-- RAM
+SELECT COUNT(DISTINCT c.id_componente) AS Servidores_RAM_Acima_70
+FROM Componente c
+JOIN TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+JOIN Registro r ON c.id_componente = r.fk_componente
+JOIN Servidor s ON c.fk_servidor = s.id_servidor
+JOIN Empresa e ON s.fk_empresa = e.id_empresa
+WHERE tc.tipo = 'MEMORIA' AND (r.uso / c.total_gib) * 100 > 70 AND e.id_empresa = 8;
+
+SELECT COUNT(DISTINCT c.id_componente) AS Servidores_Disco_Acima_80
+FROM Componente c
+JOIN TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+JOIN Registro r ON c.id_componente = r.fk_componente
+JOIN Servidor s ON c.fk_servidor = s.id_servidor
+JOIN Empresa e ON s.fk_empresa = e.id_empresa
+WHERE tc.tipo = 'DISCO' AND (r.uso / c.total_gib) * 100 > 80 AND e.id_empresa = 8; 
+
+
+SELECT 
+    COUNT(DISTINCT CASE WHEN (rc.uso / c.total_gib) * 100 > 80 THEN s.id_servidor END) AS serverDiscoElevado,
+    COUNT(DISTINCT CASE WHEN (rm.uso / c.total_gib) * 100 > 70 THEN s.id_servidor END) AS serverRamElevado,
+    COUNT(DISTINCT CASE WHEN rc.uso > 80.00 THEN s.id_servidor END) AS serverCpuElevado
+FROM 
+    Servidor s
+JOIN 
+    Empresa e ON s.fk_empresa = e.id_empresa
+JOIN 
+    Componente c ON s.id_servidor = c.fk_servidor
+JOIN 
+    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+LEFT JOIN 
+    Registro rc ON c.id_componente = rc.fk_componente AND tc.tipo = 'DISCO'
+LEFT JOIN 
+    Registro rm ON c.id_componente = rm.fk_componente AND tc.tipo = 'MEMORIA'
+WHERE 
+    e.id_empresa = 8;

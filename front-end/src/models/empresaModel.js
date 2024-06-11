@@ -7,12 +7,12 @@ function listarEmpresas() {
 }
 
 
-function editar(id, nome, cnpj) {
+function editarEmp(id, nome, cnpj) {
     var query = `UPDATE Empresa SET nome = ?, cnpj = ? WHERE id_empresa = ?;`;
     return database.executar(query, [nome, cnpj, id]);
 }
 
-function deletar(id) {
+function deletarEmp(id) {
     var query = `DELETE FROM Empresa WHERE id_empresa = ?;`;
     return database.executar(query, [id]);
 }
@@ -22,7 +22,7 @@ function listarAcessos() {
     return database.executar(query);
 }
 
-function cadastrarAcesso(nome, cnpj) {
+function cadastrarAcesso(nome) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, cnpj);
   
     var query = `
@@ -44,9 +44,10 @@ function deletarAcesso(id) {
 }
 
 module.exports = {
+    
     listarEmpresas,
-    editar,
-    deletar,
+    editarEmp,
+    deletarEmp,
     listarAcessos,
     editarAcesso,
     deletarAcesso,
@@ -54,21 +55,3 @@ module.exports = {
 
 };
 
-// function buscarPorId(id) {
-//   var instrucaoSql = `SELECT * FROM empresa WHERE id = '${id}'`;
-
-//   return database.executar(instrucaoSql);
-// }
-// function buscarPorCnpj(cnpj) {
-//   var instrucaoSql = `SELECT * FROM empresa WHERE cnpj = '${cnpj}'`;
-
-//   return database.executar(instrucaoSql);
-// }
-
-// function cadastrar(razaoSocial, cnpj) {
-//   var instrucaoSql = `INSERT INTO empresa (razao_social, cnpj) VALUES ('${razaoSocial}', '${cnpj}')`;
-
-//   return database.executar(instrucaoSql);
-// }
-
-// module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listarEmpresas };

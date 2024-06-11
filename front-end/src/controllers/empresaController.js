@@ -22,11 +22,11 @@ function listarEmpresasAdm(req, res) {
 
 
 function editarEmpresa(id, nome, cnpj) {
-  return empresaModel.editar(id, nome, cnpj);
+  return empresaModel.editarEmp(id, nome, cnpj);
 }
 
 function deletarEmpresa(id) {
-  return empresaModel.deletar(id);
+  return empresaModel.deletarEmp(id);
 }
 
 
