@@ -172,6 +172,22 @@ WHERE
     return database.executar(query, [idEmpresa]);
 }
 
+function cadastrarServidor( nome, hostName, idEmpresa) {
+
+    let query = `INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES (?, ?, ?);`;
+    return database.executar(query, [nome, hostName, idEmpresa]);
+
+}
+
+function obterServidoresPorEmpresa(idEmpresa) {
+    const query = `SELECT * FROM Servidor WHERE fk_empresa = ?`;
+    return database.executar(query, [idEmpresa]);
+}
+
+function excluirServidor(idServidor) {
+    const query = `DELETE FROM Servidor WHERE id_servidor = ?`;
+    return database.executar(query, [idServidor]);
+}
 
 module.exports = {
     buscarServidoresPorEmpresa,
@@ -183,7 +199,9 @@ module.exports = {
     inserirParametrosDefault,
     obterParametrosEmp,
     getQtdServidoresUsoCompontesElevado,
-    
+    cadastrarServidor,
+    obterServidoresPorEmpresa,
+    excluirServidor,
     
 }
 

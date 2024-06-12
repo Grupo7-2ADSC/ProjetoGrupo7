@@ -111,6 +111,51 @@ function getQtdServidoresUsoCompontesElevado(req, res) {
       });
 }
 
+function cadastrarServidor(req, res) {
+
+    var nome = req.body.nomeServer;
+    var hostName = req.body.hostNameServer;
+    var idEmpresa = req.body.idEmpresaServer;
+  
+    if (nome === undefined) {
+      res.status(400).send("Campo nome está undefined!");
+    } else if (hostName === undefined) {
+      res.status(400).send("Campo hostName está undefined!");
+    } else {
+      servidorModel.cadastrarServidor(nome, hostName, idEmpresa)
+        .then(resultado => {
+          res.json(resultado);
+        })
+        .catch(erro => {
+          console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
+          res.status(500).json(erro.sqlMessage);
+        });
+    }
+  }
+
+  function obterServidoresPorEmpresa(req, res) {
+    const idEmpresa = req.params.idEmpresa;
+    servidorModel.obterServidoresPorEmpresa(idEmpresa)
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao obter servidores:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+  }
+
+  function excluirServidor(req, res) {
+    const id = req.params.idServidor;
+    servidorModel.excluirServidor(id)
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao excluir servidor:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+  }
 
 module.exports = { 
   
@@ -123,6 +168,9 @@ module.exports = {
   inserirParametrosDefault,
   obterParametros,
   getQtdServidoresUsoCompontesElevado,
+  cadastrarServidor,
+  obterServidoresPorEmpresa,
+  excluirServidor,
 
   
   

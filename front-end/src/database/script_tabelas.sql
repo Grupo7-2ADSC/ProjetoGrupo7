@@ -508,3 +508,4 @@ LEFT JOIN
     Registro rm ON c.id_componente = rm.fk_componente AND tc.tipo = 'MEMORIA'
 WHERE 
     e.id_empresa = 8;
+    

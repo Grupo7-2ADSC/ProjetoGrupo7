@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./painel.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Painel</title>
 </head>
+
 <body>
 
     <div class="sidebar">
@@ -18,116 +21,145 @@
         <div class="NomeUsuario">Olá, <span id="nomeUser" class="NomeUsuario"></span></div>
 
         <ul>
-            <li><a class="button" href="./avisos.html"><img class="icone-menu" src="./assets/notification.png" alt="">Avisos ‎ ‎ ‎ </a></li>
-            <li><a class="buttonSelecionado"><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ ‎ ‎</a></li>
-            <li><a class="button" href="./relatorio.html"><img class="icone-menu" src="./assets/report.png" alt="">Relátorio</a></li>
-            <li><a class="button" href="./usuarios.html"><img class="icone-menu" src="./assets/group.png" alt="">Usuários</a></li>
+            <li><a class="button" href="./avisos.html"><img class="icone-menu" src="./assets/notification.png"
+                        alt="">Avisos ‎ ‎ ‎ </a></li>
+            <li><a class="buttonSelecionado"><img class="icone-menu" src="./assets/web-analysis.png" alt=""> Painel ‎ ‎
+                    ‎</a></li>
+            <li><a class="button" href="./relatorio.html"><img class="icone-menu" src="./assets/report.png"
+                        alt="">Relátorio</a></li>
+            <li><a class="button" href="./usuarios.html"><img class="icone-menu" src="./assets/group.png"
+                        alt="">Usuários</a></li>
             <br>
             <br>
         </ul>
-        <div class="exitContainer"><button class="exitButton"  onclick="logout()"><span class='text'>Sair</span><span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg></span></button></div>
-    
-        </div>
+        <div class="exitContainer"><button class="exitButton" onclick="logout()"><span class='text'>Sair</span><span
+                    class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path
+                            d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+                    </svg></span></button></div>
 
-        <main class="main-content">
-            <h1 class="titulo">Painel Geral</h1>
+    </div>
 
-            <div class="container-card-main">
+    <main class="main-content">
+        <h1 class="titulo">Painel Geral</h1>
 
-                <div class="card-kpi">
-                    <p class="conteudo-card">Quantidade de Servidores com uso de RAM acima de <span id="paramMaxRam"></span>%</p>
-                    <span class="conteudo-card" id="totalServersRamUp"></span>
-                </div>
+        <div class="container-card-main">
 
-                <div class="card-kpi">
-                    <p class="conteudo-card">Quantidade de Servidores com pouco espaço em disco</p>
-                    <span class="conteudo-card" id="qtdDiscosMinSpace"></span>
-                </div>
-                
-
-                <div class="card-kpi">
-                    <p class="conteudo-card">Quantidade de Servidores com uso de CPU acima de <span id="paramMaxCpu"></span>%</p>
-                    <span class="conteudo-card"id="totalServersCpuUp"></span>
-                </div>
-
-                <div class="card-kpi">
-                    <p class="conteudo-card">Total de Servidores</p>
-                    <span class="conteudo-card" id="totalServers"></span>
-                </div>
-                
+            <div class="card-kpi">
+                <p class="conteudo-card">Quantidade de Servidores com uso de RAM acima de <span
+                        id="paramMaxRam"></span>%</p>
+                <span class="conteudo-card" id="totalServersRamUp"></span>
             </div>
 
-           <div class="conjunto-seletor">
+            <div class="card-kpi">
+                <p class="conteudo-card">Quantidade de Servidores com pouco espaço em disco</p>
+                <span class="conteudo-card" id="qtdDiscosMinSpace"></span>
+            </div>
+
+
+            <div class="card-kpi">
+                <p class="conteudo-card">Quantidade de Servidores com uso de CPU acima de <span
+                        id="paramMaxCpu"></span>%</p>
+                <span class="conteudo-card" id="totalServersCpuUp"></span>
+            </div>
+
+            <div class="card-kpi">
+                <p class="conteudo-card">Total de Servidores</p>
+                <span class="conteudo-card" id="totalServers"></span>
+            </div>
+
+        </div>
+
+        <div class="conjunto-seletor">
             <div class="seletor-filtro">
                 <p>Filtrar servidores por indicador</p>
-                <select class="" name="seletor de filtro" id="select-indicador" alt="seletor de filtro" onchange="filtrarServidores()">
+                <select class="" name="seletor de filtro" id="select-indicador" alt="seletor de filtro"
+                    onchange="filtrarServidores()">
                     <option value="all">todos</option>
                     <option value="verde">verde</option>
                     <option value="amarelo">amarelo</option>
                     <option value="vermelho">vermelho</option>
                 </select>
             </div>
-            <button id="botaoInfo" class="botao-info" onclick="toggleInfo()"> <img class="icon-info" src="./assets/infoPreta.png" alt="Botão de informações"></button>
-           
+            <button id="botaoInfo" class="botao-info" onclick="toggleInfo()"> <img class="icon-info"
+                    src="./assets/infoPreta.png" alt="Botão de informações"></button>
+
             <div id="infoDiv" class="info-div">
-            <div class="superior-info">
+                <div class="superior-info">
 
-                <p>Indice</p>
-            <button id="closeButton" class="closeButton" onclick="toggleInfo()">X</button>
+                    <p>Indice</p>
+                    <button id="closeButton" class="closeButton" onclick="toggleInfo()">X</button>
 
-            </div>
+                </div>
 
-            <div class="conteudo-legenda">
-                <div class="legenda-info">
-                <p>🟢</p>
-                <span><b>Indicador Verde</b>
-                <br> <br> Nenhum componente do servidor (CPU, Memória RAM, Disco, Rede) está apresentando problemas.</span>
-            </div>
+                <div class="conteudo-legenda">
+                    <div class="legenda-info">
+                        <p>🟢</p>
+                        <span><b>Indicador Verde</b>
+                            <br> <br> Nenhum componente do servidor (CPU, Memória RAM, Disco, Rede) está apresentando
+                            problemas.</span>
+                    </div>
 
-            <div class="legenda-info">
-                <p>🟡</p>
-                <span><b>Indicador Amarelo</b>
-                <br> <br> 1 (um) ou mais componentes do servidor (CPU, Memória RAM, Disco, Rede) apresentam problemas.</span>
-            </div>
+                    <div class="legenda-info">
+                        <p>🟡</p>
+                        <span><b>Indicador Amarelo</b>
+                            <br> <br> 1 (um) ou mais componentes do servidor (CPU, Memória RAM, Disco, Rede) apresentam
+                            problemas.</span>
+                    </div>
 
-            <div class="legenda-info">
-                <p>🔴</p>
-                <span><b>Indicador Vermelho</b>
-                <br> <br> 2 (dois) ou mais componentes do servidor (CPU, Memória RAM, Disco, Rede) apresentam problemas.</span>
-            </div>
-            </div>
+                    <div class="legenda-info">
+                        <p>🔴</p>
+                        <span><b>Indicador Vermelho</b>
+                            <br> <br> 2 (dois) ou mais componentes do servidor (CPU, Memória RAM, Disco, Rede)
+                            apresentam problemas.</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="line-cadastroServer">
             <button class="cadastro-servidor" onclick="openCadastro()">Cadastrar Servidor</button>
-            <button class="alterar-servidor">Alterar</button>
-            <button class="excluir-servidor">Excluir</button>
         </div>
-        <div id="overlay" >
+        <div id="overlay">
             <div id="cadastroServer" class="cadastroServer">
                 <h2 class="titulo">Cadastro de Servidor</h2>
                 <button id="closeBtn" onclick="closeCadastro()" style="color: black;">X</button>
-               <div class="fomulario-cadastroServer">
-                <p class="p-sever">Nome</p>
-                <input class="inp-server" type="text" name="" id="" alt="">
-                <p class="p-sever">Hostname</p>
-                <input class="inp-server" type="text" name="" id="" alt="">
-            </div>
-            <button onclick="closeCadastro()" class="btn-cadastrarServer">Cadastrar</button>
+                <div class="fomulario-cadastroServer">
+                    <p class="p-sever">Nome</p>
+                    <input class="inp-server" type="text" name="" id="nomeDoServidor" alt="">
+                    <p class="p-sever">Hostname</p>
+                    <input class="inp-server" type="text" name="" id="hostNameServidor" alt="">
+                    <p id="pErro" style="color: red;"></p>
+                </div>
+                <button onclick="efetuarCadastro()" class="btn-cadastrarServer">Cadastrar</button>
             </div>
         </div>
 
-            <div class="container-servidores" id="containerServidores"></div>
-        </main>
-   
-    
+        <div id="overlay2">
+            <div id="AlterarServer" class="AlterarServer">
+                <h2 class="titulo">Alterar de Servidor</h2>
+                <button id="closeBtnAlterar" onclick="closeAlterar()" style="color: black;">X</button>
+                <div class="fomulario-AlterarServer">
+                    <p class="p-sever">Novo Nome</p>
+                    <input class="inp-server" type="text" name="" id="novoNomeDoServidor" alt="">
+                    <p class="p-sever">Novo Hostname</p>
+                    <input class="inp-server" type="text" name="" id="novoHostNameServidor" alt="">
+                    <p id="pErro2" style="color: red;"></p>
+                </div>
+                <button onclick="efetuarAlterar()" class="btn-cadastrarServer">Alterar</button>
+            </div>
+        </div>
+
+        <div class="container-servidores" id="containerServidores"></div>
+    </main>
+
+
 </body>
+
 </html>
 
 <script>
-   nomeUser.innerHTML = sessionStorage.NOME_USUARIO;   
+    nomeUser.innerHTML = sessionStorage.NOME_USUARIO;
     console.log(sessionStorage.PARAMETROS_ALERTAS);
     console.log(sessionStorage.SERVIDORES);
     console.log("Lenght" + sessionStorage.PARAMETROS_ALERTAS.length)
@@ -137,30 +169,30 @@
     var parametrosAlertas = JSON.parse(sessionStorage.PARAMETROS_ALERTAS);
 
     console.log(parametrosAlertas[0]);
-    
 
-    if (parametrosAlertas[0] === undefined ) {
-    fetch('/servidores/inserirParametrosDefault', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ idEmpresa: idEmpresaUser })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Parametros default inseridos com sucesso:', data);
-        return fetch(`/servidores/obterParametros/${idEmpresaUser}`);
-    })
-    .then(response => response.json())
-    .then(data => {
-        sessionStorage.setItem('PARAMETROS_ALERTAS', JSON.stringify(data));
-        location.reload();
-    })
-    .catch(error => {
-        console.error('Erro ao inserir parametros default:', error);
-    });
-}
+
+    if (parametrosAlertas[0] === undefined) {
+        fetch('/servidores/inserirParametrosDefault', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ idEmpresa: idEmpresaUser })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('Parametros default inseridos com sucesso:', data);
+                return fetch(`/servidores/obterParametros/${idEmpresaUser}`);
+            })
+            .then(response => response.json())
+            .then(data => {
+                sessionStorage.setItem('PARAMETROS_ALERTAS', JSON.stringify(data));
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Erro ao inserir parametros default:', error);
+            });
+    }
 
 
     fetch(`/servidores/obterParametros/${idEmpresaUser}`)
@@ -178,26 +210,26 @@
                     paramMaxCpu.innerHTML = parametro.parametro_max;
                 }
             });
-            
-           
+
+
         })
         .catch(error => {
             console.error('Erro ao obter parametros:', error);
         });
-        
 
 
-        
-        let dataServer = JSON.parse(sessionStorage.SERVIDORES);
-        if( dataServer.length === 0){
-            totalServersCpuUp.innerHTML = "0";
-            totalServersRamUp.innerHTML = "0";
-            qtdDiscosMinSpace.innerHTML = "0";
-            totalServers.innerHTML = "0";
 
-            containerServidores.innerHTML = `<p class="sem-servidores">Não há servidores cadastrados</p>`;
-        }else{
-            fetch(`/servidores/getQtdServidoresUsoCompontesElevado/${idEmpresaUser}`)
+
+    let dataServer = JSON.parse(sessionStorage.SERVIDORES);
+    if (dataServer.length === 0) {
+        totalServersCpuUp.innerHTML = "0";
+        totalServersRamUp.innerHTML = "0";
+        qtdDiscosMinSpace.innerHTML = "0";
+        totalServers.innerHTML = "0";
+
+        containerServidores.innerHTML = `<p class="sem-servidores">Não há servidores cadastrados</p>`;
+    } else {
+        fetch(`/servidores/getQtdServidoresUsoCompontesElevado/${idEmpresaUser}`)
             .then(response => response.json())
             .then(data => {
                 console.log('Qtd servidores com uso de componentes elevado:', data);
@@ -206,21 +238,103 @@
                 totalServersRamUp.innerHTML = data[0].serverRamElevado;
                 qtdDiscosMinSpace.innerHTML = data[0].serverDiscoElevado;
                 totalServers.innerHTML = dataServer.length;
-            
+
             })
             .catch(error => {
                 console.error('Erro ao obter quantidade de servidores com uso de componentes elevado:', error);
             });
-        
-        };
-        
+
+    };
+
+    containerServidores.innerHTML = "";
+    dataServer.forEach((element, i) => {
+        console.log(element.nome);
 
 
-            dataServer.forEach((element, i) => {
+        containerServidores.innerHTML += `
+                <div class="conteudo-servidores">
+               <div class="btns-acoes">
+                 <button class="alterar-servidor" onclick="alterarServidor(${element.id_servidor})">Alterar</button>
+                   <button class="excluir-servidor" onclick="excluirServidor(${element.id_servidor})">Excluir</button>
+                </div>
+                        <div class="card-servidores" id="servidor${element.id_servidor}" onclick="redirecionarParaPagina(event)">
+                            <span class="alocacao">
+                                <p>${element.id_servidor}</p>
+                                <p>🟢</p>
+                            </span>
+                            <div class="centralizar">
+                                <img class="img-server" src="./assets/server.png" alt="">
+                                <p class="nome-servidor">${element.nome}</p>
+                            </div>
+                        </div>
+                    </div>`;
+
+    });
+
+    function efetuarCadastro() {
+        alert('Clicou para cadastrar um novo servidor');
+        var nomeServidor = nomeDoServidor.value;
+        var hostServidor = hostNameServidor.value;
+        if (nomeServidor == "" || hostServidor == "" || nomeServidor == null || hostServidor == null) {
+            pErro.innerHTML = "Preencha todos os campos!";
+            return false;
+        } else {
+            fetch(`/servidores/cadastrarServidor`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nomeServidor,
+                    hostNameServer: hostServidor,
+                    idEmpresaServer: idEmpresaUser,
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+                    if (resposta.ok) {
+                        Swal.fire({
+                            title: "Cadastro realizado!",
+                            text: "cadastro de servidor efetuado com sucesso!",
+                            icon: "success"
+
+                        });
+                       setInterval(() => {
+                            location.reload();
+                        }, 2000);
+                        return fetch(`/servidores/obterServidoresPorEmpresa/${idEmpresaUser}`);
+                    } else {
+                        throw Swal.fire({
+                            title: "Erro no cadastro!",
+                            icon: "error"
+                        });
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+            return false;
+        }
+
+    };
+
+    fetch(`/servidores/obterServidoresPorEmpresa/${idEmpresaUser}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Servidores:', data);
+            sessionStorage.setItem('SERVIDORES', JSON.stringify(data));
+            console.log(sessionStorage.SERVIDORES);
+            containerServidores.innerHTML = "";
+            data.forEach((element, i) => {
+                console.log(element.nome);
 
                 containerServidores.innerHTML += `
-                    <div class="conteudo-servidores" onclick="redirecionarParaPagina(event)">
-                        <div class="card-servidores" id="servidor${element.id_servidor}">
+                <div class="conteudo-servidores">
+               <div class="btns-acoes">
+                 <button class="alterar-servidor" onclick="alterarServidor(${element.id_servidor})">Alterar</button>
+                   <button class="excluir-servidor" onclick="excluirServidor(${element.id_servidor})">Excluir</button>
+                </div>
+                        <div class="card-servidores" id="servidor${element.id_servidor}" onclick="redirecionarParaPagina(event)">
                             <span class="alocacao">
                                 <p>${element.id_servidor}</p>
                                 <p>🟢</p>
@@ -232,19 +346,26 @@
                         </div>
                     </div>`;
                     
+
             });
-        
-    
+
+        })
+        .catch(error => {
+            console.error('Erro ao obter servidores:', error);
+        });
+
 
     function redirecionarParaPagina(event) {
-        if (event.currentTarget.classList.contains('conteudo-servidores')) {
-            const servidorId = event.currentTarget.querySelector('.card-servidores').id;
-            
+        if (event.currentTarget.classList.contains('card-servidores')) {
+            const servidorId = event.currentTarget.id;
+
             alert('Clicou no servidor com ID: ' + servidorId);
             window.location.href = './painelInterno.html';
-            
+
         }
     }
+
+
 
 
 
@@ -255,9 +376,9 @@
     function toggleInfo() {
         var botaoInfo = document.getElementById('botaoInfo');
         var infoDiv = document.getElementById('infoDiv');
-        
+
         // botaoInfo.classList.remove('bounce');
-        
+
         infoDiv.style.display = (infoDiv.style.display === 'block') ? 'none' : 'block';
     }
 
@@ -267,7 +388,7 @@
 
         var servidores = document.querySelectorAll('.conteudo-servidores');
 
-        servidores.forEach(function(servidor) {
+        servidores.forEach(function (servidor) {
             var indicadorServidor = servidor.querySelector('.alocacao p:nth-child(2)').textContent;
 
             if (indicadorSelecionado === 'all' || (indicadorSelecionado === 'verde' && indicadorServidor === '🟢') || (indicadorSelecionado === 'amarelo' && indicadorServidor === '🟡') || (indicadorSelecionado === 'vermelho' && indicadorServidor === '🔴')) {
@@ -278,6 +399,7 @@
         });
     }
 
+
     function openCadastro() {
         document.getElementById("overlay").style.display = "block";
     }
@@ -286,8 +408,70 @@
         document.getElementById("overlay").style.display = "none";
     }
 
-    function logout(){
-        sessionStorage.clear(); 
+    function openAlterar() {
+        document.getElementById("overlay2").style.display = "block";
+    }
+
+    function closeAlterar() {
+        document.getElementById("overlay2").style.display = "none";
+    }
+
+
+
+    function alterarServidor(id) {
+        alert('Clicou para alterar o servidor com ID: ' + id);
+        openAlterar();
+       fetch(`/servidores/alterarServidor/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Servidor alterado:', data);
+                sessionStorage.setItem('SERVIDOR_ALTERAR', JSON.stringify(data));
+                console.log(sessionStorage.SERVIDOR_ALTERAR);
+                novoNomeDoServidor.value = data[0].nome;
+                novoHostNameServidor.value = data[0].host_name;
+            })
+            .catch(error => {
+                console.error('Erro ao alterar servidor:', error);
+            });
+    }
+
+    function excluirServidor(id) {
+        Swal.fire({
+            title: 'Excluir Servidor',
+            text: 'Tem certeza que deseja excluir o servidor com ID: ' + id + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, excluir',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`/servidores/excluirServidor/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Servidor excluído:', data);
+                        Swal.fire(
+                            'Excluído!',
+                            'O servidor foi excluído.',
+                            'success'
+                        );
+
+                        setInterval(() => {
+                            location.reload();
+                        }, 2000);
+
+                    })
+                    .catch(error => {
+                        console.error('Erro ao excluir servidor:', error);
+                    });
+            }
+        });
+    }
+
+    function logout() {
+        sessionStorage.clear();
         window.location.href = '../index.html'
     }
 </script>

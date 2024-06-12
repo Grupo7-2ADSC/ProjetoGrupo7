@@ -38,7 +38,20 @@ router.get('/obterParametros/:idEmpresa', function (req, res) {
 router.get('/getQtdServidoresUsoCompontesElevado/:idEmpresa', function (req, res){
   servidorController.getQtdServidoresUsoCompontesElevado(req, res);
 
-})
+});
+
+router.post('/cadastrarServidor', function (req, res) {
+  servidorController.cadastrarServidor(req, res);
+});
+
+router.get('/obterServidoresPorEmpresa/:idEmpresa', function (req, res) {
+  servidorController.obterServidoresPorEmpresa(req, res);
+});
+
+router.delete('/excluirServidor/:idServidor', function (req, res) {
+servidorController.excluirServidor(req, res);
+
+});
 
 
 module.exports = router;
