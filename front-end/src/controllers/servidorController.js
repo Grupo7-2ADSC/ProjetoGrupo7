@@ -1,9 +1,9 @@
 var servidorModel = require("../models/servidorModel");
 
 function buscarServidoresPorEmpresa(req, res) {
-  var idUsuario = req.params.idUsuario;
+  var idEmpresa = req.params.idEmpresa;
 
-  servidorModel.buscarServidoresPorEmpresa(idUsuario)
+  servidorModel.buscarServidoresPorEmpresa(idEmpresa)
   .then((resultado) => {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
@@ -18,7 +18,8 @@ function buscarServidoresPorEmpresa(req, res) {
 };
 
 function getDadosEstaticos(req, res) {
-  servidorModel.getDadosEstaticosServidor().then((resultado) => {
+  var idServidor = req.params.idServidor;
+  servidorModel.getDadosEstaticosServidor(idServidor).then((resultado) => {
     if (resultado.length > 0) {
       res.status(200).json(resultado[0]);
     } else {
@@ -31,7 +32,8 @@ function getDadosEstaticos(req, res) {
 };
 
 function getProcessos(req, res) {
-    servidorModel.getTopProcessos()
+  var idServidor = req.params.idServidor;
+    servidorModel.getTopProcessos(idServidor)
     .then(resultado => {
         res.json(resultado);
     })
@@ -43,7 +45,8 @@ function getProcessos(req, res) {
 
 
 function getDadosDiscos(req, res) {
-    servidorModel.getDadosDiscos()
+  let idServidor = req.params.idServidor;
+    servidorModel.getDadosDiscos(idServidor)
     .then(resultado => {
         res.json(resultado);
     })
@@ -54,7 +57,8 @@ function getDadosDiscos(req, res) {
 };
 
 function getDadosCPUeRAM(req, res) {
-    servidorModel.getDadosCPUeRAM()
+    let idServidor = req.params.idServidor;
+    servidorModel.getDadosCPUeRAM(idServidor)
     .then(resultado => {
         res.json(resultado);
     })
@@ -65,7 +69,8 @@ function getDadosCPUeRAM(req, res) {
 }
 
 function getDadosRede(req, res) {
-    servidorModel.getDadosRede()
+  var idServidor = req.params.idServidor;
+    servidorModel.getDadosRede(idServidor)
     .then(resultado => {
         res.json(resultado);
     })
@@ -157,6 +162,21 @@ function cadastrarServidor(req, res) {
         });
   }
 
+  function alterarServidor(req, res) {
+    const id = req.params.idServidor;
+    const nome = req.body.novoNomeServer;
+    const hostName = req.body.novoHostServer;
+    console.log(id, nome, hostName);
+    servidorModel.alterarServidor(id, nome, hostName)
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao alterar servidor:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+  }
+
 module.exports = { 
   
   buscarServidoresPorEmpresa,
@@ -171,6 +191,7 @@ module.exports = {
   cadastrarServidor,
   obterServidoresPorEmpresa,
   excluirServidor,
+  alterarServidor,
 
   
   

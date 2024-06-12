@@ -7,23 +7,23 @@ router.get("/:empresaId", function (req, res) {
   servidorController.buscarServidoresPorEmpresa(req, res);
 });
 
-router.get('/dadosEstaticosServidor', function (req, res) {
+router.get('/dadosEstaticosServidor/:idServidor', function (req, res) {
   servidorController.getDadosEstaticos(req, res);
 });
 
-router.get('/dadosPID', function (req, res) {
+router.get('/dadosPID/:idServidor', function (req, res) {
   servidorController.getProcessos(req, res);
 });
 
-router.get('/dadosDiscos', function (req, res) {
+router.get('/dadosDiscos/:idServidor', function (req, res) {
   servidorController.getDadosDiscos(req, res);
 });
 
-router.get('/dadosCPUeRAM', function (req, res) {
+router.get('/dadosCPUeRAM/:idServidor', function (req, res) {
   servidorController.getDadosCPUeRAM(req, res);
 });
 
-router.get('/dadosRede', function (req, res) {
+router.get('/dadosRede/:idServidor', function (req, res) {
   servidorController.getDadosRede(req, res);
 });
 
@@ -51,6 +51,10 @@ router.get('/obterServidoresPorEmpresa/:idEmpresa', function (req, res) {
 router.delete('/excluirServidor/:idServidor', function (req, res) {
 servidorController.excluirServidor(req, res);
 
+});
+
+router.put('/alterarServidor/:idServidor', function (req, res) {
+  servidorController.alterarServidor(req, res);
 });
 
 

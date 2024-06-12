@@ -1,14 +1,14 @@
 var database = require("../database/config");
 
-function buscarServidoresPorEmpresa(empresaId) {
+function buscarServidoresPorEmpresa(idEmpresa) {
 
-  instrucaoSql = `SELECT * FROM Servidor WHERE fk_empresa = ${empresaId}`;
+  instrucaoSql = `SELECT * FROM Servidor WHERE fk_empresa = ?`;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
+  return database.executar(instrucaoSql, [idEmpresa]);
 }
 
-function getDadosEstaticosServidor() {
+function getDadosEstaticosServidor(idServidor) {
   const query = `      SELECT 
     s.nome AS nome_servidor,
     c_cpu.nome AS nome_cpu,
@@ -32,19 +32,19 @@ JOIN
 LEFT JOIN 
     RedeRegistro rr ON s.id_servidor = rr.fk_servidor
 WHERE 
-    s.id_servidor = 2 LIMIT 10;
+    s.id_servidor = ? LIMIT 10;
   `;
   console.log("Executando a instrução SQL: \n" + query);
-  return database.executar(query);
+  return database.executar(query, [idServidor]);
 };
 
-function getTopProcessos() {
+function getTopProcessos(idServidor) {
     const query = `
         SELECT pr1.id_processo, pr1.pid, pr1.nome, pr1.uso_cpu, pr1.uso_memoria, pr1.data_registro, pr1.fk_servidor
         FROM ProcessoRegistro pr1
         JOIN (
                 SELECT nome, MAX(uso_cpu) AS max_uso_cpu
-                FROM ProcessoRegistro
+                FROM ProcessoRegistro WHERE fk_servidor = ?
                 GROUP BY nome
                 ORDER BY max_uso_cpu DESC
                 LIMIT 5
@@ -52,10 +52,10 @@ function getTopProcessos() {
         ORDER BY pr1.uso_cpu DESC, pr1.uso_memoria DESC LIMIT 10;
     `;
     console.log("Executando a instrução SQL: \n" + query);
-    return database.executar(query);
+    return database.executar(query, [idServidor]);
 };
 
-getDadosDiscos = function () {
+getDadosDiscos = function (idServidor) {
     const query = `
          SELECT 
     c.id_componente,
@@ -72,16 +72,16 @@ LEFT JOIN
     Registro r ON c.id_componente = r.fk_componente
 WHERE 
     tc.tipo = 'DISCO' AND
-    c.fk_servidor = 2
+    c.fk_servidor = ?
 GROUP BY 
     c.id_componente, c.nome, c.total_gib, c.data_registro, c.fk_servidor LIMIT 10;
     `;
     console.log("Executando a instrução SQL: \n" + query);
-    return database.executar(query);
+    return database.executar(query, [idServidor]);
 };
 
 
-getDadosCPUeRAM = function () {
+getDadosCPUeRAM = function (idServidor) {
     const query = `
    SELECT 
     c_cpu.id_componente AS id_cpu,
@@ -104,15 +104,15 @@ JOIN
 JOIN 
     (SELECT fk_componente, uso FROM Registro WHERE fk_componente IN (SELECT id_componente FROM Componente WHERE fk_tipo_componente = (SELECT id_tipo_componente FROM TipoComponente WHERE tipo = 'MEMORIA')) ORDER BY data_registro DESC LIMIT 1) r_ram ON c_ram.id_componente = r_ram.fk_componente
 WHERE 
-    s.id_servidor = 2 LIMIT 10;
+    s.id_servidor = ? LIMIT 10;
     `
 
     console.log("Executando a instrução SQL: \n" + query);
-    return database.executar(query);
+    return database.executar(query, [idServidor]);
 
 };
 
-getDadosRede = function () {
+getDadosRede = function (idServidor) {
     const query = `
     SELECT 
     id_rede, 
@@ -124,13 +124,13 @@ getDadosRede = function () {
 FROM 
     RedeRegistro 
 WHERE 
-    fk_servidor = 2
+    fk_servidor = ?
 ORDER BY 
     data_registro DESC 
 LIMIT 1;`
 
     console.log("Executando a instrução SQL: \n" + query);
-    return database.executar(query);
+    return database.executar(query, [idServidor]);
 
 };
 
@@ -149,28 +149,28 @@ function obterParametrosEmp(idEmpresa) {
     return database.executar(query, [idEmpresa]);
 }
 
-function getQtdServidoresUsoCompontesElevado(idEmpresa) {
-    const query = `
-    SELECT 
-    COUNT(DISTINCT CASE WHEN (rc.uso / c.total_gib) * 100 > 80 THEN s.id_servidor END) AS serverDiscoElevado,
-    COUNT(DISTINCT CASE WHEN (rm.uso / c.total_gib) * 100 > 70 THEN s.id_servidor END) AS serverRamElevado,
-    COUNT(DISTINCT CASE WHEN rc.uso > 80.00 THEN s.id_servidor END) AS serverCpuElevado
-FROM 
-    Servidor s
-JOIN 
-    Empresa e ON s.fk_empresa = e.id_empresa
-JOIN 
-    Componente c ON s.id_servidor = c.fk_servidor
-JOIN 
-    TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
-LEFT JOIN 
-    Registro rc ON c.id_componente = rc.fk_componente AND tc.tipo = 'DISCO'
-LEFT JOIN 
-    Registro rm ON c.id_componente = rm.fk_componente AND tc.tipo = 'MEMORIA'
-WHERE 
-    e.id_empresa = ?;`
-    return database.executar(query, [idEmpresa]);
-}
+// function getQtdServidoresUsoCompontesElevado(idEmpresa) {
+//     const query = `
+//     SELECT 
+//     COUNT(DISTINCT CASE WHEN (rc.uso / c.total_gib) * 100 > 80 THEN s.id_servidor END) AS serverDiscoElevado,
+//     COUNT(DISTINCT CASE WHEN (rm.uso / c.total_gib) * 100 > 70 THEN s.id_servidor END) AS serverRamElevado,
+//     COUNT(DISTINCT CASE WHEN rc.uso > 80.00 THEN s.id_servidor END) AS serverCpuElevado
+// FROM 
+//     Servidor s
+// JOIN 
+//     Empresa e ON s.fk_empresa = e.id_empresa
+// JOIN 
+//     Componente c ON s.id_servidor = c.fk_servidor
+// JOIN 
+//     TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
+// LEFT JOIN 
+//     Registro rc ON c.id_componente = rc.fk_componente AND tc.tipo = 'DISCO'
+// LEFT JOIN 
+//     Registro rm ON c.id_componente = rm.fk_componente AND tc.tipo = 'MEMORIA'
+// WHERE 
+//     e.id_empresa = ?;`
+//     return database.executar(query, [idEmpresa]);
+// }
 
 function cadastrarServidor( nome, hostName, idEmpresa) {
 
@@ -179,14 +179,20 @@ function cadastrarServidor( nome, hostName, idEmpresa) {
 
 }
 
-function obterServidoresPorEmpresa(idEmpresa) {
+function obterServidoresPorEmpresa(idEmpresaUser) {
     const query = `SELECT * FROM Servidor WHERE fk_empresa = ?`;
-    return database.executar(query, [idEmpresa]);
+    return database.executar(query, [idEmpresaUser]);
 }
 
 function excluirServidor(idServidor) {
     const query = `DELETE FROM Servidor WHERE id_servidor = ?`;
     return database.executar(query, [idServidor]);
+}
+
+function alterarServidor(id, nome, hostName) {
+    console.log(id, nome, hostName);
+    const query = `UPDATE Servidor SET nome = ?, host_name = ? WHERE id_servidor = ?`;
+    return database.executar(query, [nome, hostName, id]);
 }
 
 module.exports = {
@@ -198,10 +204,12 @@ module.exports = {
     getDadosRede,
     inserirParametrosDefault,
     obterParametrosEmp,
-    getQtdServidoresUsoCompontesElevado,
+    // getQtdServidoresUsoCompontesElevado,
     cadastrarServidor,
     obterServidoresPorEmpresa,
     excluirServidor,
+    alterarServidor,
+
     
 }
 

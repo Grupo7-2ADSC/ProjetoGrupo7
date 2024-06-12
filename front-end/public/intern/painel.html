@@ -53,7 +53,8 @@
             </div>
 
             <div class="card-kpi">
-                <p class="conteudo-card">Quantidade de Servidores com pouco espaço em disco</p>
+                <p class="conteudo-card">Quantidade de Servidores com pouco espaço em disco <span
+                        id="paramMaxDisco"></span>%</p>
                 <span class="conteudo-card" id="qtdDiscosMinSpace"></span>
             </div>
 
@@ -141,9 +142,9 @@
                 <button id="closeBtnAlterar" onclick="closeAlterar()" style="color: black;">X</button>
                 <div class="fomulario-AlterarServer">
                     <p class="p-sever">Novo Nome</p>
-                    <input class="inp-server" type="text" name="" id="novoNomeDoServidor" alt="">
+                    <input class="inp-server" type="text" name="" id="newServerName" alt="">
                     <p class="p-sever">Novo Hostname</p>
-                    <input class="inp-server" type="text" name="" id="novoHostNameServidor" alt="">
+                    <input class="inp-server" type="text" name="" id="newHostName" alt="">
                     <p id="pErro2" style="color: red;"></p>
                 </div>
                 <button onclick="efetuarAlterar()" class="btn-cadastrarServer">Alterar</button>
@@ -166,8 +167,19 @@
     parametrosAlertas
     const idEmpresaUser = sessionStorage.ID_EMPRESA;
 
+    if (sessionStorage.TIPO_ACESSO === 'Usuario Padrão') {
+        
+    }
+
     var parametrosAlertas = JSON.parse(sessionStorage.PARAMETROS_ALERTAS);
 
+    var usoElevadoCpu = 0.0;
+    var usuElevadoRam = 0.0;
+    var usoElevadoDisco = 0.0;
+
+    var cpuUp = 0;
+    var ramUp = 0;
+    var discoUp = 0;
     console.log(parametrosAlertas[0]);
 
 
@@ -206,8 +218,13 @@
             parametros.forEach(parametro => {
                 if (parametro.fk_tipo_componente === 1) {
                     paramMaxRam.innerHTML = parametro.parametro_max;
+                    usoElevadoCpu = parametro.parametro_max;
                 } else if (parametro.fk_tipo_componente === 2) {
                     paramMaxCpu.innerHTML = parametro.parametro_max;
+                    usoElevadoRam = parametro.parametro_max;
+                } else if (parametro.fk_tipo_componente === 3) {
+                    paramMaxDisco.innerHTML = parametro.parametro_max;
+                    usoElevadoDisco = parametro.parametro_max;
                 }
             });
 
@@ -221,6 +238,7 @@
 
 
     let dataServer = JSON.parse(sessionStorage.SERVIDORES);
+    totalServers.innerHTML = dataServer.length;
     if (dataServer.length === 0) {
         totalServersCpuUp.innerHTML = "0";
         totalServersRamUp.innerHTML = "0";
@@ -228,39 +246,86 @@
         totalServers.innerHTML = "0";
 
         containerServidores.innerHTML = `<p class="sem-servidores">Não há servidores cadastrados</p>`;
-    } else {
-        fetch(`/servidores/getQtdServidoresUsoCompontesElevado/${idEmpresaUser}`)
+    }
+    //  else {
+    //     fetch(`/servidores/getQtdServidoresUsoCompontesElevado/${idEmpresaUser}`)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log('Qtd servidores com uso de componentes elevado:', data);
+
+    //             totalServersCpuUp.innerHTML = data[0].serverCpuElevado;
+    //             totalServersRamUp.innerHTML = data[0].serverRamElevado;
+    //             qtdDiscosMinSpace.innerHTML = data[0].serverDiscoElevado;
+    //             totalServers.innerHTML = dataServer.length;
+
+    //         })
+    //         .catch(error => {
+    //             console.error('Erro ao obter quantidade de servidores com uso de componentes elevado:', error);
+    //         });
+
+    // };
+
+    containerServidores.innerHTML = "";
+    totalServersCpuUp.innerHTML = cpuUp;
+    totalServersRamUp.innerHTML = ramUp;
+    qtdDiscosMinSpace.innerHTML = discoUp;
+    dataServer.forEach((element, i) => {
+        idServidor = element.id_servidor;
+        let usoElevado = 0
+        console.log(element.nome);
+        fetch(`/servidores/dadosCPUeRAM/${idServidor}`)
             .then(response => response.json())
             .then(data => {
-                console.log('Qtd servidores com uso de componentes elevado:', data);
+                console.log('Dados CPU e RAM:', data);
+                console.log('CPU:', data[0].uso_cpu);
+                console.log('RAM:', data[0].uso_ram);
 
-                totalServersCpuUp.innerHTML = data[0].serverCpuElevado;
-                totalServersRamUp.innerHTML = data[0].serverRamElevado;
-                qtdDiscosMinSpace.innerHTML = data[0].serverDiscoElevado;
-                totalServers.innerHTML = dataServer.length;
+                if (data[0].uso_cpu > usoElevadoCpu) {
+                    usoElevado++;
+                    cpuUp++;
+                } else if (data[0].uso_ram > usuElevadoRam) {
+                    usoElevado++;
+                    ramUp++;
+                }
 
             })
             .catch(error => {
-                console.error('Erro ao obter quantidade de servidores com uso de componentes elevado:', error);
+                console.error('Erro ao obter dados de CPU e RAM:', error);
             });
 
-    };
+        fetch(`/servidores/dadosDiscos/${idServidor}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Dados Disco:', data);
+                console.log('Disco:', data[0].total_gib);
 
-    containerServidores.innerHTML = "";
-    dataServer.forEach((element, i) => {
-        console.log(element.nome);
+                data.forEach((element, i) => {
+                    if (data[i].total_gib === undefined)
+                    data[i].total_gib =0
+
+                    if (((data[i].total_gib / data[i].uso) * 100) < usoElevadoDisco) {
+                        usoElevado++;
+                        discoUp++;
+                    }
+                });
+
+            })
+            .catch(error => {
+                console.error('Erro ao obter dados de Disco:', error);
+            });
+
 
 
         containerServidores.innerHTML += `
                 <div class="conteudo-servidores">
                <div class="btns-acoes">
-                 <button class="alterar-servidor" onclick="alterarServidor(${element.id_servidor})">Alterar</button>
-                   <button class="excluir-servidor" onclick="excluirServidor(${element.id_servidor})">Excluir</button>
+                 <button class="alterar-servidor" onclick="alterarServidor(${idServidor})">Alterar</button>
+                   <button class="excluir-servidor" onclick="excluirServidor(${idServidor})">Excluir</button>
                 </div>
-                        <div class="card-servidores" id="servidor${element.id_servidor}" onclick="redirecionarParaPagina(event)">
+                        <div class="card-servidores" id="servidor${idServidor}" onclick="redirecionarParaPagina(event)">
                             <span class="alocacao">
-                                <p>${element.id_servidor}</p>
-                                <p>🟢</p>
+                                <p>${idServidor}</p>
+                                <p id="colorAlerta"></p>
                             </span>
                             <div class="centralizar">
                                 <img class="img-server" src="./assets/server.png" alt="">
@@ -269,7 +334,16 @@
                         </div>
                     </div>`;
 
+        if (usoElevado === 0) {
+            colorAlerta.innerHTML = '🟢';
+        } else if (usoElevado === 1) {
+            colorAlerta.innerHTML = '🟡';
+        } else if (usoElevado === 2) {
+            colorAlerta.innerHTML = '🔴';
+        }
+
     });
+
 
     function efetuarCadastro() {
         alert('Clicou para cadastrar um novo servidor');
@@ -299,7 +373,7 @@
                             icon: "success"
 
                         });
-                       setInterval(() => {
+                        setInterval(() => {
                             location.reload();
                         }, 2000);
                         return fetch(`/servidores/obterServidoresPorEmpresa/${idEmpresaUser}`);
@@ -321,6 +395,7 @@
     fetch(`/servidores/obterServidoresPorEmpresa/${idEmpresaUser}`)
         .then(response => response.json())
         .then(data => {
+            
             console.log('Servidores:', data);
             sessionStorage.setItem('SERVIDORES', JSON.stringify(data));
             console.log(sessionStorage.SERVIDORES);
@@ -334,7 +409,7 @@
                  <button class="alterar-servidor" onclick="alterarServidor(${element.id_servidor})">Alterar</button>
                    <button class="excluir-servidor" onclick="excluirServidor(${element.id_servidor})">Excluir</button>
                 </div>
-                        <div class="card-servidores" id="servidor${element.id_servidor}" onclick="redirecionarParaPagina(event)">
+                        <div class="card-servidores" id="${element.id_servidor}" onclick="redirecionarParaPagina(event)">
                             <span class="alocacao">
                                 <p>${element.id_servidor}</p>
                                 <p>🟢</p>
@@ -345,9 +420,10 @@
                             </div>
                         </div>
                     </div>`;
-                    
+
 
             });
+            totalServers.innerHTML = data.length;
 
         })
         .catch(error => {
@@ -359,9 +435,11 @@
         if (event.currentTarget.classList.contains('card-servidores')) {
             const servidorId = event.currentTarget.id;
 
+            sessionStorage.setItem('id_serverSelecionado', servidorId);
+            console.log(sessionStorage.id_serverSelecionado)
+
             alert('Clicou no servidor com ID: ' + servidorId);
             window.location.href = './painelInterno.html';
-
         }
     }
 
@@ -418,22 +496,59 @@
 
 
 
+    let serverIdToAlter;
+
     function alterarServidor(id) {
         alert('Clicou para alterar o servidor com ID: ' + id);
+        serverIdToAlter = id;
         openAlterar();
-       fetch(`/servidores/alterarServidor/${id}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Servidor alterado:', data);
-                sessionStorage.setItem('SERVIDOR_ALTERAR', JSON.stringify(data));
-                console.log(sessionStorage.SERVIDOR_ALTERAR);
-                novoNomeDoServidor.value = data[0].nome;
-                novoHostNameServidor.value = data[0].host_name;
-            })
-            .catch(error => {
-                console.error('Erro ao alterar servidor:', error);
-            });
     }
+
+    function efetuarAlterar() {
+        alert('Clicou para alterar o servidor');
+        var novoNomeServer = newServerName.value;
+        var novoHostServer = newHostName.value;
+        if (novoNomeServer == "" || novoHostServer == "" || novoNomeServer == null || novoHostServer == null) {
+            pErro2.innerHTML = "Preencha todos os campos!";
+            return false;
+        } else {
+            console.log("idServer: ", serverIdToAlter, novoNomeServer, novoHostServer),
+                fetch(`/servidores/alterarServidor/${serverIdToAlter}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        novoNomeServer, novoHostServer
+                    }),
+                })
+                    .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+                        if (resposta.ok) {
+                            Swal.fire({
+                                title: "Alteração realizada!",
+                                text: "Alteração de servidor efetuada com sucesso!",
+                                icon: "success"
+                            });
+                            setInterval(() => {
+                                location.reload();
+                            }, 2000);
+                            return fetch(`/servidores/obterServidoresPorEmpresa/${idEmpresaUser}`);
+                        } else {
+                            throw Swal.fire({
+                                title: "Erro na alteração!",
+                                icon: "error"
+                            });
+                        }
+                    })
+                    .catch(function (resposta) {
+                        console.log(`#ERRO: ${resposta}`);
+                    });
+            return false;
+        }
+    };
+
+
 
     function excluirServidor(id) {
         Swal.fire({

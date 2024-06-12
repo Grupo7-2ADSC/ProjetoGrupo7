@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/painel.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Painel Dashs Interno</title>
 </head>
 
@@ -43,12 +44,12 @@
     <main class="main-content">
 
         <div class="container-seletorServidor">
-            <h1 class="titulo">Servidor de backup</h1>
-            <select class="seletor-servidor" name="Seletor de servidor" id="server-selector" alt="Seletor de servidor">
-                <option value="server1" id="servidorSelecionado"></option>
+            <h1 class="titulo" id="titleSvSelected"></h1>
+            <!-- <select class="seletor-servidor" name="Seletor de servidor" id="server-selector" alt="Seletor de servidor">
+                <option value="" id="servidorSelecionado"></option>
 
 
-            </select>
+            </select> -->
 
         </div>
 
@@ -160,8 +161,22 @@
 <script>
     nomeUser.innerHTML = sessionStorage.NOME_USUARIO;
 
+    var idServidor = sessionStorage.id_serverSelecionado;
+    var idEmpresa = sessionStorage.ID_EMPRESA;
+    titleSvSelected.innerHTML = sessionStorage.SER;
+    console.log('ID DO SERVIDOR ATUAL: ' + idServidor);
+    console.log('ID DA EMPRESA: ' + idEmpresa);
+
+    var usoElevadoCpu = 0.0;
+    var usuElevadoRam = 0.0;
+    var usoElevadoDisco = 0.0;
+
+
+    
+    
+
     // fetch de dados estaticos do servidor
-    fetch('/servidores/dadosEstaticosServidor', {
+    fetch(`/servidores/dadosEstaticosServidor/${idServidor}`, {
         method: 'GET',
 
 
@@ -175,7 +190,8 @@
         .then(data => {
             console.log('Data recebida pelo fetch de dados estaticos do servidor \n' + JSON.stringify(data));
             if (data) {
-                servidorSelecionado.innerHTML = data.nome_servidor;
+                titleSvSelected.innerHTML = data.nome_servidor;
+                // servidorSelecionado.innerHTML = data.nome_servidor;
                 nomeCpu.innerHTML = data.nome_cpu;
                 dataInicializacao.innerHTML = data.data_inicializacao_sistema;
                 tempoDAtividade.innerHTML = data.tempo_atividade;
@@ -186,6 +202,13 @@
                 //   nomeAdaptador.innerHTML = estaticData.nome_adaptador;
             }
         }).catch(error => {
+            
+                    Swal.fire({
+                                title: "Nenhum dado encontrado!",
+                                text: "Não foi possível encontrar dados do servidor selecionado, \n por favor, tente novamente ou entre em contato com seu administrador!",
+                                 icon: "error"
+                            });
+                
             console.error('Erro no fetch de dados estaticos do servidor', error);
         });
 
@@ -195,7 +218,7 @@
 
     // fetch de dados dianmicos de PID do servidor
     setInterval(() => {
-        fetch('/servidores/dadosPID', {
+        fetch(`/servidores/dadosPID/${idServidor}`, {
             method: 'GET',
         })
             .then(response => {
@@ -206,6 +229,7 @@
             })
             .then(data => {
                 console.log('Data recebida pelo fetch de dados estaticos do servidor \n' + JSON.stringify(data));
+               
                 if (data) {
                     const processos = data;
 
@@ -244,7 +268,7 @@
 
     // fetch de dados de disco do servidor
 
-    fetch('/servidores/dadosDiscos', {
+    fetch(`/servidores/dadosDiscos/${idServidor}`, {
         method: 'GET',
     })
         .then(response => {
@@ -499,7 +523,7 @@
     });
 
     setInterval(() => {
-        fetch('/servidores/dadosCPUeRAM', {
+        fetch(`/servidores/dadosCPUeRAM/${idServidor}`, {
             method: 'GET',
         })
             .then(response => {
@@ -546,7 +570,7 @@
 
     // fetch de dados de rede do servidor
     setInterval(() => {
-        fetch('/servidores/dadosRede', {
+        fetch(`/servidores/dadosRede/${idServidor}`, {
             method: 'GET',
         })
             .then(response => {
