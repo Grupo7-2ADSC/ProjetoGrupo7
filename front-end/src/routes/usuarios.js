@@ -55,12 +55,12 @@ router.post("/cadastrarUsuarioInterno", function (req, res) {
     usuarioController.cadastrarUsuarioInterno(req, res);
 });
 
-router.get("/listar/:idEmpresa", function (req, res) {
-    usuarioController.listar(req, res);
+router.get("/listarUsuariosPorEmpresa/:idEmpresa", function (req, res) {
+    usuarioController.listarUsuariosPorEmpresa(req, res);
 });
 
-router.delete("/deletar/:nomeUsuario", function (req, res) {
-    usuarioController.deletar(req, res);
+router.delete("/deletarUserIntern/:nomeUsuario", function (req, res) {
+    usuarioController.deletarUserIntern(req, res);
 });
 
 

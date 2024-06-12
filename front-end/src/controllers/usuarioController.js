@@ -168,10 +168,10 @@ function cadastrarEmp(req, res) {
     }
 }
 
-function  listarUsuarioPorEmpresa(req, res) {
+function  listarUsuariosPorEmpresa(req, res) {
     var idEmpresa = req.params.idEmpresa;
 
-    usuarioModel.listarUsuarioPorEmpresa(idEmpresa)
+    usuarioModel.listarUsuariosPorEmpresa(idEmpresa)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
@@ -220,7 +220,7 @@ module.exports = {
     deletarUsuario,
     cadastrarUser,
     cadastrarUsuarioInterno,
-    listarUsuarioPorEmpresa,
+    listarUsuariosPorEmpresa,
     deletarUserIntern,
     
 };

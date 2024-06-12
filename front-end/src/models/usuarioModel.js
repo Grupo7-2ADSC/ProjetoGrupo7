@@ -80,10 +80,10 @@ function cadastrarUsuario(nome, email, senha, empresa, tipoAcesso){
     return database.executar(instrucaoSql, [nome, email, senha, acessoId, empresaId]);
 }
 
-function listarUsuarioPorEmpresa(idEmpresa) {
+function listarUsuariosPorEmpresa(idEmpresa) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarPorUsuario()");
     var instrucaoSql = `
-       SELECT Usuario.nome, Usuario.email, TipoAcesso.tipo AS tipo_acesso 
+       SELECT Usuario.id_usuario, Usuario.nome, Usuario.email, TipoAcesso.tipo AS tipo_acesso 
        FROM Usuario JOIN TipoAcesso 
        ON Usuario.fk_tipo_acesso = TipoAcesso.id_tipo_acesso 
        WHERE fk_empresa = ${idEmpresa}; 
@@ -107,7 +107,7 @@ module.exports = {
     deletarUserAdm,
     cadastrarUsuario,
     cadastrarUsuarioInterno,
-    listarUsuarioPorEmpresa,
+    listarUsuariosPorEmpresa,
     deletarUserIntern,
 
   };

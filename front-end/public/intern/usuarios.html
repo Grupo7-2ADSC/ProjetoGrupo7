@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/usuarios.css">
     <link rel="shortcut icon" href="./assets/iconNavegador.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Usuarios</title>
 </head>
 
@@ -104,6 +105,30 @@
                 </div>
             </div>
         </div>
+        <div id="modal-editar" class="modal-overlay">
+            <div class="container-formulario">
+                <div class="conteudo-formulario">
+                    <h1>Editar Usuário</h1>
+                    <div class="bloco-input">
+                        <span>Nome</span>
+                        <input type="text" id="editar_nome_input">
+                    </div>
+                    <div class="bloco-input">
+                        <span>E-mail</span>
+                        <input type="email" id="editar_email_input">
+                    </div>
+                    <div class="bloco-input">
+                        <span>Tipo de acesso</span>
+                        <select name="acessos" id="editar_listaAcessos"></select>
+                    </div>
+                    <div class="btns">
+                        <button class="btn-cancelar" onclick="fecharModalEditar()">Cancelar</button>
+                        <button class="btn-confirmar" onclick="salvarEdicaoUsuario()">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </main>
 </body>
 
@@ -115,7 +140,7 @@
     var idEmpresa = sessionStorage.ID_EMPRESA;
 
     function atualizarUsuarios() {
-        fetch(`/usuarios/listar/${idEmpresa}`, {
+        fetch(`/usuarios/listarUsuariosPorEmpresa/${idEmpresa}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -155,7 +180,7 @@
                         const editButton = document.createElement('button');
                         editButton.classList.add('edit-btn');
                         editButton.innerHTML = `<img src="./assets/edit.png" alt="">`;
-                        editButton.onclick = () => editarUser(index);
+                        editButton.onclick = () => editarUser(resposta.id_usuario);
 
                         const deleteButton = document.createElement('button');
                         deleteButton.classList.add('del-btn');
@@ -177,9 +202,9 @@
         });
     }
 
-    /*function editarUser(index) {
- 
-     }*/
+    function editarUser(idUsuario) {
+     showEdit
+     }
 
     function showDeleteModal(index) {
 
@@ -215,7 +240,7 @@
     }
 
     function deletar(nomeUsuario) {
-        fetch(`/usuarios/deletar/${nomeUsuario}`, {
+        fetch(`/usuarios/deletarUserIntern/${nomeUsuario}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -224,12 +249,26 @@
 
             if (resposta.ok) {
 
-                alertmessageDelete();
+                Swal.fire({
+                                title: "Usuario deletado com sucesso!",
+                                 icon: "success"
+                                 });
+                                    setInterval(() => {
+                                       location.reload();
+                                    }, 2000);
+
 
             } else if (resposta.status == 404) {
                 console.log(`Deu 404!`);
             } else {
-                throw ("Houve um erro ao tentar realizar a exclução " + resposta.status);
+                throw Swal.fire({
+                                title: "Não foi possivel deletar o usuario!",
+                            
+                                 icon: "error"
+                            });
+                            setInterval(() => {
+                               location.reload();
+                            }, 2000);
             }
         }).catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
@@ -319,10 +358,23 @@
 
                             if (resposta.ok) {
 
-                                alertmessageCadastro();
+                                Swal.fire({
+                                title: "Usuario adicionado com sucesso!",
+                            
+                                 icon: "success"
+                                 
+                            });
+
+                            setInterval(() => {
+                               location.reload();
+                            }, 2000);
 
                             } else {
-                                throw "Houve um erro ao tentar realizar o cadastro!";
+                                throw    Swal.fire({
+                                title: "Erro ao cadastrar usuario!",
+                                text: "Usuario não cadastrado!",
+                                 icon: "error"
+                            });
                             }
                         })
                         .catch(function (resposta) {
@@ -351,5 +403,78 @@
         }
 
     }
+
+    function editarUser(idUsuario) {
+    // Busca os dados do usuário e preenche o formulário de edição
+    fetch(`/usuarios/obterUsuario/${idUsuario}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(function (usuario) {
+                document.getElementById('editar_nome_input').value = usuario.nome;
+                document.getElementById('editar_email_input').value = usuario.email;
+                document.getElementById('editar_listaAcessos').value = usuario.tipo_acesso;
+                
+                // Armazena o ID do usuário em uma variável global ou dataset do modal para ser usada na atualização
+                document.getElementById('modal-editar').dataset.usuarioId = usuario.id_usuario;
+                
+                // Exibe o modal de edição
+                document.getElementById('modal-editar').classList.add('show');
+            });
+        } else {
+            console.error('Houve um erro ao buscar os dados do usuário!');
+        }
+    }).catch(function (resposta) {
+        console.error(resposta);
+    });
+}
+
+function fecharModalEditar() {
+    document.getElementById('modal-editar').classList.remove('show');
+}
+
+function salvarEdicaoUsuario() {
+    var idUsuario = document.getElementById('modal-editar').dataset.usuarioId;
+    var nomeVar = document.getElementById('editar_nome_input').value;
+    var emailVar = document.getElementById('editar_email_input').value;
+    var acessoVar = document.getElementById('editar_listaAcessos').value;
+
+    fetch(`/usuarios/atualizarUsuario/${idUsuario}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            acessoIdServer: acessoVar
+        }),
+    })
+    .then(function (resposta) {
+        if (resposta.ok) {
+            Swal.fire({
+                title: "Usuário atualizado com sucesso!",
+                icon: "success"
+            });
+
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        } else {
+            Swal.fire({
+                title: "Erro ao atualizar usuário!",
+                text: "Usuário não atualizado!",
+                icon: "error"
+            });
+        }
+    })
+    .catch(function (resposta) {
+        console.error(resposta);
+    });
+}
+ 
 
 </script>
