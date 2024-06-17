@@ -247,23 +247,6 @@
 
         containerServidores.innerHTML = `<p class="sem-servidores">Não há servidores cadastrados</p>`;
     }
-    //  else {
-    //     fetch(`/servidores/getQtdServidoresUsoCompontesElevado/${idEmpresaUser}`)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log('Qtd servidores com uso de componentes elevado:', data);
-
-    //             totalServersCpuUp.innerHTML = data[0].serverCpuElevado;
-    //             totalServersRamUp.innerHTML = data[0].serverRamElevado;
-    //             qtdDiscosMinSpace.innerHTML = data[0].serverDiscoElevado;
-    //             totalServers.innerHTML = dataServer.length;
-
-    //         })
-    //         .catch(error => {
-    //             console.error('Erro ao obter quantidade de servidores com uso de componentes elevado:', error);
-    //         });
-
-    // };
 
     containerServidores.innerHTML = "";
     totalServersCpuUp.innerHTML = cpuUp;
@@ -279,13 +262,61 @@
                 console.log('Dados CPU e RAM:', data);
                 console.log('CPU:', data[0].uso_cpu);
                 console.log('RAM:', data[0].uso_ram);
+                if (data[0].uso_cpu === undefined || data[0].uso_cpu === null){
+                    data[0].uso_cpu = 0;
+                    data[0].uso_ram = 0;
+                }
 
                 if (data[0].uso_cpu > usoElevadoCpu) {
                     usoElevado++;
                     cpuUp++;
+                    Swal.fire({
+                        title: 'Atenção!',
+                        text: `O servidor ${element.nome} está com uso de CPU acima do normal!`,
+                        icon: 'warning'
+                    });
+
+                    fetch(`/servidores/enviarAlertas`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            registro: data[0].uso_cpu,
+                            componente: 1})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Alerta enviado:', data);
+                        })
+                        .catch(error => {
+                            console.error('Erro ao enviar alerta:', error);
+                        });
+                   
                 } else if (data[0].uso_ram > usuElevadoRam) {
                     usoElevado++;
                     ramUp++;
+                    Swal.fire({
+                        title: 'Atenção!',
+                        text: `O servidor ${element.nome} está com uso de RAM acima do normal!`,
+                        icon: 'warning'
+                    });
+                    fetch(`/servidores/enviarAlertas`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            registro: data[0].uso_ram,
+                            componente: 2})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Alerta enviado:', data);
+                        })
+                        .catch(error => {
+                            console.error('Erro ao enviar alerta:', error);
+                        });
                 }
 
             })
@@ -300,12 +331,33 @@
                 console.log('Disco:', data[0].total_gib);
 
                 data.forEach((element, i) => {
-                    if (data[i].total_gib === undefined)
-                    data[i].total_gib =0
+                    if (data[i].total_gib === undefined) data[i].total_gib = 0;
 
+                    
                     if (((data[i].total_gib / data[i].uso) * 100) < usoElevadoDisco) {
                         usoElevado++;
                         discoUp++;
+                        Swal.fire({
+                            title: 'Atenção!',
+                            text: `O servidor ${element.nome} está com pouco espaço em disco!`,
+                            icon: 'warning'
+                        });
+                        fetch(`/servidores/enviarAlertas`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            registro: data[i].total_gib / data[i].uso * 100,
+                            componente: 3})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Alerta enviado:', data);
+                        })
+                        .catch(error => {
+                            console.error('Erro ao enviar alerta:', error);
+                        });
                     }
                 });
 

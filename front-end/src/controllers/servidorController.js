@@ -177,6 +177,21 @@ function cadastrarServidor(req, res) {
         });
   }
 
+  function enviarAlertas(req, res) {
+    var componente = req.body.componente;
+    var registro = req.body.registro;
+    var dataRegistro = new Date();
+
+    servidorModel.enviarAlertas(componente, registro, dataRegistro)
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao enviar alertas:", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = { 
   
   buscarServidoresPorEmpresa,
@@ -192,6 +207,7 @@ module.exports = {
   obterServidoresPorEmpresa,
   excluirServidor,
   alterarServidor,
+  enviarAlertas
 
   
   

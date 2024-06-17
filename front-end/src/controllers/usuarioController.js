@@ -211,6 +211,10 @@ function deletarUserIntern(req, res) {
         );
 }
 
+function editarUserIntern(id, nome, email, senha, tipoAcesso) {
+    return usuarioModel.editarUserIntern(id, nome, email, senha, tipoAcesso);
+}
+
 
 module.exports = {
     autenticar,
@@ -222,5 +226,7 @@ module.exports = {
     cadastrarUsuarioInterno,
     listarUsuariosPorEmpresa,
     deletarUserIntern,
+    editarUserIntern,
+    
     
 };

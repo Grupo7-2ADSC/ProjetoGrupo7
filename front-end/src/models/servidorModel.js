@@ -149,29 +149,6 @@ function obterParametrosEmp(idEmpresa) {
     return database.executar(query, [idEmpresa]);
 }
 
-// function getQtdServidoresUsoCompontesElevado(idEmpresa) {
-//     const query = `
-//     SELECT 
-//     COUNT(DISTINCT CASE WHEN (rc.uso / c.total_gib) * 100 > 80 THEN s.id_servidor END) AS serverDiscoElevado,
-//     COUNT(DISTINCT CASE WHEN (rm.uso / c.total_gib) * 100 > 70 THEN s.id_servidor END) AS serverRamElevado,
-//     COUNT(DISTINCT CASE WHEN rc.uso > 80.00 THEN s.id_servidor END) AS serverCpuElevado
-// FROM 
-//     Servidor s
-// JOIN 
-//     Empresa e ON s.fk_empresa = e.id_empresa
-// JOIN 
-//     Componente c ON s.id_servidor = c.fk_servidor
-// JOIN 
-//     TipoComponente tc ON c.fk_tipo_componente = tc.id_tipo_componente
-// LEFT JOIN 
-//     Registro rc ON c.id_componente = rc.fk_componente AND tc.tipo = 'DISCO'
-// LEFT JOIN 
-//     Registro rm ON c.id_componente = rm.fk_componente AND tc.tipo = 'MEMORIA'
-// WHERE 
-//     e.id_empresa = ?;`
-//     return database.executar(query, [idEmpresa]);
-// }
-
 function cadastrarServidor( nome, hostName, idEmpresa) {
 
     let query = `INSERT INTO Servidor (nome, host_name, fk_empresa) VALUES (?, ?, ?);`;
@@ -195,6 +172,11 @@ function alterarServidor(id, nome, hostName) {
     return database.executar(query, [nome, hostName, id]);
 }
 
+function enviarAlertas(componente, registro, dataRegistro) {
+    const query = `INSERT INTO Alerta (registro, data_registro, fk_componente) VALUES (?, ?, ?)`;
+    return database.executar(query, [registro, dataRegistro, componente]);
+}
+
 module.exports = {
     buscarServidoresPorEmpresa,
     getDadosEstaticosServidor,
@@ -204,11 +186,12 @@ module.exports = {
     getDadosRede,
     inserirParametrosDefault,
     obterParametrosEmp,
-    // getQtdServidoresUsoCompontesElevado,
     cadastrarServidor,
     obterServidoresPorEmpresa,
     excluirServidor,
     alterarServidor,
+    enviarAlertas,
+
 
     
 }

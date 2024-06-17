@@ -57,5 +57,9 @@ router.put('/alterarServidor/:idServidor', function (req, res) {
   servidorController.alterarServidor(req, res);
 });
 
+router.post('/enviarAlertas', function (req, res) {
+  servidorController.enviarAlertas(req, res);
+});
+
 
 module.exports = router;

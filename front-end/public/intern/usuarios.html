@@ -45,10 +45,10 @@
             </table>
         </div>
 
-        <div class="message-cadastro" id="MessageCadastro">
+        <!-- <div class="message-cadastro" id="MessageCadastro">
             Cadastro realizado com sucesso
             <img src="./assets/ok.png">
-        </div>
+        </div> -->
 
         <div id="modal-cadastro" class="modal-overlay">
 
@@ -88,11 +88,6 @@
             </div>
         </div>
 
-        <div class="message-deletar" id="MessageDelete">
-            Usuário removido com sucesso
-            <img src="./assets/ok.png">
-        </div>
-
         <div id="modal-excluirFunc">
             <div class="conteudo-modal-excluirFunc">
                 <img src="./assets/relatorio.png" alt="icone-alerta" class="img-alerta">
@@ -116,6 +111,10 @@
                     <div class="bloco-input">
                         <span>E-mail</span>
                         <input type="email" id="editar_email_input">
+                    </div>
+                    <div class="bloco-input">
+                        <span>Senha</span>
+                        <input type="password" id="editar_senha_input">
                     </div>
                     <div class="bloco-input">
                         <span>Tipo de acesso</span>
@@ -181,6 +180,7 @@
                         editButton.classList.add('edit-btn');
                         editButton.innerHTML = `<img src="./assets/edit.png" alt="">`;
                         editButton.onclick = () => editarUser(resposta.id_usuario);
+                        console.log("Id do usuario para editar:"+resposta.id_usuario);
 
                         const deleteButton = document.createElement('button');
                         deleteButton.classList.add('del-btn');
@@ -203,7 +203,12 @@
     }
 
     function editarUser(idUsuario) {
-     showEdit
+    
+        var modalEditar = document.getElementById('modal-editar');
+        modalEditar.setAttribute('data-usuario-id', idUsuario);
+        modalEditar = document.getElementById('modal-editar');
+        modalEditar.classList.add('show');
+  
      }
 
     function showDeleteModal(index) {
@@ -293,6 +298,7 @@
                 resposta.json().then((acessos) => {
                     acessos.forEach((acessos) => {
                         listaAcessos.innerHTML += `<option value='${acessos.id_tipo_acesso}'>${acessos.tipo}</option>`;
+                        editar_listaAcessos.innerHTML += `<option value='${acessos.id_tipo_acesso}'>${acessos.tipo}</option>`;
                     });
                 });
             })
@@ -404,76 +410,64 @@
 
     }
 
-    function editarUser(idUsuario) {
-    // Busca os dados do usuário e preenche o formulário de edição
-    fetch(`/usuarios/obterUsuario/${idUsuario}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then(function (resposta) {
-        if (resposta.ok) {
-            resposta.json().then(function (usuario) {
-                document.getElementById('editar_nome_input').value = usuario.nome;
-                document.getElementById('editar_email_input').value = usuario.email;
-                document.getElementById('editar_listaAcessos').value = usuario.tipo_acesso;
-                
-                // Armazena o ID do usuário em uma variável global ou dataset do modal para ser usada na atualização
-                document.getElementById('modal-editar').dataset.usuarioId = usuario.id_usuario;
-                
-                // Exibe o modal de edição
-                document.getElementById('modal-editar').classList.add('show');
-            });
-        } else {
-            console.error('Houve um erro ao buscar os dados do usuário!');
-        }
-    }).catch(function (resposta) {
-        console.error(resposta);
-    });
-}
-
+   
 function fecharModalEditar() {
     document.getElementById('modal-editar').classList.remove('show');
 }
 
 function salvarEdicaoUsuario() {
-    var idUsuario = document.getElementById('modal-editar').dataset.usuarioId;
+    var modalEditar = document.getElementById('modal-editar');
+    var idUsuario = modalEditar.getAttribute('data-usuario-id');
     var nomeVar = document.getElementById('editar_nome_input').value;
+    var senhaVar = document.getElementById('editar_senha_input').value;
     var emailVar = document.getElementById('editar_email_input').value;
     var acessoVar = document.getElementById('editar_listaAcessos').value;
 
-    fetch(`/usuarios/atualizarUsuario/${idUsuario}`, {
+ if( emailVar !=  "" && nomeVar != "" && acessoVar != ""  && senhaVar != ""){
+    fetch(`/usuarios/editarUsuarioIntern/${idUsuario}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            nomeServer: nomeVar,
-            emailServer: emailVar,
-            acessoIdServer: acessoVar
+            nome: nomeVar,
+            email: emailVar,
+            senha: senhaVar,
+            acessoId: acessoVar
         }),
     })
-    .then(function (resposta) {
-       if (resposta.ok) {
-            Swal.fire({
-                title: "Usuário atualizado com sucesso!",
-                icon: "success"
-            });
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
 
-            setTimeout(() => {
-                location.reload();
-            }, 2000);
-        } else {
-            Swal.fire({
-                title: "Erro ao atualizar usuário!",
-                text: "Usuário não atualizado!",
-                icon: "error"
-            });
-        }
-    })
-    .catch(function (resposta) {
-        console.error(resposta);
-    });
+            if (resposta.ok) {
+                Swal.fire({
+                                title: "Usuario editado com sucesso!",
+                                 icon: "success"
+                                 });
+                                    setInterval(() => {
+                                       location.reload();
+                                    }, 2000);
+            } else {
+                throw Swal.fire({
+                                title: "Erro ao editar usuario!",
+                                text: "Usuario não editado!",
+                                 icon: "error"
+                            });
+                            setInterval(() => {
+                               location.reload();
+                            }, 2000);
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }else{
+        Swal.fire({
+                                title: "Erro ao editar usuario!",
+                                text: "Preencha todos os campos!",
+                                 icon: "error"
+                            });
+    }
 }
  
 

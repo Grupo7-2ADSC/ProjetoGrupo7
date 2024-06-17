@@ -99,6 +99,13 @@ function deletarUserIntern(nomeUsuario) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
+
+function editarUserIntern(id, nome, email, senha, tipoAcesso, empresa) {
+    var query = `UPDATE Usuario SET nome = ?, email = ?, senha = ?, fk_tipo_acesso = ? WHERE id_usuario = ?;`;
+    return database.executar(query, [nome, email, senha, tipoAcesso, id]);
+}
+
 module.exports = {
     autenticar,
     cadastrarEmp,
@@ -109,5 +116,6 @@ module.exports = {
     cadastrarUsuarioInterno,
     listarUsuariosPorEmpresa,
     deletarUserIntern,
+    editarUserIntern,
 
   };

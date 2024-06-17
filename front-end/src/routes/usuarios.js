@@ -63,5 +63,22 @@ router.delete("/deletarUserIntern/:nomeUsuario", function (req, res) {
     usuarioController.deletarUserIntern(req, res);
 });
 
+router.put("/editarUsuarioIntern/:id", function (req, res) {
+    var id = req.params.id;
+    var nome = req.body.nome;
+    var email = req.body.email;
+    var senha = req.body.senha;
+    var tipoAcesso = req.body.acessoId;
+
+    usuarioController.editarUserIntern(id, nome, email, senha, tipoAcesso)
+        .then(resultado => {
+            res.status(200).json({ mensagem: "usuario editado com sucesso!" });
+        })
+        .catch(erro => {
+            console.log("Erro ao editar usuario:", erro);
+            res.status(500).json({ erro: "Erro interno ao editar usuario" });
+        });
+});
+
 
 module.exports = router;
